@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6BC68586-4D6C-49C9-A4A2-1C2D83A24AE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{FC6B1901-4AA1-4F0C-A2BD-5E5985E7F9C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{E43FC3F8-783C-4D9A-A4B4-08C674D0DED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbi_API", "Mumbi_API\Mumbi_API.csproj", "{DA43E93A-F7B3-45B8-B249-147C02D65165}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbi.Application", "Mumbi.Application\Mumbi.Application.csproj", "{F78F460E-C861-471B-8F7F-301751F233D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbi.Domain", "Mumbi.Domain\Mumbi.Domain.csproj", "{35BA2049-E0C5-4074-A49A-25708EF7B720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbi.Infrastucture", "Mumbi.Infrastucture\Mumbi.Infrastucture.csproj", "{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA43E93A-F7B3-45B8-B249-147C02D65165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA43E93A-F7B3-45B8-B249-147C02D65165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA43E93A-F7B3-45B8-B249-147C02D65165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA43E93A-F7B3-45B8-B249-147C02D65165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78F460E-C861-471B-8F7F-301751F233D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78F460E-C861-471B-8F7F-301751F233D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78F460E-C861-471B-8F7F-301751F233D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78F460E-C861-471B-8F7F-301751F233D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35BA2049-E0C5-4074-A49A-25708EF7B720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BA2049-E0C5-4074-A49A-25708EF7B720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BA2049-E0C5-4074-A49A-25708EF7B720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BA2049-E0C5-4074-A49A-25708EF7B720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA43E93A-F7B3-45B8-B249-147C02D65165} = {FC6B1901-4AA1-4F0C-A2BD-5E5985E7F9C5}
+		{F78F460E-C861-471B-8F7F-301751F233D0} = {6BC68586-4D6C-49C9-A4A2-1C2D83A24AE0}
+		{35BA2049-E0C5-4074-A49A-25708EF7B720} = {6BC68586-4D6C-49C9-A4A2-1C2D83A24AE0}
+		{EEDDBAC6-F2E3-40FE-BA11-F5108C0BCFFA} = {E43FC3F8-783C-4D9A-A4B4-08C674D0DED5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5043A934-E304-40FB-B61D-BA303FB4B076}
+	EndGlobalSection
+EndGlobal
