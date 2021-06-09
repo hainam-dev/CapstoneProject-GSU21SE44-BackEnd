@@ -62,6 +62,7 @@ namespace Mumbi.Application.Services
                     if (await _unitOfWork.SaveAsync() > 0)
                     {
                         currentAccount = account_Info;
+                        currentAccount.EmailNavigation = mom_info;
                     };
                 }
 
@@ -70,6 +71,7 @@ namespace Mumbi.Application.Services
                 response.Email = currentAccount.Email;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
+                response.Photo = currentAccount.EmailNavigation.Image;
 
                 return new Response<AuthenticationResponse>(response, $"Authenticated {account_firebase.Email}");
             }
