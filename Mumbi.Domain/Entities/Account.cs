@@ -19,23 +19,20 @@ namespace Mumbi.Domain.Entities
 
         [Key]
         [StringLength(100)]
-        public string Email { get; set; }
+        public string AccountId { get; set; }
         [Required]
         [StringLength(20)]
         public string RoleId { get; set; }
         public bool? IsDeleted { get; set; }
 
-        [ForeignKey(nameof(Email))]
-        [InverseProperty(nameof(Mom.Account))]
-        public virtual Mom EmailNavigation { get; set; }
         [ForeignKey(nameof(RoleId))]
         [InverseProperty("Accounts")]
         public virtual Role Role { get; set; }
-        [InverseProperty("IdNavigation")]
-        public virtual Dad Dad { get; set; }
-        [InverseProperty("IdNavigation")]
+        [InverseProperty("Account")]
         public virtual Doctor Doctor { get; set; }
-        [InverseProperty("IdNavigation")]
+        [InverseProperty("Account")]
+        public virtual Mom Mom { get; set; }
+        [InverseProperty("Account")]
         public virtual staff staff { get; set; }
         [InverseProperty(nameof(Reminder.Account))]
         public virtual ICollection<Reminder> Reminders { get; set; }

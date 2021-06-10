@@ -13,6 +13,7 @@ namespace Mumbi.Domain.Entities
     {
         public Child()
         {
+            ActionChildren = new HashSet<ActionChild>();
             Diaries = new HashSet<Diary>();
             InjectionSchedules = new HashSet<InjectionSchedule>();
             PregnancyActivities = new HashSet<PregnancyActivity>();
@@ -49,14 +50,15 @@ namespace Mumbi.Domain.Entities
         [ForeignKey(nameof(DadId))]
         [InverseProperty("Children")]
         public virtual Dad Dad { get; set; }
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(PregnancyInformation.Child))]
-        public virtual PregnancyInformation IdNavigation { get; set; }
         [ForeignKey(nameof(MomId))]
         [InverseProperty("Children")]
         public virtual Mom Mom { get; set; }
         [InverseProperty("IdNavigation")]
+        public virtual PregnancyInformation PregnancyInformation { get; set; }
+        [InverseProperty("IdNavigation")]
         public virtual Tooth Tooth { get; set; }
+        [InverseProperty(nameof(ActionChild.Child))]
+        public virtual ICollection<ActionChild> ActionChildren { get; set; }
         [InverseProperty(nameof(Diary.Child))]
         public virtual ICollection<Diary> Diaries { get; set; }
         [InverseProperty(nameof(InjectionSchedule.Children))]

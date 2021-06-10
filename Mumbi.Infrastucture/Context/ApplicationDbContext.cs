@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mumbi.Domain.Entities;
+using System;
+
 
 #nullable disable
 
@@ -17,6 +19,8 @@ namespace Mumbi.Infrastucture.Context
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Domain.Entities.Action> Actions { get; set; }
+        public virtual DbSet<ActionChild> ActionChildren { get; set; }
         public virtual DbSet<Child> Children { get; set; }
         public virtual DbSet<Dad> Dads { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
@@ -39,11 +43,7 @@ namespace Mumbi.Infrastucture.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=SE130022\\SQLEXPRESS;Database=Mumbi_Capstone;Trusted_Connection=True;");
-            }
+ 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,23 +52,32 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Account>(entity =>
             {
-                entity.Property(e => e.Email).IsUnicode(false);
-
-                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+                entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.RoleId).IsUnicode(false);
-
-                entity.HasOne(d => d.EmailNavigation)
-                    .WithOne(p => p.Account)
-                    .HasForeignKey<Account>(d => d.Email)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Account_Mom");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Account_Role");
+            });
+
+            modelBuilder.Entity<ActionChild>(entity =>
+            {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
+                entity.HasOne(d => d.Action)
+                    .WithMany(p => p.ActionChildren)
+                    .HasForeignKey(d => d.ActionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActionChild_Action");
+
+                entity.HasOne(d => d.Child)
+                    .WithMany(p => p.ActionChildren)
+                    .HasForeignKey(d => d.ChildId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActionChild_Child");
             });
 
             modelBuilder.Entity<Child>(entity =>
@@ -94,12 +103,6 @@ namespace Mumbi.Infrastucture.Context
                     .HasForeignKey(d => d.DadId)
                     .HasConstraintName("FK_Children_Dad");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Child)
-                    .HasForeignKey<Child>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Children_Pregnancy");
-
                 entity.HasOne(d => d.Mom)
                     .WithMany(p => p.Children)
                     .HasForeignKey(d => d.MomId)
@@ -110,8 +113,6 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.AccountId).IsUnicode(false);
-
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
                 entity.Property(e => e.Image).IsUnicode(false);
@@ -119,12 +120,6 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.Property(e => e.RhBloodGroup).IsUnicode(false);
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Dad)
-                    .HasForeignKey<Dad>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Dad_Account1");
             });
 
             modelBuilder.Entity<Diary>(entity =>
@@ -135,8 +130,6 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
-                entity.Property(e => e.IsPublic).HasDefaultValueSql("((0))");
-
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.Diaries)
                     .HasForeignKey(d => d.ChildId)
@@ -146,7 +139,10 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Doctor>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
+                entity.HasKey(e => e.AccountId)
+                    .HasName("PK__Doctor__349DA5A69BAFC2B6");
+
+                entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.FromHospital).IsUnicode(false);
 
@@ -154,9 +150,9 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.Account)
                     .WithOne(p => p.Doctor)
-                    .HasForeignKey<Doctor>(d => d.Id)
+                    .HasForeignKey<Doctor>(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Doctor_Account");
             });
@@ -204,7 +200,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Mom>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
+                entity.HasKey(e => e.AccountId)
+                    .HasName("PK__Mom__349DA5A68520F284");
 
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
@@ -215,6 +212,12 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.Property(e => e.RhBloodGroup).IsUnicode(false);
+
+                entity.HasOne(d => d.Account)
+                    .WithOne(p => p.Mom)
+                    .HasForeignKey<Mom>(d => d.AccountId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Account_Mom");
             });
 
             modelBuilder.Entity<News>(entity =>
@@ -237,9 +240,7 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.ChildId).IsUnicode(false);
 
-                entity.Property(e => e.IsDone)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.IsDone).IsUnicode(false);
 
                 entity.Property(e => e.MediaFile).IsUnicode(false);
 
@@ -256,14 +257,18 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<PregnancyActivityType>(entity =>
             {
-                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.SuitableAge).IsUnicode(false);
             });
 
             modelBuilder.Entity<PregnancyInformation>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.PregnancyInformation)
+                    .HasForeignKey<PregnancyInformation>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Children_Pregnancy");
             });
 
             modelBuilder.Entity<Reminder>(entity =>
@@ -288,8 +293,6 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Token>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.Token1).IsUnicode(false);
@@ -319,13 +322,16 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<staff>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
+                entity.HasKey(e => e.AccountId)
+                    .HasName("PK__Staff__349DA5A69F3B2D6C");
+
+                entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.Account)
                     .WithOne(p => p.staff)
-                    .HasForeignKey<staff>(d => d.Id)
+                    .HasForeignKey<staff>(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Staff_Account");
             });

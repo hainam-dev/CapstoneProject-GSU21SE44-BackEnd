@@ -8,6 +8,8 @@ namespace Mumbi.Application.Interfaces
         IAccountRepository AccountRepository { get; }
         IRoleRepository RoleRepository { get; }
         IMomRepository MomRepository { get; }
+        IChildrenRepository ChildrenRepository { get; }
+        IPregnancyInformationRepository PregnancyInformationRepository { get; }
         Task<int> SaveAsync();
     }
 }

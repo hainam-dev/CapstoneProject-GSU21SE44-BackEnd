@@ -19,7 +19,7 @@ namespace Mumbi.Domain.Entities
 
         [Key]
         [StringLength(100)]
-        public string Id { get; set; }
+        public string AccountId { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
@@ -35,11 +35,9 @@ namespace Mumbi.Domain.Entities
         public double? Weight { get; set; }
         public double? Height { get; set; }
         public bool? IsSingleMom { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string AccountId { get; set; }
 
-        [InverseProperty("EmailNavigation")]
+        [ForeignKey(nameof(AccountId))]
+        [InverseProperty("Mom")]
         public virtual Account Account { get; set; }
         [InverseProperty(nameof(Child.Mom))]
         public virtual ICollection<Child> Children { get; set; }

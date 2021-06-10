@@ -13,7 +13,7 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         [StringLength(100)]
-        public string Id { get; set; }
+        public string AccountId { get; set; }
         [Required]
         [StringLength(10)]
         public string FullName { get; set; }
@@ -23,8 +23,8 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string FromHospital { get; set; }
 
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(Account.Doctor))]
-        public virtual Account IdNavigation { get; set; }
+        [ForeignKey(nameof(AccountId))]
+        [InverseProperty("Doctor")]
+        public virtual Account Account { get; set; }
     }
 }

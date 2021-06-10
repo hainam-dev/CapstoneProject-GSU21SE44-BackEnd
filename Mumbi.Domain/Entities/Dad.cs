@@ -32,13 +32,7 @@ namespace Mumbi.Domain.Entities
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string AccountId { get; set; }
 
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(Account.Dad))]
-        public virtual Account IdNavigation { get; set; }
         [InverseProperty(nameof(Child.Dad))]
         public virtual ICollection<Child> Children { get; set; }
     }

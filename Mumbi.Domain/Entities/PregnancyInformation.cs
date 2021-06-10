@@ -26,7 +26,8 @@ namespace Mumbi.Domain.Entities
         public int? MotherMenstrualCycleTime { get; set; }
         public double? MotherWeight { get; set; }
 
-        [InverseProperty("IdNavigation")]
-        public virtual Child Child { get; set; }
+        [ForeignKey(nameof(Id))]
+        [InverseProperty(nameof(Child.PregnancyInformation))]
+        public virtual Child IdNavigation { get; set; }
     }
 }

@@ -38,21 +38,20 @@ namespace Mumbi.Application.Services
 
                 UserRecord account_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(decodedToken.Uid);
                 Account currentAccount = await _unitOfWork.AccountRepository
-                                                          .FirstAsync(u => u.Email == account_firebase.Email,
+                                                          .FirstAsync(u => u.AccountId == account_firebase.Email,
                                                                       includeProperties: "EmailNavigation");
 
                 if (currentAccount == null)
                 {
                     var account_Info = new Account
                     {
-                        Email = account_firebase.Email,
+                        AccountId = account_firebase.Email,
                         RoleId = RoleConstant.USER_ROLE
                     };
                     await _unitOfWork.AccountRepository.AddAsync(account_Info);
 
                     var mom_info = new Mom
                     {
-                        Id = account_firebase.Email,
                         AccountId = account_firebase.Email,
                         FullName = account_firebase.DisplayName,
                         Phonenumber = account_firebase.PhoneNumber,
@@ -63,16 +62,16 @@ namespace Mumbi.Application.Services
                     if (await _unitOfWork.SaveAsync() > 0)
                     {
                         currentAccount = account_Info;
-                        currentAccount.EmailNavigation = mom_info;
+                        currentAccount.Mom = mom_info;
                     };
                 }
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
                 AuthenticationResponse response = new AuthenticationResponse();
-                response.Email = currentAccount.Email;
+                response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                response.Photo = currentAccount.EmailNavigation.Image;
+                response.Photo = currentAccount.Mom.Image;
 
                 return new Response<AuthenticationResponse>(response, $"Authenticated {account_firebase.Email}");
             }
@@ -88,8 +87,8 @@ namespace Mumbi.Application.Services
             var claim = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("email", account.Email),
-                new Claim(JwtRegisteredClaimNames.Email, account.Email),
+                new Claim("email", account.AccountId),
+                new Claim(JwtRegisteredClaimNames.Email, account.AccountId),
                 new Claim(ClaimTypes.Role, role.Name),
             };
 

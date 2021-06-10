@@ -22,11 +22,17 @@ namespace Mumbi.Infrastucture.Repositories
 
         public IMomRepository MomRepository { get; set; }
 
+        public IChildrenRepository ChildrenRepository { get; set; }
+
+        public IPregnancyInformationRepository PregnancyInformationRepository { get; set; }
+
         private void InitRepository()
         {
             RoleRepository = new RoleRepository(_context);
             AccountRepository = new AccountRepository(_context);
             MomRepository = new MomRepository(_context);
+            ChildrenRepository = new ChildrenRepository(_context);
+            PregnancyInformationRepository = new PregnancyInformationRepository(_context);
         }
 
         public async Task<int> SaveAsync()

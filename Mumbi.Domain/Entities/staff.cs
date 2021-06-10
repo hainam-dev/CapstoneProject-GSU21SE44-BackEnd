@@ -13,7 +13,7 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         [StringLength(100)]
-        public string Id { get; set; }
+        public string AccountId { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
@@ -21,8 +21,8 @@ namespace Mumbi.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime? Birthday { get; set; }
 
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(Account.staff))]
-        public virtual Account IdNavigation { get; set; }
+        [ForeignKey(nameof(AccountId))]
+        [InverseProperty("staff")]
+        public virtual Account Account { get; set; }
     }
 }

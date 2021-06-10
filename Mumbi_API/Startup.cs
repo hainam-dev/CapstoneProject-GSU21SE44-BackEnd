@@ -21,6 +21,17 @@ namespace Mumbi_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder =>
+                {
+                    builder.AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials();
+                });             
+            });
+
             services.AddControllers();
 
             services.AddApplication();
@@ -39,6 +50,8 @@ namespace Mumbi_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 
