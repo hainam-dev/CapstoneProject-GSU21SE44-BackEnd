@@ -31,6 +31,7 @@ namespace Mumbi.Application.Services
                 Gender = request.Gender,
                 BirthDay = request.BirthDay,
                 Image = request.Image,
+                IsDeleted = false,
             };
 
             await _unitOfWork.ChildrenRepository.AddAsync(child);

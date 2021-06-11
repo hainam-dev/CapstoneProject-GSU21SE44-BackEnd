@@ -17,6 +17,11 @@ namespace Mumbi_API.Controllers
         {
             _momService = momService;
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _momService.GetAllMom());
+        }
         [HttpPut("{AccountId}")]
         public async Task<IActionResult> UpdatePregnancy(string AccountId, UpdateMomRequest request)
         {
@@ -27,5 +32,7 @@ namespace Mumbi_API.Controllers
 
             return Ok(await _momService.UpdateMomRequest(request));
         }
+
+        
     }
 }

@@ -46,7 +46,8 @@ namespace Mumbi.Application.Services
                     var account_Info = new Account
                     {
                         AccountId = account_firebase.Email,
-                        RoleId = RoleConstant.USER_ROLE
+                        RoleId = RoleConstant.USER_ROLE,
+                        IsDeleted = false,
                     };
                     await _unitOfWork.AccountRepository.AddAsync(account_Info);
 

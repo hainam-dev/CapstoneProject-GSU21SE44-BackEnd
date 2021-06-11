@@ -11,5 +11,6 @@ namespace Mumbi.Application.Interfaces
     public interface IMomService
     {
         Task<Response<string>> UpdateMomRequest(UpdateMomRequest request);
+        Task<Response<List<MomResponse>>> GetAllMom();
     }
 }
