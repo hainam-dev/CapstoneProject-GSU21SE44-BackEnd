@@ -97,10 +97,9 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildrenRepository.FirstAsync(x => x.Id == id);
             if (child != null)
             {
-                //child.IsDeleted = true;
+                child.IsDeleted = true;
                 _unitOfWork.ChildrenRepository.UpdateAsync(child);
                 await _unitOfWork.SaveAsync();
-
                 return new Response<string>("Delete children succesfully", child.Id);
             }
 
@@ -129,7 +128,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<ChildrenResponse>>> GetAllChildren()
         {
             var response = new List<ChildrenResponse>();
-            var child = await _unitOfWork.ChildrenRepository.GetAllAsync();
+            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "PregnancyInfomation");
             if(child != null)
             {
                 response = _mapper.Map<List<ChildrenResponse>>(child);

@@ -33,7 +33,6 @@ namespace Mumbi.Application.Services
                 mom.RhBloodGroup = request.RhBloodGroup;
                 mom.Weight = request.Weight;
                 mom.Height = request.Height;
-                mom.IsSingleMom = request.IsSingleMom;
 
 
                 _unitOfWork.MomRepository.UpdateAsync(mom);
