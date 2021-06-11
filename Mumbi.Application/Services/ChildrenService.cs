@@ -72,6 +72,25 @@ namespace Mumbi.Application.Services
 
             return new Response<string>("Update children information failed");
         }
+        public async Task<Response<string>> UpdatePregnancyInformation(UpdatePregnancyInfoRequest request)
+        {
+            var pregnancy = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.Id == request.Id);
+            if(pregnancy != null)
+            {
+                pregnancy.PregnancyWeek = request.PregnancyWeek;
+                pregnancy.MotherWeight = request.MotherWeight;
+                pregnancy.Weight = request.Weight;
+                pregnancy.HeadCircumference = request.HeadCircumference;
+                pregnancy.FetalHeartRate = request.FetalHeartRate;
+                pregnancy.FemurLength = request.FemurLength;
+
+                _unitOfWork.PregnancyInformationRepository.UpdateAsync(pregnancy);
+                await _unitOfWork.SaveAsync();
+
+                return new Response<string>("Update pregnancy information succesfully", pregnancy.Id);
+            }
+            return new Response<string>("Update pregnancy information failed");
+        }
 
         public async Task<Response<string>> DeleteChildren(string id)
         {
@@ -109,12 +128,20 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<ChildrenResponse>>> GetAllChildren()
         {
-            var child = await _unitOfWork.ChildrenRepository.GetAllAsync();
-
             var response = new List<ChildrenResponse>();
-            response = _mapper.Map<List<ChildrenResponse>>(child);
-
+            var child = await _unitOfWork.ChildrenRepository.GetAllAsync();
+            if(child != null)
+            {
+                response = _mapper.Map<List<ChildrenResponse>>(child);
+                var pregnancyInfo = await _unitOfWork.PregnancyInformationRepository.GetAllAsync();
+                if(pregnancyInfo != null)
+                {
+                    response = _mapper.Map<List<ChildrenResponse>>(pregnancyInfo);
+                }
+            }
             return new Response<List<ChildrenResponse>>(response);
         }
+
+        
     }
 }

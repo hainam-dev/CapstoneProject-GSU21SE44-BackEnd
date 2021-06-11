@@ -38,8 +38,8 @@ namespace Mumbi_API.Controllers
             return Ok(await _childrenService.AddChildren(request));
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Update(string Id, UpdateChildrenInfoResquest request)
+        [HttpPut("{Id}/updateChildrenInfo")]
+        public async Task<IActionResult> UpdateChildren(string Id, UpdateChildrenInfoResquest request)
         {
             if(Id != request.Id)
             {
@@ -47,6 +47,16 @@ namespace Mumbi_API.Controllers
             }
 
             return Ok(await _childrenService.UpdateChildrenInformation(request));
+        }
+        [HttpPut("{Id}/updatePregnancyInfo")]
+        public async Task<IActionResult> UpdatePregnancy(string Id, UpdatePregnancyInfoRequest request)
+        {
+            if (Id != request.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _childrenService.UpdatePregnancyInformation(request));
         }
 
         [HttpDelete("{Id}")]
