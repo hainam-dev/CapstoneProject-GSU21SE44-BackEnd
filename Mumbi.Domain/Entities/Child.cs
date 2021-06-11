@@ -46,6 +46,7 @@ namespace Mumbi.Domain.Entities
         public string MomId { get; set; }
         [StringLength(100)]
         public string DadId { get; set; }
+        public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(DadId))]
         [InverseProperty("Children")]

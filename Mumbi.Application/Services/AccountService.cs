@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
                 UserRecord account_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(decodedToken.Uid);
                 Account currentAccount = await _unitOfWork.AccountRepository
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
-                                                                      includeProperties: "EmailNavigation");
+                                                                      includeProperties: "Mom");
 
                 if (currentAccount == null)
                 {

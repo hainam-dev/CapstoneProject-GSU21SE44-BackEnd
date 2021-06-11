@@ -34,7 +34,6 @@ namespace Mumbi.Domain.Entities
         public string RhBloodGroup { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
-        public bool? IsSingleMom { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Mom")]
