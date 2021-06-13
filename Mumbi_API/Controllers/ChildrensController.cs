@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Interfaces;
@@ -20,6 +21,7 @@ namespace Mumbi_API.Controllers
             _childrenService = childrenService;
         }
 
+        [Authorize(Roles = "user")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Mumbi_API.Middlewares;
 
 namespace Mumbi_API.Extensions
 {
@@ -13,9 +14,9 @@ namespace Mumbi_API.Extensions
             });
         }
 
-        //public static void UseErrorHandlingMidlleware(this IApplicationBuilder app)
-        //{
-        //    app.UseMiddleware<ErrorHandlerMiddleware>();
-        //}
+        public static void UseErrorHandlingMidlleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+        }
     }
 }

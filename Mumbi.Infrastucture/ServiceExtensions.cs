@@ -56,6 +56,31 @@ namespace Mumbi.Infrastucture
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenValue))
                 };
+                o.Events = new JwtBearerEvents()
+                {
+                    OnAuthenticationFailed = c =>
+                    {
+                        c.NoResult();
+                        c.Response.StatusCode = 500;
+                        c.Response.ContentType = "text/plain";
+                        return c.Response.WriteAsync(c.Exception.ToString());
+                    },
+                    OnChallenge = context =>
+                    {
+                        context.HandleResponse();
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new Response<string>("You are not Authorized"));
+                        return context.Response.WriteAsync(result);
+                    },
+                    OnForbidden = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        context.Response.ContentType = "application/json";
+                        var result = JsonConvert.SerializeObject(new Response<string>("You are not authorized to access this resource"));
+                        return context.Response.WriteAsync(result);
+                    },
+                };
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();

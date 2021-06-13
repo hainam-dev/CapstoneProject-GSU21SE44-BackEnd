@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -13,15 +10,18 @@ namespace Mumbi_API.Controllers
     public class MomsController : ControllerBase
     {
         private readonly IMomService _momService;
+
         public MomsController(IMomService momService)
         {
             _momService = momService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _momService.GetAllMom());
         }
+
         [HttpPut("{AccountId}")]
         public async Task<IActionResult> UpdatePregnancy(string AccountId, UpdateMomRequest request)
         {

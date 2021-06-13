@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Accounts;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Mumbi_API.Controllers
             _accountService = accountService;
         }
 
+        [AllowAnonymous]
         [HttpPost("Authenticate")]
         public async Task<IActionResult> AuthenticateWithGoogle(AuthenticationRequest request)
         {
