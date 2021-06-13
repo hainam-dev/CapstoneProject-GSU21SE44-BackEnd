@@ -46,7 +46,6 @@ namespace Mumbi.Application.Services
                     var roleID = "";
                     string getEmail = account_firebase.Email;
                     string[] spitFirstNameEmail = getEmail.Split(".");
-
                     string[] getRole = spitFirstNameEmail[1].Split("@");
                     if (getRole[0].ToString() == "staffmumbi")
                     {

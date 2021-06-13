@@ -10,7 +10,10 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IMomService
     {
-        Task<Response<string>> UpdateMomRequest(UpdateMomRequest request);
         Task<Response<List<MomResponse>>> GetAllMom();
+        Task<Response<MomResponse>> GetMomById(String id);
+        Task<Response<string>> UpdateMomRequest(UpdateMomRequest request);
+
+        Task<Response<string>> DeleteMom(string id);
     }
 }

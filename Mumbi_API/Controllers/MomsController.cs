@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
@@ -16,14 +17,20 @@ namespace Mumbi_API.Controllers
             _momService = momService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllMom")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _momService.GetAllMom());
         }
 
-        [HttpPut("{AccountId}")]
-        public async Task<IActionResult> UpdatePregnancy(string AccountId, UpdateMomRequest request)
+        [HttpGet("GetMomById/{id}")]
+        public async Task<IActionResult> GetMomById(string id)
+        {
+            return Ok(await _momService.GetMomById(id));
+        }
+
+        [HttpPut("UpdateMom/{AccountId}")]
+        public async Task<IActionResult> UpdateMom(string AccountId, UpdateMomRequest request)
         {
             if (AccountId != request.AccountId)
             {
@@ -33,6 +40,11 @@ namespace Mumbi_API.Controllers
             return Ok(await _momService.UpdateMomRequest(request));
         }
 
-        
+        [HttpPut("DeleteMom/{Id}")]
+        public async Task<IActionResult> Delete(string Id)
+        {
+            return Ok(await _momService.DeleteMom(Id));
+        }
+
     }
 }

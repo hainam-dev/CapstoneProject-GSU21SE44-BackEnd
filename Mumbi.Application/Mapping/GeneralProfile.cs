@@ -14,6 +14,8 @@ namespace Mumbi.Application.Mapping
             // Pregnancy Info
             CreateMap<PregnancyInformation, ChildrenResponse>();
 
+            // Mom
+            CreateMap<Mom, MomResponse>();
             // Account
             CreateMap<Account, MomResponse>().ForMember(
                 dest => dest.AccountId,

@@ -21,6 +21,20 @@ namespace Mumbi.Application.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Response<string>> DeleteMom(string id)
+        {
+            var account = await _unitOfWork.AccountRepository.FirstAsync(x => x.AccountId == id);
+            if (account != null)
+            {
+                account.IsDeleted = true;
+                _unitOfWork.AccountRepository.UpdateAsync(account);
+                await _unitOfWork.SaveAsync();
+                return new Response<string>("Delete mom succesfully", account.AccountId);
+            }
+
+            return new Response<string>("Delete mom failed");
+        }
+
         public async Task<Response<List<MomResponse>>> GetAllMom()
         {
             var response = new List<MomResponse>();
@@ -30,6 +44,24 @@ namespace Mumbi.Application.Services
                 response = _mapper.Map<List<MomResponse>>(account);
             }
             return new Response<List<MomResponse>>(response);
+        }
+
+        public async Task<Response<MomResponse>> GetMomById(String id)
+        {
+            var response = new MomResponse();
+            var account = await _unitOfWork.AccountRepository.FirstAsync(x => x.AccountId == id);
+            if(account != null)
+            {
+                if(account.IsDeleted == false)
+                {
+                    var mom = await _unitOfWork.MomRepository.FirstAsync(x => x.AccountId == id);
+                    if (mom != null)
+                    {
+                        response = _mapper.Map<MomResponse>(mom);
+                    }
+                }
+            }
+            return new Response<MomResponse>(response);
         }
 
         public async Task<Response<string>> UpdateMomRequest(UpdateMomRequest request)

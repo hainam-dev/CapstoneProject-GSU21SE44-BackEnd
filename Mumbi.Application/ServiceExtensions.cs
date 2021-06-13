@@ -13,6 +13,7 @@ namespace Mumbi.Application
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IChildrenService, ChildrenService>();
             services.AddTransient<IMomService, MomService>();
+            services.AddTransient<IDadService, DadService>();
         }
     }
 }
