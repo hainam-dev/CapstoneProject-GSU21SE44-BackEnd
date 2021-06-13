@@ -43,10 +43,23 @@ namespace Mumbi.Application.Services
 
                 if (currentAccount == null)
                 {
+                    var roleID = "";
+                    string[] getRole = account_firebase.Email.Split('@');
+                    if(getRole[1].ToString() == "StaffMumbi")
+                    {
+                        roleID = RoleConstant.STAFF_ROLE;
+                    }else if(getRole[1].ToString() == "DoctorMumbi")
+                    {
+                        roleID = RoleConstant.DOCTOR_ROLE;
+                    }
+                    else
+                    {
+                        roleID = RoleConstant.USER_ROLE;
+                    }
                     var account_Info = new Account
                     {
                         AccountId = account_firebase.Email,
-                        RoleId = RoleConstant.USER_ROLE,
+                        RoleId = roleID,
                         IsDeleted = false,
                     };
                     await _unitOfWork.AccountRepository.AddAsync(account_Info);

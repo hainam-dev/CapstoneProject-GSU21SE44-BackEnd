@@ -31,6 +31,7 @@ namespace Mumbi.Application.Services
                 Gender = request.Gender,
                 BirthDay = request.BirthDay,
                 Image = request.Image,
+                MomId = request.MomID,
                 IsDeleted = false,
             };
 
@@ -129,7 +130,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<ChildrenResponse>>> GetAllChildren()
         {
             var response = new List<ChildrenResponse>();
-            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "PregnancyInfomation");
+            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "PregnancyInformation");
             if(child != null)
             {
                 response = _mapper.Map<List<ChildrenResponse>>(child);
