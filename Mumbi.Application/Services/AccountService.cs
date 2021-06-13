@@ -44,11 +44,14 @@ namespace Mumbi.Application.Services
                 if (currentAccount == null)
                 {
                     var roleID = "";
-                    string[] getRole = account_firebase.Email.Split('@');
-                    if(getRole[1].ToString() == "StaffMumbi")
+                    string getEmail = account_firebase.Email;
+                    string[] spitFirstNameEmail = getEmail.Split(".");
+
+                    string[] getRole = spitFirstNameEmail[1].Split("@");
+                    if (getRole[0].ToString() == "staffmumbi")
                     {
                         roleID = RoleConstant.STAFF_ROLE;
-                    }else if(getRole[1].ToString() == "DoctorMumbi")
+                    }else if(getRole[0].ToString() == "doctormumbi")
                     {
                         roleID = RoleConstant.DOCTOR_ROLE;
                     }
