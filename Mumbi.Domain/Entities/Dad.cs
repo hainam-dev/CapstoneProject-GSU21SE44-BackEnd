@@ -11,14 +11,8 @@ namespace Mumbi.Domain.Entities
     [Table("Dad")]
     public partial class Dad
     {
-        public Dad()
-        {
-            Children = new HashSet<Child>();
-        }
-
         [Key]
-        [StringLength(100)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
@@ -32,8 +26,13 @@ namespace Mumbi.Domain.Entities
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string MomId { get; set; }
+        public bool IsDeleted { get; set; }
 
-        [InverseProperty(nameof(Child.Dad))]
-        public virtual ICollection<Child> Children { get; set; }
+        [ForeignKey(nameof(MomId))]
+        [InverseProperty("Dads")]
+        public virtual Mom Mom { get; set; }
     }
 }

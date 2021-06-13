@@ -10,6 +10,11 @@ namespace Mumbi.Domain.Entities
 {
     public partial class News
     {
+        public News()
+        {
+            NewsMoms = new HashSet<NewsMom>();
+        }
+
         [Key]
         [StringLength(50)]
         public string Id { get; set; }
@@ -33,5 +38,7 @@ namespace Mumbi.Domain.Entities
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(NewsType.News))]
         public virtual NewsType Type { get; set; }
+        [InverseProperty(nameof(NewsMom.News))]
+        public virtual ICollection<NewsMom> NewsMoms { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Mumbi.Application.Services
                 FullName = request.FullName,
                 Nickname = request.NickName,
                 Gender = request.Gender,
-                BirthDay = request.BirthDay,
+                Birthday = request.BirthDay,
                 Image = request.Image,
                 MomId = request.MomID,
                 IsDeleted = false,
@@ -41,7 +41,7 @@ namespace Mumbi.Application.Services
             {
                 var pregnancyInfo = new PregnancyInformation
                 {
-                    Id = child.Id,
+                    ChildId = child.Id,
                     CalculatedBornDate = request.CalculatedBornDate
                 };
 
@@ -61,7 +61,7 @@ namespace Mumbi.Application.Services
             {
                 child.Weight = request.Weight;
                 child.Height = request.Height;
-                child.BirthDay = request.BirthDay;
+                child.Birthday = request.BirthDay;
                 child.HeadCircumference = request.HeadCircumference;
                 child.HourSleep = request.HourSleep;
                 child.AvgMilk = request.AvgMilk;
@@ -76,7 +76,7 @@ namespace Mumbi.Application.Services
         }
         public async Task<Response<string>> UpdatePregnancyInformation(UpdatePregnancyInfoRequest request)
         {
-            var pregnancy = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.Id == request.Id);
+            var pregnancy = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.ChildId == request.Id);
             if(pregnancy != null)
             {
                 pregnancy.PregnancyWeek = request.PregnancyWeek;
@@ -89,7 +89,7 @@ namespace Mumbi.Application.Services
                 _unitOfWork.PregnancyInformationRepository.UpdateAsync(pregnancy);
                 await _unitOfWork.SaveAsync();
 
-                return new Response<string>("Update pregnancy information succesfully", pregnancy.Id);
+                return new Response<string>("Update pregnancy information succesfully", pregnancy.ChildId);
             }
             return new Response<string>("Update pregnancy information failed");
         }
@@ -116,7 +116,7 @@ namespace Mumbi.Application.Services
             if (child != null)
             {
                 response = _mapper.Map<ChildrenResponse>(child);
-                var pregnancyInfo = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.Id == id);
+                var pregnancyInfo = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.ChildId == id);
 
                 if(pregnancyInfo != null)
                 {

@@ -8,22 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
+    [Table("Tooth")]
     public partial class Tooth
     {
+        public Tooth()
+        {
+            ToothChildren = new HashSet<ToothChild>();
+        }
+
         [Key]
-        [StringLength(50)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public int? ToothNumber { get; set; }
         [StringLength(50)]
         public string ToothName { get; set; }
-        [StringLength(100)]
-        public string EstimateGrowTime { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? GrowTime { get; set; }
-        public bool IsGrown { get; set; }
 
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(Child.Tooth))]
-        public virtual Child IdNavigation { get; set; }
+        [InverseProperty(nameof(ToothChild.Tooth))]
+        public virtual ICollection<ToothChild> ToothChildren { get; set; }
     }
 }

@@ -11,6 +11,11 @@ namespace Mumbi.Domain.Entities
     [Table("Guidebook")]
     public partial class Guidebook
     {
+        public Guidebook()
+        {
+            GuidebookMoms = new HashSet<GuidebookMom>();
+        }
+
         [Key]
         [StringLength(50)]
         public string Id { get; set; }
@@ -29,11 +34,12 @@ namespace Mumbi.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
         public int? TypeId { get; set; }
-        public bool IsSaved { get; set; }
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(GuildbookType.Guidebooks))]
         public virtual GuildbookType Type { get; set; }
+        [InverseProperty(nameof(GuidebookMom.Guidebook))]
+        public virtual ICollection<GuidebookMom> GuidebookMoms { get; set; }
     }
 }

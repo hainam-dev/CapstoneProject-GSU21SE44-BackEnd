@@ -22,6 +22,7 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(100)]
         public string AccountId { get; set; }
+        public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Reminders")]

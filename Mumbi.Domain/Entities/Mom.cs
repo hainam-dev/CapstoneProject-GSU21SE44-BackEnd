@@ -14,7 +14,10 @@ namespace Mumbi.Domain.Entities
         public Mom()
         {
             Children = new HashSet<Child>();
+            Dads = new HashSet<Dad>();
+            GuidebookMoms = new HashSet<GuidebookMom>();
             InjectionSchedules = new HashSet<InjectionSchedule>();
+            NewsMoms = new HashSet<NewsMom>();
         }
 
         [Key]
@@ -40,7 +43,13 @@ namespace Mumbi.Domain.Entities
         public virtual Account Account { get; set; }
         [InverseProperty(nameof(Child.Mom))]
         public virtual ICollection<Child> Children { get; set; }
-        [InverseProperty(nameof(InjectionSchedule.Mother))]
+        [InverseProperty(nameof(Dad.Mom))]
+        public virtual ICollection<Dad> Dads { get; set; }
+        [InverseProperty(nameof(GuidebookMom.Mom))]
+        public virtual ICollection<GuidebookMom> GuidebookMoms { get; set; }
+        [InverseProperty(nameof(InjectionSchedule.Mom))]
         public virtual ICollection<InjectionSchedule> InjectionSchedules { get; set; }
+        [InverseProperty(nameof(NewsMom.Mom))]
+        public virtual ICollection<NewsMom> NewsMoms { get; set; }
     }
 }

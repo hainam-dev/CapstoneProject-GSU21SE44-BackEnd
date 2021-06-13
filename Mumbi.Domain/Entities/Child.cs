@@ -17,6 +17,7 @@ namespace Mumbi.Domain.Entities
             Diaries = new HashSet<Diary>();
             InjectionSchedules = new HashSet<InjectionSchedule>();
             PregnancyActivities = new HashSet<PregnancyActivity>();
+            ToothChildren = new HashSet<ToothChild>();
         }
 
         [Key]
@@ -25,12 +26,12 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
-        [StringLength(10)]
+        [StringLength(200)]
         public string Nickname { get; set; }
         public string Image { get; set; }
         public int? Gender { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? BirthDay { get; set; }
+        public DateTime? Birthday { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]
@@ -42,29 +43,25 @@ namespace Mumbi.Domain.Entities
         public double? HeadCircumference { get; set; }
         public double? HourSleep { get; set; }
         public double? AvgMilk { get; set; }
+        [Required]
         [StringLength(100)]
         public string MomId { get; set; }
-        [StringLength(100)]
-        public string DadId { get; set; }
         public bool IsDeleted { get; set; }
 
-        [ForeignKey(nameof(DadId))]
-        [InverseProperty("Children")]
-        public virtual Dad Dad { get; set; }
         [ForeignKey(nameof(MomId))]
         [InverseProperty("Children")]
         public virtual Mom Mom { get; set; }
-        [InverseProperty("IdNavigation")]
+        [InverseProperty("Child")]
         public virtual PregnancyInformation PregnancyInformation { get; set; }
-        [InverseProperty("IdNavigation")]
-        public virtual Tooth Tooth { get; set; }
         [InverseProperty(nameof(ActionChild.Child))]
         public virtual ICollection<ActionChild> ActionChildren { get; set; }
         [InverseProperty(nameof(Diary.Child))]
         public virtual ICollection<Diary> Diaries { get; set; }
-        [InverseProperty(nameof(InjectionSchedule.Children))]
+        [InverseProperty(nameof(InjectionSchedule.Child))]
         public virtual ICollection<InjectionSchedule> InjectionSchedules { get; set; }
         [InverseProperty(nameof(PregnancyActivity.Child))]
         public virtual ICollection<PregnancyActivity> PregnancyActivities { get; set; }
+        [InverseProperty(nameof(ToothChild.Child))]
+        public virtual ICollection<ToothChild> ToothChildren { get; set; }
     }
 }

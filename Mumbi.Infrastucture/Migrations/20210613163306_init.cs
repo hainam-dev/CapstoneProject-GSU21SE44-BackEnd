@@ -7,7 +7,7 @@ namespace Mumbi.Infrastucture.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -16,19 +16,22 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "ActionChild");
 
             migrationBuilder.DropTable(
+                name: "Dad");
+
+            migrationBuilder.DropTable(
                 name: "Diary");
 
             migrationBuilder.DropTable(
                 name: "Doctor");
 
             migrationBuilder.DropTable(
-                name: "Guidebook");
+                name: "GuidebookMom");
 
             migrationBuilder.DropTable(
                 name: "InjectionSchedule");
 
             migrationBuilder.DropTable(
-                name: "News");
+                name: "NewsMom");
 
             migrationBuilder.DropTable(
                 name: "PregnancyActivity");
@@ -43,31 +46,46 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "Staff");
 
             migrationBuilder.DropTable(
-                name: "Teeth");
+                name: "StandardIndex");
+
+            migrationBuilder.DropTable(
+                name: "SymptomVaccine");
 
             migrationBuilder.DropTable(
                 name: "Token");
 
             migrationBuilder.DropTable(
+                name: "ToothChild");
+
+            migrationBuilder.DropTable(
                 name: "Action");
 
             migrationBuilder.DropTable(
-                name: "GuildbookType");
+                name: "Guidebook");
 
             migrationBuilder.DropTable(
-                name: "Vaccine");
-
-            migrationBuilder.DropTable(
-                name: "NewsType");
+                name: "News");
 
             migrationBuilder.DropTable(
                 name: "PregnancyActivityType");
 
             migrationBuilder.DropTable(
+                name: "Symptom");
+
+            migrationBuilder.DropTable(
+                name: "Vaccine");
+
+            migrationBuilder.DropTable(
                 name: "Child");
 
             migrationBuilder.DropTable(
-                name: "Dad");
+                name: "Tooth");
+
+            migrationBuilder.DropTable(
+                name: "GuildbookType");
+
+            migrationBuilder.DropTable(
+                name: "NewsType");
 
             migrationBuilder.DropTable(
                 name: "Mom");

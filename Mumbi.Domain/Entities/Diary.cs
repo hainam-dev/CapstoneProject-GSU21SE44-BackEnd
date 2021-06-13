@@ -22,7 +22,7 @@ namespace Mumbi.Domain.Entities
         public DateTime? CreatedTime { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
-        public bool? IsPublic { get; set; }
+        public bool IsPublic { get; set; }
         [Required]
         [StringLength(50)]
         public string ChildId { get; set; }

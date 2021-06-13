@@ -17,7 +17,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(50)]
         public string ChildId { get; set; }
         public int ActionId { get; set; }
-        public bool? Status { get; set; }
+        public bool IsChecked { get; set; }
 
         [ForeignKey(nameof(ActionId))]
         [InverseProperty("ActionChildren")]

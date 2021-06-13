@@ -14,22 +14,26 @@ namespace Mumbi.Domain.Entities
         public Vaccine()
         {
             InjectionSchedules = new HashSet<InjectionSchedule>();
+            SymptomVaccines = new HashSet<SymptomVaccine>();
         }
 
         [Key]
-        [StringLength(50)]
-        public string Id { get; set; }
-        [Required]
+        public int Id { get; set; }
         [StringLength(200)]
         public string VaccineName { get; set; }
-        [Required]
-        [StringLength(200)]
         public string DiseaseName { get; set; }
+        public string DiseaseDescription { get; set; }
+        [StringLength(50)]
+        public string WayToUse { get; set; }
+        public int? Month { get; set; }
         [StringLength(200)]
         public string ProductionCountry { get; set; }
-        public int Price { get; set; }
+        public int? Price { get; set; }
+        public bool IsMandatory { get; set; }
 
         [InverseProperty(nameof(InjectionSchedule.Vaccine))]
         public virtual ICollection<InjectionSchedule> InjectionSchedules { get; set; }
+        [InverseProperty(nameof(SymptomVaccine.Vaccine))]
+        public virtual ICollection<SymptomVaccine> SymptomVaccines { get; set; }
     }
 }

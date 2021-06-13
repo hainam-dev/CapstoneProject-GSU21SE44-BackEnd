@@ -12,8 +12,9 @@ namespace Mumbi.Domain.Entities
     public partial class PregnancyInformation
     {
         [Key]
+        [Column("ChildID")]
         [StringLength(50)]
-        public string Id { get; set; }
+        public string ChildId { get; set; }
         public double? Weight { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? CalculatedBornDate { get; set; }
@@ -26,8 +27,8 @@ namespace Mumbi.Domain.Entities
         public int? MotherMenstrualCycleTime { get; set; }
         public double? MotherWeight { get; set; }
 
-        [ForeignKey(nameof(Id))]
-        [InverseProperty(nameof(Child.PregnancyInformation))]
-        public virtual Child IdNavigation { get; set; }
+        [ForeignKey(nameof(ChildId))]
+        [InverseProperty("PregnancyInformation")]
+        public virtual Child Child { get; set; }
     }
 }

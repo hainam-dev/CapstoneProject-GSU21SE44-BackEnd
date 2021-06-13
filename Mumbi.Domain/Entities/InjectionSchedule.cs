@@ -13,15 +13,13 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string VaccineId { get; set; }
+        public int VaccineId { get; set; }
         [StringLength(15)]
         public string Phonenumber { get; set; }
         [StringLength(50)]
-        public string ChildrenId { get; set; }
+        public string ChildId { get; set; }
         [StringLength(100)]
-        public string MotherId { get; set; }
+        public string MomId { get; set; }
         public int? OrderOfInjection { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? InjectionDate { get; set; }
@@ -30,12 +28,12 @@ namespace Mumbi.Domain.Entities
         public int? Price { get; set; }
         public bool? IsInjection { get; set; }
 
-        [ForeignKey(nameof(ChildrenId))]
-        [InverseProperty(nameof(Child.InjectionSchedules))]
-        public virtual Child Children { get; set; }
-        [ForeignKey(nameof(MotherId))]
-        [InverseProperty(nameof(Mom.InjectionSchedules))]
-        public virtual Mom Mother { get; set; }
+        [ForeignKey(nameof(ChildId))]
+        [InverseProperty("InjectionSchedules")]
+        public virtual Child Child { get; set; }
+        [ForeignKey(nameof(MomId))]
+        [InverseProperty("InjectionSchedules")]
+        public virtual Mom Mom { get; set; }
         [ForeignKey(nameof(VaccineId))]
         [InverseProperty("InjectionSchedules")]
         public virtual Vaccine Vaccine { get; set; }

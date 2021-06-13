@@ -20,9 +20,9 @@ namespace Mumbi.Domain.Entities
         public int Id { get; set; }
         public int Month { get; set; }
         [Required]
-        [StringLength(200)]
         public string ActionName { get; set; }
-        [StringLength(50)]
+        [Required]
+        [StringLength(20)]
         public string ActionType { get; set; }
 
         [InverseProperty(nameof(ActionChild.Action))]
