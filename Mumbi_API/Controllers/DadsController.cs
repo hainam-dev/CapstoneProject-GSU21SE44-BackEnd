@@ -21,7 +21,8 @@ namespace Mumbi_API.Controllers
         [HttpPut("DeleteDad/{Id}")]
         public async Task<IActionResult> DeleteDad(int Id)
         {
-            return Ok(await _dadService.DeleteDad(Id));
+            //return Ok(await _dadService.DeleteDad(Id));
+            return Ok();
         }
     }
 }

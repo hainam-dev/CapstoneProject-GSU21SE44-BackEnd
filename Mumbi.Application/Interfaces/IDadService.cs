@@ -10,7 +10,7 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IDadService
     {
-        Task<Response<string>> AddDad(CreateDadRequest request);
-        Task<Response<string>> DeleteDad(int id);
+        //Task<Response<string>> AddDad(CreateDadRequest request);
+        //Task<Response<string>> DeleteDad(int id);
     }
 }

@@ -22,8 +22,8 @@ namespace Mumbi.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Response<string>> AddDad(CreateDadRequest request)
-        {
+        //public Task<Response<string>> AddDad(CreateDadRequest request)
+        //{
             //var dad = new Dad
             //{
             //    Id = Guid.NewGuid().,
@@ -34,18 +34,18 @@ namespace Mumbi.Application.Services
             //    IsDeleted = false,
             //};
             //await _unitOfWork.DadRepository.AddAsync(dad);
-        }
+        //}
 
-        public async Task<Response<string>> DeleteDad(int id)
-        {
-            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == id);
-            if (dad != null) { 
-                dad.IsDeleted = true;
-                _unitOfWork.DadRepository.UpdateAsync(dad);
-                await _unitOfWork.SaveAsync();
-                return new Response<string>("Delete dad succesfully", dad.FullName);
-            }
-        return new Response<string>("Delete dad failed");
-        }
+        //public async Task<Response<string>> DeleteDad(int id)
+        //{
+        //    var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == id);
+        //    if (dad != null) { 
+        //        dad.IsDeleted = true;
+        //        _unitOfWork.DadRepository.UpdateAsync(dad);
+        //        await _unitOfWork.SaveAsync();
+        //        return new Response<string>("Delete dad succesfully", dad.FullName);
+        //    }
+        //return new Response<string>("Delete dad failed");
+        //}
     }
 }

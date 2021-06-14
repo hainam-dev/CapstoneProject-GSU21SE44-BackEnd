@@ -111,6 +111,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Dad>(entity =>
             {
+                entity.Property(e => e.Id).IsUnicode(false);
+
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
                 entity.Property(e => e.Image).IsUnicode(false);

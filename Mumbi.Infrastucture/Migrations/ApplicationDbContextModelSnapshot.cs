@@ -171,10 +171,10 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Dad", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime");
@@ -190,9 +190,9 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Image")
-                        .HasMaxLength(100)
+                        .HasMaxLength(200)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
