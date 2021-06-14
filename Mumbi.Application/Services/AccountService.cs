@@ -41,7 +41,11 @@ namespace Mumbi.Application.Services
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
                                                                       includeProperties: "Mom");
 
-                if (currentAccount == null)
+                if (currentAccount != null && currentAccount.IsDeleted == true)
+                {
+                    return new Response<AuthenticationResponse>($"Xác thực đã bị lỗi. Tài khoản \'{account_firebase.Email}\' không khả dụng");
+                }
+                else if (currentAccount == null)
                 {
                     var roleID = "";
                     string getEmail = account_firebase.Email;
@@ -50,7 +54,8 @@ namespace Mumbi.Application.Services
                     if (getRole[0].ToString() == "staffmumbi")
                     {
                         roleID = RoleConstant.STAFF_ROLE;
-                    }else if(getRole[0].ToString() == "doctormumbi")
+                    }
+                    else if (getRole[0].ToString() == "doctormumbi")
                     {
                         roleID = RoleConstant.DOCTOR_ROLE;
                     }
@@ -87,9 +92,10 @@ namespace Mumbi.Application.Services
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
+                response.Fullname = currentAccount.Mom.FullName;
                 response.Photo = currentAccount.Mom.Image;
 
-                return new Response<AuthenticationResponse>(response, $"Authenticated {account_firebase.Email}");
+                return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }
             catch (FirebaseAuthException ex)
             {

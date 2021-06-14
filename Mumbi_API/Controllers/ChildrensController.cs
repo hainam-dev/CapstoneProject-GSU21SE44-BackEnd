@@ -21,23 +21,23 @@ namespace Mumbi_API.Controllers
             _childrenService = childrenService;
         }
 
+        [HttpPost("AddChildren")]
+        public async Task<IActionResult> Add(CreateChildrenRequest request)
+        {
+            return Ok(await _childrenService.AddChildren(request));
+        }
+
         [Authorize(Roles = "user")]
-        [HttpGet]
+        [HttpGet("GetAllChildren")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _childrenService.GetAllChildren());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetChildrenBy/{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             return Ok(await _childrenService.GetChildrenById(id));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(CreateChildrenRequest request)
-        {
-            return Ok(await _childrenService.AddChildren(request));
         }
 
         [HttpPut("updateChildrenInfo/{Id}")]

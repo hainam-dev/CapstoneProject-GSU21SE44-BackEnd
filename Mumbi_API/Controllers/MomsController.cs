@@ -23,7 +23,7 @@ namespace Mumbi_API.Controllers
             return Ok(await _momService.GetAllMom());
         }
 
-        [HttpGet("GetMomById/{id}")]
+        [HttpGet("GetMomBy/{id}")]
         public async Task<IActionResult> GetMomById(string id)
         {
             return Ok(await _momService.GetMomById(id));

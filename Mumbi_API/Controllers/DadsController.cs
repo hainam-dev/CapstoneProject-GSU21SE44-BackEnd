@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,27 @@ namespace Mumbi_API.Controllers
             _dadService = dadService;
         }
 
-        [HttpPut("DeleteDad/{Id}")]
-        public async Task<IActionResult> DeleteDad(int Id)
+        [HttpPost("AddDad")]
+        public async Task<IActionResult> Add(CreateDadRequest request)
         {
-            //return Ok(await _dadService.DeleteDad(Id));
-            return Ok();
+            return Ok(await _dadService.AddDad(request));
+        }
+
+        [HttpPut("UpdateDad/{Id}")]
+        public async Task<IActionResult> UpdateMom(string Id, UpdateDadRequest request)
+        {
+            if (Id != request.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _dadService.UpdateDadRequest(request));
+        }
+
+        [HttpPut("DeleteDad/{Id}")]
+        public async Task<IActionResult> DeleteDad(string Id)
+        {
+            return Ok(await _dadService.DeleteDad(Id));
         }
     }
 }

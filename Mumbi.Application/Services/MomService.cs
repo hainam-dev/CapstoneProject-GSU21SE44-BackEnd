@@ -21,19 +21,7 @@ namespace Mumbi.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Response<string>> DeleteMom(string id)
-        {
-            var account = await _unitOfWork.AccountRepository.FirstAsync(x => x.AccountId == id);
-            if (account != null)
-            {
-                account.IsDeleted = true;
-                _unitOfWork.AccountRepository.UpdateAsync(account);
-                await _unitOfWork.SaveAsync();
-                return new Response<string>("Delete mom succesfully", account.AccountId);
-            }
-
-            return new Response<string>("Delete mom failed");
-        }
+       
 
         public async Task<Response<List<MomResponse>>> GetAllMom()
         {
@@ -50,16 +38,18 @@ namespace Mumbi.Application.Services
         {
             var response = new MomResponse();
             var account = await _unitOfWork.AccountRepository.FirstAsync(x => x.AccountId == id);
-            if(account != null)
+            if(account == null)
             {
-                if(account.IsDeleted == false)
-                {
-                    var mom = await _unitOfWork.MomRepository.FirstAsync(x => x.AccountId == id);
-                    if (mom != null)
-                    {
-                        response = _mapper.Map<MomResponse>(mom);
-                    }
-                }
+                return new Response<MomResponse>($"Không tìm thấy tài khoản \'{account.AccountId}\'.");
+            }
+            if (account.IsDeleted == true)
+            {
+                return new Response<MomResponse>($"Tài khoản \'{account.AccountId}\' đã bị xóa khỏi hệ thống.");
+            }
+            var mom = await _unitOfWork.MomRepository.FirstAsync(x => x.AccountId == id);
+            if (mom != null)
+            {
+                response = _mapper.Map<MomResponse>(mom);
             }
             return new Response<MomResponse>(response);
         }
@@ -68,25 +58,37 @@ namespace Mumbi.Application.Services
         {
             var mom = await _unitOfWork.MomRepository.FirstAsync(x => x.AccountId == request.AccountId);
 
-            if (mom != null)
+            if (mom == null)
             {
-                mom.AccountId = request.AccountId;
-                mom.FullName = request.FullName;
-                mom.Image = request.Image;
-                mom.Birthday = request.BirthDay;
-                mom.Phonenumber = request.Phonenumber;
-                mom.BloodGroup = request.BloodGroup;
-                mom.RhBloodGroup = request.RhBloodGroup;
-                mom.Weight = request.Weight;
-                mom.Height = request.Height;
-
-                _unitOfWork.MomRepository.UpdateAsync(mom);
-                await _unitOfWork.SaveAsync();
-
-                return new Response<string>("Update mom information succesfully", mom.AccountId);
+                return new Response<string>($"Không tìm thấy thông tin tài khoản \'{mom.AccountId}\'.");
             }
+            mom.AccountId = request.AccountId;
+            mom.FullName = request.FullName;
+            mom.Image = request.Image;
+            mom.Birthday = request.BirthDay;
+            mom.Phonenumber = request.Phonenumber;
+            mom.BloodGroup = request.BloodGroup;
+            mom.RhBloodGroup = request.RhBloodGroup;
+            mom.Weight = request.Weight;
+            mom.Height = request.Height;
 
-            return new Response<string>("Update mom information failed");
+            _unitOfWork.MomRepository.UpdateAsync(mom);
+            await _unitOfWork.SaveAsync();
+
+            return new Response<string>("Cập nhật thông tin thành công", mom.AccountId);
+        }
+
+        public async Task<Response<string>> DeleteMom(string id)
+        {
+            var account = await _unitOfWork.AccountRepository.FirstAsync(x => x.AccountId == id);
+            if (account == null)
+            {
+                return new Response<string>($"Không tìm thấy thông tin tài khoản \'{account.AccountId}\'.");
+            }
+            account.IsDeleted = true;
+            _unitOfWork.AccountRepository.UpdateAsync(account);
+            await _unitOfWork.SaveAsync();
+            return new Response<string>("Delete mom succesfully", account.AccountId);
         }
     }
 }
