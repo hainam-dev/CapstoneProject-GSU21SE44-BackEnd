@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Mumbi.Application.Dtos.Childrens;
+using Mumbi.Application.Dtos.Dads;
+using Mumbi.Application.Dtos.Diaries;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Domain.Entities;
 namespace Mumbi.Application.Mapping
@@ -16,6 +18,10 @@ namespace Mumbi.Application.Mapping
 
             // Mom
             CreateMap<Mom, MomResponse>();
+            // Dad
+            CreateMap<Dad, DadResponse>();
+            // Diary
+            CreateMap<Diary, DiaryResponse>();
             // Account
             CreateMap<Account, MomResponse>().ForMember(
                 dest => dest.AccountId,

@@ -71,7 +71,7 @@ namespace Mumbi.Application.Services
                 return new Response<string>("Cập nhật thông tin em bé thành công", child.Id);
             }
 
-            return new Response<string>("Không tìm thấy em bé ", child.Id);
+            return new Response<string>($"Không tìm thấy em bé \'{request.Id}\'");
         }
         public async Task<Response<string>> UpdatePregnancyInformation(UpdatePregnancyInfoRequest request)
         {
@@ -90,7 +90,7 @@ namespace Mumbi.Application.Services
 
                 return new Response<string>("Cập nhật thông tin em bé thành công ", pregnancy.ChildId);
             }
-            return new Response<string>("Không tìm thấy em bé ", pregnancy.ChildId);
+            return new Response<string>($"Không tìm thấy em bé \'{request.Id}\'");
         }
 
         public async Task<Response<string>> DeleteChildren(string id)
@@ -104,7 +104,7 @@ namespace Mumbi.Application.Services
                 return new Response<string>("Xóa em bé thành công ", child.Id);
             }
 
-            return new Response<string>("Không tìm thấy em bé ", child.Id);
+            return new Response<string>($"Không tìm thấy em bé \'{id}\'");
         }
 
         public async Task<Response<ChildrenResponse>> GetChildrenById(string id)
@@ -114,7 +114,7 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildrenRepository.FirstAsync(x => x.Id == id);
             if (child == null)
             {
-                return new Response<ChildrenResponse>($"Không tìm thấy em bé \'{child.Id}\'");
+                return new Response<ChildrenResponse>($"Không tìm thấy em bé \'{id}\'");
             }
             response = _mapper.Map<ChildrenResponse>(child);
             var pregnancyInfo = await _unitOfWork.PregnancyInformationRepository.FirstAsync(x => x.ChildId == id);

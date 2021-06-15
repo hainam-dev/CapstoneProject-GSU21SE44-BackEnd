@@ -27,6 +27,7 @@ namespace Mumbi.Infrastucture.Repositories
         public IPregnancyInformationRepository PregnancyInformationRepository { get; set; }
 
         public IDadRepository DadRepository { get; set; }
+        public IDiaryRepository DiaryRepository { get; set; }
 
         private void InitRepository()
         {
@@ -36,6 +37,7 @@ namespace Mumbi.Infrastucture.Repositories
             ChildrenRepository = new ChildrenRepository(_context);
             PregnancyInformationRepository = new PregnancyInformationRepository(_context);
             DadRepository = new DadRepository(_context);
+            DiaryRepository = new DiaryRepository(_context);
         }
 
         public async Task<int> SaveAsync()

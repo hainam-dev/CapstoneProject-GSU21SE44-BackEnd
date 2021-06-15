@@ -4,6 +4,7 @@ using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -37,17 +38,26 @@ namespace Mumbi.Application.Services
             await _unitOfWork.SaveAsync();
             return new Response<string>("Thêm thông tin ba thành công" + dad.Id);
         }
-
+        public async Task<Response<DadResponse>> GetDadByMomId(String momId)
+        {
+            var response = new DadResponse();
+            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.MomId == momId && x.IsDeleted == false);
+            if (dad == null)
+            {
+                return new Response<DadResponse>($"Tài khoản mẹ \'{momId}\' chưa thêm thông tin ba!");
+            }
+                response = _mapper.Map<DadResponse>(dad);
+                return new Response<DadResponse>(response);
+        }
         public async Task<Response<string>> UpdateDadRequest(UpdateDadRequest request)
         {
-            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == request.Id);
+            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == request.Id && x.IsDeleted == false);
 
             if (dad == null)
             {
-                return new Response<string>($"Không tìm thấy thông tin ba \'{dad.Id}\'.");
+                return new Response<string>($"Không tìm thấy thông tin ba \'{request.Id}\'.");
                 
             }
-            dad.Id = request.Id;
             dad.FullName = request.FullName;
             dad.Image = request.Image;
             dad.Birthday = request.BirthDay;
@@ -63,7 +73,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> DeleteDad(string id)
         {
-            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == id);
+            var dad = await _unitOfWork.DadRepository.FirstAsync(x => x.Id == id && x.IsDeleted == false);
             if (dad == null)
             {
                 return new Response<string>($"Không tìm thấy thông tin ba \'{dad.Id}\'.");

@@ -11,6 +11,7 @@ namespace Mumbi.Application.Interfaces
         IDadRepository DadRepository { get; }
         IChildrenRepository ChildrenRepository { get; }
         IPregnancyInformationRepository PregnancyInformationRepository { get; }
+        IDiaryRepository DiaryRepository { get; }
         Task<int> SaveAsync();
     }
 }

@@ -14,6 +14,7 @@ namespace Mumbi.Application
             services.AddTransient<IChildrenService, ChildrenService>();
             services.AddTransient<IMomService, MomService>();
             services.AddTransient<IDadService, DadService>();
+            services.AddTransient<IDiaryService, DiaryService>();
         }
     }
 }

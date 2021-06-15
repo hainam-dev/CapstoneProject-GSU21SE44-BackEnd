@@ -20,13 +20,19 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpPost("AddDad")]
-        public async Task<IActionResult> Add(CreateDadRequest request)
+        public async Task<IActionResult> AddDad(CreateDadRequest request)
         {
             return Ok(await _dadService.AddDad(request));
         }
 
+        [HttpGet("GetDadBy/{momId}")]
+        public async Task<IActionResult> GetDadByMomId(string momId)
+        {
+            return Ok(await _dadService.GetDadByMomId(momId));
+        }
+
         [HttpPut("UpdateDad/{Id}")]
-        public async Task<IActionResult> UpdateMom(string Id, UpdateDadRequest request)
+        public async Task<IActionResult> UpdateDad(string Id, UpdateDadRequest request)
         {
             if (Id != request.Id)
             {
