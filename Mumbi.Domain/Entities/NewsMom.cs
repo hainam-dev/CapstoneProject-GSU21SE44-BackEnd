@@ -19,7 +19,6 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(50)]
         public string NewsId { get; set; }
-        public bool IsSaved { get; set; }
 
         [ForeignKey(nameof(MomId))]
         [InverseProperty("NewsMoms")]

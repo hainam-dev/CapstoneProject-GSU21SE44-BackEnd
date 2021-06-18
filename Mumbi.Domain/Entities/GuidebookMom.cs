@@ -19,7 +19,6 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(50)]
         public string GuidebookId { get; set; }
-        public bool IsSaved { get; set; }
 
         [ForeignKey(nameof(GuidebookId))]
         [InverseProperty("GuidebookMoms")]

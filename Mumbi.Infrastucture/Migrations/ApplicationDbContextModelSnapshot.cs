@@ -357,9 +357,6 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool>("IsSaved")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MomId")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -549,9 +546,6 @@ namespace Mumbi.Infrastucture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("IsSaved")
-                        .HasColumnType("bit");
 
                     b.Property<string>("MomId")
                         .IsRequired()
