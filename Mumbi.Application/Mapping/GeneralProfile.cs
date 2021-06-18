@@ -3,6 +3,9 @@ using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Dtos.Diaries;
 using Mumbi.Application.Dtos.Moms;
+using Mumbi.Application.Dtos.News;
+using Mumbi.Application.Dtos.NewsMom;
+using Mumbi.Application.Dtos.NewsType;
 using Mumbi.Domain.Entities;
 namespace Mumbi.Application.Mapping
 {
@@ -22,6 +25,13 @@ namespace Mumbi.Application.Mapping
             CreateMap<Dad, DadResponse>();
             // Diary
             CreateMap<Diary, DiaryResponse>();
+            // NewsType
+            CreateMap<NewsType, NewsTypeResponse>();
+            // News
+            CreateMap<News, NewsResponse>();
+            CreateMap<News, NewsByTypeIdResponse>();
+            // NewsMom
+            CreateMap<NewsMom, NewsMomResponse>();
             // Account
             CreateMap<Account, MomResponse>().ForMember(
                 dest => dest.AccountId,

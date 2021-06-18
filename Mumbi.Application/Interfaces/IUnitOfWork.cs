@@ -12,6 +12,10 @@ namespace Mumbi.Application.Interfaces
         IChildrenRepository ChildrenRepository { get; }
         IPregnancyInformationRepository PregnancyInformationRepository { get; }
         IDiaryRepository DiaryRepository { get; }
+        INewsRepository NewsRepository { get; }
+        INewsTypeRepository NewsTypeRepository { get; }
+        INewsMomRepository NewsMomRepository { get; }
+
         Task<int> SaveAsync();
     }
 }

@@ -32,8 +32,8 @@ namespace Mumbi.Application.Services
                 Image = request.Image,
                 DiaryContent = request.DiaryContent,
                 CreatedBy = request.CreatedBy,
-                CreatedTime = request.CreatedTime,
-                LastModifiedTime = request.LastModifiedTime,
+                CreatedTime = DateTime.Now,
+                LastModifiedTime = DateTime.Now,
                 IsPublic = request.IsPublic,
                 ChildId = request.ChildId,
                 IsDeleted = false,
@@ -75,7 +75,7 @@ namespace Mumbi.Application.Services
             }
             diary.Image = request.Image;
             diary.DiaryContent = request.DiaryContent;
-            diary.LastModifiedTime = request.LastModifiedTime;
+            diary.LastModifiedTime = DateTime.Now;
             diary.IsPublic = request.IsPublic;
 
             _unitOfWork.DiaryRepository.UpdateAsync(diary);
