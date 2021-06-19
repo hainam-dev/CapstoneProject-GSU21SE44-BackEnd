@@ -18,6 +18,9 @@ namespace Mumbi.Application
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<INewsTypeService, NewsTypeService>();
             services.AddTransient<INewsMomService, NewsMomService>();
+            services.AddTransient<IGuidebookService, GuidebookService>();
+            services.AddTransient<IGuidebookTypeService, GuidebookTypeService>();
+            services.AddTransient<IGuidebookMomService, GuidebookMomService>();
         }
     }
 }

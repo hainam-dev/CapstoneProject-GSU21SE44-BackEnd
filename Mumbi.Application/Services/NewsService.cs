@@ -85,6 +85,12 @@ namespace Mumbi.Application.Services
             {
                 return new Response<string>($"Không tìm thấy news id \'{request.Id}\'");
             }
+            news.Title = request.Title;
+            news.NewsContent = request.NewsContent;
+            news.Image = request.Image;
+            news.EstimateFinishTime = request.EstimateFinishTime;
+            news.LastModifiedTime = request.LastModifiedTime;
+            news.TypeId = request.TypeId;
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();
             return new Response<string>("Cập nhật news type thành công");

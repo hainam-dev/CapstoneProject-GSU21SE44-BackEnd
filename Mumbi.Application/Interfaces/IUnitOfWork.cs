@@ -15,6 +15,9 @@ namespace Mumbi.Application.Interfaces
         INewsRepository NewsRepository { get; }
         INewsTypeRepository NewsTypeRepository { get; }
         INewsMomRepository NewsMomRepository { get; }
+        IGuidebookRepository GuidebookRepository { get; }
+        IGuidebookTypeRepository GuidebookTypeRepository { get; }
+        IGuidebookMomRepository GuidebookMomRepository { get; }
 
         Task<int> SaveAsync();
     }

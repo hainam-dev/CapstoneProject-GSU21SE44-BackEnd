@@ -31,6 +31,9 @@ namespace Mumbi.Infrastucture.Repositories
         public INewsRepository NewsRepository { get; set; }
         public INewsTypeRepository NewsTypeRepository { get; set; }
         public INewsMomRepository NewsMomRepository { get; set; }
+        public IGuidebookRepository GuidebookRepository { get; set; }
+        public IGuidebookTypeRepository GuidebookTypeRepository { get; set; }
+        public IGuidebookMomRepository GuidebookMomRepository { get; set; }
 
         private void InitRepository()
         {
@@ -44,6 +47,9 @@ namespace Mumbi.Infrastucture.Repositories
             NewsRepository = new NewsRepository(_context);
             NewsTypeRepository = new NewsTypeRepository(_context);
             NewsMomRepository = new NewsMomRepository(_context);
+            GuidebookRepository = new GuidebookRepository(_context);
+            GuidebookTypeRepository = new GuidebookTypeRepository(_context);
+            GuidebookMomRepository = new GuidebookMomRepository(_context);
         }
 
         public async Task<int> SaveAsync()

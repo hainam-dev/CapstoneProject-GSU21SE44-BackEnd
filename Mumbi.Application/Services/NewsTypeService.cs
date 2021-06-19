@@ -86,6 +86,12 @@ namespace Mumbi.Application.Services
             }
             foreach(var deleteNews in news)
             {
+                var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == deleteNews.Id);
+                if (newsMom != null)
+                {
+                    _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
+                    await _unitOfWork.SaveAsync();
+                }
                 deleteNews.IsDeleted = true;
                 _unitOfWork.NewsRepository.UpdateAsync(deleteNews);
                 await _unitOfWork.SaveAsync();

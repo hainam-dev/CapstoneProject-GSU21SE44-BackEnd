@@ -2,6 +2,9 @@
 using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Dtos.Diaries;
+using Mumbi.Application.Dtos.GuidebookMom;
+using Mumbi.Application.Dtos.Guidebooks;
+using Mumbi.Application.Dtos.GuidebookTypes;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsMom;
@@ -32,6 +35,13 @@ namespace Mumbi.Application.Mapping
             CreateMap<News, NewsByTypeIdResponse>();
             // NewsMom
             CreateMap<NewsMom, NewsMomResponse>();
+            // GuidebookType
+            CreateMap<GuidebookType, GuidebookTypeResponse>();
+            // Guidebook
+            CreateMap<Guidebook, GuidebookResponse>();
+            CreateMap<Guidebook, GuidebookByTypeIdResponse>();
+            // GuidebookMom
+            CreateMap<GuidebookMom, GuidebookMomResponse>();
             // Account
             CreateMap<Account, MomResponse>().ForMember(
                 dest => dest.AccountId,
