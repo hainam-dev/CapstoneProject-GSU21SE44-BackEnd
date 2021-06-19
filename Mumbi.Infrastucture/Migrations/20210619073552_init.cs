@@ -82,7 +82,7 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "Tooth");
 
             migrationBuilder.DropTable(
-                name: "GuildbookType");
+                name: "GuidebookType");
 
             migrationBuilder.DropTable(
                 name: "NewsType");

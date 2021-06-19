@@ -27,7 +27,7 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Guidebook> Guidebooks { get; set; }
         public virtual DbSet<GuidebookMom> GuidebookMoms { get; set; }
-        public virtual DbSet<GuildbookType> GuildbookTypes { get; set; }
+        public virtual DbSet<GuidebookType> GuidebookTypes { get; set; }
         public virtual DbSet<InjectionSchedule> InjectionSchedules { get; set; }
         public virtual DbSet<Mom> Moms { get; set; }
         public virtual DbSet<News> News { get; set; }
@@ -49,6 +49,7 @@ namespace Mumbi.Infrastucture.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

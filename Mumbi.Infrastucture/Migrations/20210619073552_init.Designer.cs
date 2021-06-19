@@ -10,7 +10,7 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210618161331_init")]
+    [Migration("20210619073552_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -374,7 +374,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.ToTable("GuidebookMom");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.GuildbookType", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -391,7 +391,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GuildbookType");
+                    b.ToTable("GuidebookType");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectionSchedule", b =>
@@ -1055,7 +1055,7 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
                 {
-                    b.HasOne("Mumbi.Domain.Entities.GuildbookType", "Type")
+                    b.HasOne("Mumbi.Domain.Entities.GuidebookType", "Type")
                         .WithMany("Guidebooks")
                         .HasForeignKey("TypeId")
                         .HasConstraintName("FK_Guidebook_GuildbookType");
@@ -1284,7 +1284,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("GuidebookMoms");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.GuildbookType", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookType", b =>
                 {
                     b.Navigation("Guidebooks");
                 });

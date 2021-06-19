@@ -372,7 +372,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.ToTable("GuidebookMom");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.GuildbookType", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,7 +389,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GuildbookType");
+                    b.ToTable("GuidebookType");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectionSchedule", b =>
@@ -1053,7 +1053,7 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
                 {
-                    b.HasOne("Mumbi.Domain.Entities.GuildbookType", "Type")
+                    b.HasOne("Mumbi.Domain.Entities.GuidebookType", "Type")
                         .WithMany("Guidebooks")
                         .HasForeignKey("TypeId")
                         .HasConstraintName("FK_Guidebook_GuildbookType");
@@ -1282,7 +1282,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("GuidebookMoms");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.GuildbookType", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookType", b =>
                 {
                     b.Navigation("Guidebooks");
                 });

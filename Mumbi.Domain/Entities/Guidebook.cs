@@ -37,8 +37,8 @@ namespace Mumbi.Domain.Entities
         public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(TypeId))]
-        [InverseProperty(nameof(GuildbookType.Guidebooks))]
-        public virtual GuildbookType Type { get; set; }
+        [InverseProperty(nameof(GuidebookType.Guidebooks))]
+        public virtual GuidebookType Type { get; set; }
         [InverseProperty(nameof(GuidebookMom.Guidebook))]
         public virtual ICollection<GuidebookMom> GuidebookMoms { get; set; }
     }
