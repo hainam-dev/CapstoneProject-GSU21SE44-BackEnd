@@ -282,9 +282,8 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
-                        .IsFixedLength(true);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Image")
                         .IsUnicode(false)
@@ -758,6 +757,30 @@ namespace Mumbi.Infrastucture.Migrations
                     b.ToTable("Role");
                 });
 
+            modelBuilder.Entity("Mumbi.Domain.Entities.Staff", b =>
+                {
+                    b.Property<string>("AccountId")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime?>("Birthday")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Image")
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(max)");
+
+                    b.HasKey("AccountId");
+
+                    b.ToTable("Staff");
+                });
+
             modelBuilder.Entity("Mumbi.Domain.Entities.StandardIndex", b =>
                 {
                     b.Property<int>("Id")
@@ -951,30 +974,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vaccine");
-                });
-
-            modelBuilder.Entity("Mumbi.Domain.Entities.staff", b =>
-                {
-                    b.Property<string>("AccountId")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Image")
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Staff");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Account", b =>
@@ -1184,6 +1183,17 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Account");
                 });
 
+            modelBuilder.Entity("Mumbi.Domain.Entities.Staff", b =>
+                {
+                    b.HasOne("Mumbi.Domain.Entities.Account", "Account")
+                        .WithOne("Staff")
+                        .HasForeignKey("Mumbi.Domain.Entities.Staff", "AccountId")
+                        .HasConstraintName("FK_Staff_Account")
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
             modelBuilder.Entity("Mumbi.Domain.Entities.SymptomVaccine", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.Symptom", "Symptom")
@@ -1233,17 +1243,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Tooth");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.staff", b =>
-                {
-                    b.HasOne("Mumbi.Domain.Entities.Account", "Account")
-                        .WithOne("staff")
-                        .HasForeignKey("Mumbi.Domain.Entities.staff", "AccountId")
-                        .HasConstraintName("FK_Staff_Account")
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Account", b =>
                 {
                     b.Navigation("Doctor");
@@ -1252,7 +1251,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Navigation("Reminders");
 
-                    b.Navigation("staff");
+                    b.Navigation("Staff");
 
                     b.Navigation("Tokens");
                 });

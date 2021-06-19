@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Mumbi.Domain.Entities
 {
     [Table("Staff")]
-    public partial class staff
+    public partial class Staff
     {
         [Key]
         [StringLength(100)]
@@ -22,7 +22,7 @@ namespace Mumbi.Domain.Entities
         public DateTime? Birthday { get; set; }
 
         [ForeignKey(nameof(AccountId))]
-        [InverseProperty("staff")]
+        [InverseProperty("Staff")]
         public virtual Account Account { get; set; }
     }
 }

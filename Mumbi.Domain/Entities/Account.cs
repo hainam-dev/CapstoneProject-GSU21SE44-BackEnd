@@ -33,7 +33,7 @@ namespace Mumbi.Domain.Entities
         [InverseProperty("Account")]
         public virtual Mom Mom { get; set; }
         [InverseProperty("Account")]
-        public virtual staff staff { get; set; }
+        public virtual Staff Staff { get; set; }
         [InverseProperty(nameof(Reminder.Account))]
         public virtual ICollection<Reminder> Reminders { get; set; }
         [InverseProperty(nameof(Token.Account))]

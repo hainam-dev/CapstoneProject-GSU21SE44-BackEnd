@@ -15,7 +15,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string AccountId { get; set; }
         [Required]
-        [StringLength(10)]
+        [StringLength(200)]
         public string FullName { get; set; }
         public string Image { get; set; }
         [Column(TypeName = "datetime")]

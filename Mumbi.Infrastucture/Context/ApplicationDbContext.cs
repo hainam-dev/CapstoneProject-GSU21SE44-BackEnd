@@ -45,7 +45,7 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Tooth> Teeth { get; set; }
         public virtual DbSet<ToothChild> ToothChildren { get; set; }
         public virtual DbSet<Vaccine> Vaccines { get; set; }
-        public virtual DbSet<staff> staff { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -150,8 +150,6 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.FromHospital).IsUnicode(false);
-
-                entity.Property(e => e.FullName).IsFixedLength(true);
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
@@ -399,15 +397,15 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_ToothChild_Tooth");
             });
 
-            modelBuilder.Entity<staff>(entity =>
+            modelBuilder.Entity<Staff>(entity =>
             {
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
-                    .WithOne(p => p.staff)
-                    .HasForeignKey<staff>(d => d.AccountId)
+                    .WithOne(p => p.Staff)
+                    .HasForeignKey<Staff>(d => d.AccountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Staff_Account");
             });
