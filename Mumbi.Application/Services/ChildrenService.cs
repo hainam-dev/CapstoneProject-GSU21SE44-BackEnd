@@ -134,15 +134,21 @@ namespace Mumbi.Application.Services
             if(child != null)
             {
                 response = _mapper.Map<List<ChildrenResponse>>(child);
-                var pregnancyInfo = await _unitOfWork.PregnancyInformationRepository.GetAllAsync();
-                if(pregnancyInfo != null)
-                {
-                    response = _mapper.Map<List<ChildrenResponse>>(pregnancyInfo);
-                }
             }
             return new Response<List<ChildrenResponse>>(response);
         }
 
-        
+        public async Task<Response<List<ChildrenResponse>>> GetChildrenByMomId(string momId)
+        {
+            var response = new List<ChildrenResponse>();
+
+            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.MomId == momId, includeProperties: "PregnancyInformation");
+            if (child == null)
+            {
+                return new Response<List<ChildrenResponse>>($"Không tìm thấy mẹ \'{momId}\'");
+            }
+            response = _mapper.Map<List<ChildrenResponse>>(child);
+            return new Response<List<ChildrenResponse>>(response);
+        }
     }
 }

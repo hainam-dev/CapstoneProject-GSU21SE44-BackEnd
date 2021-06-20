@@ -78,6 +78,7 @@ namespace Mumbi.Application.Services
                         Phonenumber = account_firebase.PhoneNumber,
                         Image = account_firebase.PhotoUrl
                     };
+                    
                     await _unitOfWork.MomRepository.AddAsync(mom_info);
 
                     if (await _unitOfWork.SaveAsync() > 0)
@@ -92,11 +93,11 @@ namespace Mumbi.Application.Services
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                if(currentAccount.RoleId == "Role01")
+                if(currentAccount.Mom != null)
                 {
                     response.Fullname = currentAccount.Mom.FullName;
                     response.Photo = currentAccount.Mom.Image;
-                }else if(currentAccount.RoleId == "Role02")
+                }else if(currentAccount.Staff != null)
                 {
                     response.Fullname = currentAccount.Doctor.FullName;
                     response.Photo = currentAccount.Doctor.Image;

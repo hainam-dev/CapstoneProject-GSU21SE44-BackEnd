@@ -34,6 +34,8 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookRepository GuidebookRepository { get; set; }
         public IGuidebookTypeRepository GuidebookTypeRepository { get; set; }
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
+        public IStaffRepository StaffRepository { get; set; }
+        public IDoctorRepository DoctorRepository { get; set; }
 
         private void InitRepository()
         {
@@ -50,6 +52,8 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookRepository = new GuidebookRepository(_context);
             GuidebookTypeRepository = new GuidebookTypeRepository(_context);
             GuidebookMomRepository = new GuidebookMomRepository(_context);
+            StaffRepository = new StaffRepository(_context);
+            DoctorRepository = new DoctorRepository(_context);
         }
 
         public async Task<int> SaveAsync()

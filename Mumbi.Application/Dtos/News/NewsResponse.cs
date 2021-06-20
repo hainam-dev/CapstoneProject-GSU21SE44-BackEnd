@@ -8,6 +8,7 @@ namespace Mumbi.Application.Dtos.News
 {
     public class NewsResponse
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string NewsContent { get; set; }
         public string Image { get; set; }

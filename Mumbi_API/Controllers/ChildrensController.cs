@@ -27,7 +27,7 @@ namespace Mumbi_API.Controllers
             return Ok(await _childrenService.AddChildren(request));
         }
 
-        [Authorize(Roles = "user")]
+        //[Authorize(Roles = "user")]
         [HttpGet("GetAllChildren")]
         public async Task<IActionResult> GetAll()
         {
@@ -38,6 +38,11 @@ namespace Mumbi_API.Controllers
         public async Task<IActionResult> GetById(string id)
         {
             return Ok(await _childrenService.GetChildrenById(id));
+        }
+        [HttpGet("GetChildrenByMom/{momId}")]
+        public async Task<IActionResult> GetChildrenByMomId(string momId)
+        {
+            return Ok(await _childrenService.GetChildrenByMomId(momId));
         }
 
         [HttpPut("updateChildrenInfo/{Id}")]

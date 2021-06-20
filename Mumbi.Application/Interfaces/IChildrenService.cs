@@ -9,7 +9,7 @@ namespace Mumbi.Application.Interfaces
     {
         Task<Response<List<ChildrenResponse>>> GetAllChildren();
         Task<Response<ChildrenResponse>> GetChildrenById(string id);
-        //Task<Response<ChildrenResponse>> GetChildrenByMomId(string momId);
+        Task<Response<List<ChildrenResponse>>> GetChildrenByMomId(string momId);
         Task<Response<string>> AddChildren(CreateChildrenRequest request);
         Task<Response<string>> UpdateChildrenInformation(UpdateChildrenInfoResquest request);
         Task<Response<string>> UpdatePregnancyInformation(UpdatePregnancyInfoRequest request);
