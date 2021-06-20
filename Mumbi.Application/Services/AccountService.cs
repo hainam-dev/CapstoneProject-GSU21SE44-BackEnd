@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
                 UserRecord account_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(decodedToken.Uid);
                 Account currentAccount = await _unitOfWork.AccountRepository
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
-                                                                      includeProperties: "Mom");
+                                                                      includeProperties: "Mom,Staff,Doctor");
 
                 if (currentAccount != null && currentAccount.IsDeleted == true)
                 {
@@ -92,8 +92,21 @@ namespace Mumbi.Application.Services
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                response.Fullname = currentAccount.Mom.FullName;
-                response.Photo = currentAccount.Mom.Image;
+                if(currentAccount.RoleId == "Role01")
+                {
+                    response.Fullname = currentAccount.Mom.FullName;
+                    response.Photo = currentAccount.Mom.Image;
+                }else if(currentAccount.RoleId == "Role02")
+                {
+                    response.Fullname = currentAccount.Doctor.FullName;
+                    response.Photo = currentAccount.Doctor.Image;
+                }
+                else
+                {
+                    response.Fullname = currentAccount.Staff.FullName;
+                    response.Photo = currentAccount.Staff.Image;
+                }
+                
 
                 return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }
