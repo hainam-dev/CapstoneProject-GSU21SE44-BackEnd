@@ -60,7 +60,6 @@ namespace Mumbi.Application.Services
                     {
                         account_Info.RoleId = RoleConstant.STAFF_ROLE;
                         await _unitOfWork.AccountRepository.AddAsync(account_Info);
-                        currentAccount = account_Info;
                         var staff_info = new Staff
                         {
                             AccountId = account_firebase.Email,
@@ -99,6 +98,7 @@ namespace Mumbi.Application.Services
                     }
 
                     await _unitOfWork.SaveAsync();
+                    currentAccount = account_Info;
                 }
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
