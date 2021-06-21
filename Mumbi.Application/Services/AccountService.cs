@@ -47,72 +47,58 @@ namespace Mumbi.Application.Services
                 }
                 else if (currentAccount == null)
                 {
-                    var roleID = "";
+                    var account_Info = new Account
+                    {
+                        AccountId = account_firebase.Email,
+                        IsDeleted = false,
+                    };
+
                     string getEmail = account_firebase.Email;
                     string[] spitFirstNameEmail = getEmail.Split(".");
                     string[] getRole = spitFirstNameEmail[1].Split("@");
                     if (getRole[0].ToString() == "staffmumbi")
                     {
-                        roleID = RoleConstant.STAFF_ROLE;
+                        account_Info.RoleId = RoleConstant.STAFF_ROLE;
+                        await _unitOfWork.AccountRepository.AddAsync(account_Info);
+
+                        var staff_info = new Staff
+                        {
+                            AccountId = account_firebase.Email,
+                            FullName = account_firebase.DisplayName,
+                            Image = account_firebase.PhotoUrl
+                        };
+                        await _unitOfWork.StaffRepository.AddAsync(staff_info);
+
                     }
                     else if (getRole[0].ToString() == "doctormumbi")
                     {
-                        roleID = RoleConstant.DOCTOR_ROLE;
+                        account_Info.RoleId = RoleConstant.DOCTOR_ROLE;
+                        await _unitOfWork.AccountRepository.AddAsync(account_Info);
+
+                        var doctor_info = new Doctor
+                        {
+                            AccountId = account_firebase.Email,
+                            FullName = account_firebase.DisplayName,
+                            Image = account_firebase.PhotoUrl
+                        };
+                        await _unitOfWork.DoctorRepository.AddAsync(doctor_info);
                     }
                     else
                     {
-                        roleID = RoleConstant.USER_ROLE;
-                    }
-                    var account_Info = new Account
-                    {
-                        AccountId = account_firebase.Email,
-                        RoleId = roleID,
-                        IsDeleted = false,
-                    };
-                    await _unitOfWork.AccountRepository.AddAsync(account_Info);
+                        account_Info.RoleId = RoleConstant.USER_ROLE;
+                        await _unitOfWork.AccountRepository.AddAsync(account_Info);
 
-                    var mom_info = new Mom
-                    {
-                        AccountId = account_firebase.Email,
-                        FullName = account_firebase.DisplayName,
-                        Phonenumber = account_firebase.PhoneNumber,
-                        Image = account_firebase.PhotoUrl
-                    };
-                    var staff_info = new Staff
-                    {
-                        AccountId = account_firebase.Email,
-                        FullName = account_firebase.DisplayName,
-                        Image = account_firebase.PhotoUrl
-                    };
-                    var doctor_info = new Doctor
-                    {
-                        AccountId = account_firebase.Email,
-                        FullName = account_firebase.DisplayName,
-                        Image = account_firebase.PhotoUrl
-                    };
-                    
-                    if(await _unitOfWork.SaveAsync() > 0)
-                    {
-                        currentAccount = account_Info;
-                        if (roleID == "role01")
+                        var mom_info = new Mom
                         {
-                            await _unitOfWork.MomRepository.AddAsync(mom_info);
-                            await _unitOfWork.SaveAsync();
-                            currentAccount.Mom = mom_info;
-                        }
-                        else if (roleID == "role02")
-                        {
-                            await _unitOfWork.StaffRepository.AddAsync(staff_info);
-                            await _unitOfWork.SaveAsync();
-                            currentAccount.Staff = staff_info;
-                        }
-                        else
-                        {
-                            await _unitOfWork.DoctorRepository.AddAsync(doctor_info);
-                            await _unitOfWork.SaveAsync();
-                            currentAccount.Doctor = doctor_info;
-                        }
+                            AccountId = account_firebase.Email,
+                            FullName = account_firebase.DisplayName,
+                            Phonenumber = account_firebase.PhoneNumber,
+                            Image = account_firebase.PhotoUrl
+                        };
+                        await _unitOfWork.MomRepository.AddAsync(mom_info);
                     }
+
+                    await _unitOfWork.SaveAsync();
                 }
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
