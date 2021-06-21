@@ -26,7 +26,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<MomResponse>>> GetAllMom()
         {
             var response = new List<MomResponse>();
-            var account = await _unitOfWork.AccountRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "Mom");
+            var account = await _unitOfWork.AccountRepository.GetAsync(x => x.IsDeleted == false && x.RoleId == "role01", includeProperties: "Mom");
             if (account != null)
             {
                 response = _mapper.Map<List<MomResponse>>(account);
