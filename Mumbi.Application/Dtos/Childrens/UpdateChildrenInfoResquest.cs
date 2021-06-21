@@ -9,7 +9,7 @@ namespace Mumbi.Application.Dtos.Childrens
     public class UpdateChildrenInfoResquest
     {
         public string Id { get; set; }
-        public DateTime BirthDay { get; set; }
+        public string BirthDay { get; set; }
         public float Weight { get; set; }
         public float Height { get; set; }
         public float HeadCircumference { get; set; }

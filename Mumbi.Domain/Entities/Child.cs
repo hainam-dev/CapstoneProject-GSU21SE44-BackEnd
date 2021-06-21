@@ -30,8 +30,8 @@ namespace Mumbi.Domain.Entities
         public string Nickname { get; set; }
         public string Image { get; set; }
         public int? Gender { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? Birthday { get; set; }
+        [StringLength(50)]
+        public string Birthday { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]

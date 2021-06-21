@@ -49,7 +49,7 @@ namespace Mumbi.Infrastucture.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -92,6 +92,8 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
+                entity.Property(e => e.Birthday).IsUnicode(false);
+
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
                 entity.Property(e => e.Fingertips).IsUnicode(false);
@@ -112,6 +114,8 @@ namespace Mumbi.Infrastucture.Context
             modelBuilder.Entity<Dad>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.Property(e => e.Birthday).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
@@ -149,9 +153,13 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
+                entity.Property(e => e.Birthday).IsUnicode(false);
+
                 entity.Property(e => e.FromHospital).IsUnicode(false);
 
                 entity.Property(e => e.Image).IsUnicode(false);
+
+                entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
                     .WithOne(p => p.Doctor)
@@ -228,6 +236,8 @@ namespace Mumbi.Infrastucture.Context
                     .HasName("PK_Parent");
 
                 entity.Property(e => e.AccountId).IsUnicode(false);
+
+                entity.Property(e => e.Birthday).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
@@ -401,7 +411,11 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
+                entity.Property(e => e.Birthday).IsUnicode(false);
+
                 entity.Property(e => e.Image).IsUnicode(false);
+
+                entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
                     .WithOne(p => p.Staff)

@@ -107,8 +107,10 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<double?>("AvgMilk")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("BloodGroup")
                         .HasMaxLength(10)
@@ -176,8 +178,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("BloodGroup")
                         .HasMaxLength(10)
@@ -272,8 +276,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("FromHospital")
                         .HasMaxLength(100)
@@ -290,8 +296,9 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Phonenumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("AccountId");
 
@@ -455,8 +462,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("BloodGroup")
                         .HasMaxLength(10)
@@ -768,8 +777,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -781,8 +792,9 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("varchar(max)");
 
                     b.Property<string>("Phonenumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("AccountId");
 

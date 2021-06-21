@@ -17,11 +17,11 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
-        public string Image { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? Birthday { get; set; }
-        [StringLength(15)]
+        [StringLength(50)]
         public string Phonenumber { get; set; }
+        public string Image { get; set; }
+        [StringLength(50)]
+        public string Birthday { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Staff")]
