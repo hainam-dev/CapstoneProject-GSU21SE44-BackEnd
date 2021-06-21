@@ -90,11 +90,9 @@ namespace Mumbi.Application.Services
                 if (newsMom != null)
                 {
                     _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
-                    await _unitOfWork.SaveAsync();
                 }
                 deleteNews.IsDeleted = true;
                 _unitOfWork.NewsRepository.UpdateAsync(deleteNews);
-                await _unitOfWork.SaveAsync();
             }
             newsType.IsDeleted = true;
             _unitOfWork.NewsTypeRepository.UpdateAsync(newsType);
