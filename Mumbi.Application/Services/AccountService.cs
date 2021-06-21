@@ -78,14 +78,41 @@ namespace Mumbi.Application.Services
                         Phonenumber = account_firebase.PhoneNumber,
                         Image = account_firebase.PhotoUrl
                     };
+                    var staff_info = new Staff
+                    {
+                        AccountId = account_firebase.Email,
+                        FullName = account_firebase.DisplayName,
+                        Image = account_firebase.PhotoUrl
+                    };
+                    var doctor_info = new Doctor
+                    {
+                        AccountId = account_firebase.Email,
+                        FullName = account_firebase.DisplayName,
+                        Image = account_firebase.PhotoUrl
+                    };
                     
-                    await _unitOfWork.MomRepository.AddAsync(mom_info);
-
-                    if (await _unitOfWork.SaveAsync() > 0)
+                    if(await _unitOfWork.SaveAsync() > 0)
                     {
                         currentAccount = account_Info;
-                        currentAccount.Mom = mom_info;
-                    };
+                        if (roleID == "role01")
+                        {
+                            await _unitOfWork.MomRepository.AddAsync(mom_info);
+                            await _unitOfWork.SaveAsync();
+                            currentAccount.Mom = mom_info;
+                        }
+                        else if (roleID == "role02")
+                        {
+                            await _unitOfWork.StaffRepository.AddAsync(staff_info);
+                            await _unitOfWork.SaveAsync();
+                            currentAccount.Staff = staff_info;
+                        }
+                        else
+                        {
+                            await _unitOfWork.DoctorRepository.AddAsync(doctor_info);
+                            await _unitOfWork.SaveAsync();
+                            currentAccount.Doctor = doctor_info;
+                        }
+                    }
                 }
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
@@ -93,21 +120,22 @@ namespace Mumbi.Application.Services
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                if(currentAccount.Mom != null)
+                if (currentAccount.Mom != null)
                 {
                     response.Fullname = currentAccount.Mom.FullName;
                     response.Photo = currentAccount.Mom.Image;
-                }else if(currentAccount.Staff != null)
-                {
-                    response.Fullname = currentAccount.Doctor.FullName;
-                    response.Photo = currentAccount.Doctor.Image;
                 }
-                else
+                else if (currentAccount.Staff != null)
                 {
                     response.Fullname = currentAccount.Staff.FullName;
                     response.Photo = currentAccount.Staff.Image;
                 }
-                
+                else
+                {
+                    response.Fullname = currentAccount.Doctor.FullName;
+                    response.Photo = currentAccount.Doctor.Image;
+                }
+
 
                 return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }
