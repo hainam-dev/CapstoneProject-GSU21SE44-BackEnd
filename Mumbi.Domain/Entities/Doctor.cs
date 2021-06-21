@@ -22,6 +22,8 @@ namespace Mumbi.Domain.Entities
         public DateTime? Birthday { get; set; }
         [StringLength(100)]
         public string FromHospital { get; set; }
+        [StringLength(15)]
+        public string Phonenumber { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Doctor")]

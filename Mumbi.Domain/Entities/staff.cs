@@ -20,6 +20,8 @@ namespace Mumbi.Domain.Entities
         public string Image { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Birthday { get; set; }
+        [StringLength(15)]
+        public string Phonenumber { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Staff")]
