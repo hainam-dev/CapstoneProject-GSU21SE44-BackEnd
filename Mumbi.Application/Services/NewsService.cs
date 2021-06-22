@@ -89,7 +89,6 @@ namespace Mumbi.Application.Services
             news.NewsContent = request.NewsContent;
             news.Image = request.Image;
             news.EstimateFinishTime = request.EstimateFinishTime;
-            news.LastModifiedTime = request.LastModifiedTime;
             news.TypeId = request.TypeId;
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();

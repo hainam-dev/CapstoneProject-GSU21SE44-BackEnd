@@ -64,6 +64,7 @@ namespace Mumbi.Application.Services
                         {
                             AccountId = account_firebase.Email,
                             FullName = account_firebase.DisplayName,
+                            Phonenumber = account_firebase.PhoneNumber,
                             Image = account_firebase.PhotoUrl
                         };
                         await _unitOfWork.StaffRepository.AddAsync(staff_info);
@@ -78,6 +79,7 @@ namespace Mumbi.Application.Services
                         {
                             AccountId = account_firebase.Email,
                             FullName = account_firebase.DisplayName,
+                            Phonenumber = account_firebase.PhoneNumber,
                             Image = account_firebase.PhotoUrl
                         };
                         await _unitOfWork.DoctorRepository.AddAsync(doctor_info);

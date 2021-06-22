@@ -13,7 +13,6 @@ namespace Mumbi.Application.Dtos.Guidebooks
         public string GuidebookContent { get; set; }
         public string Image { get; set; }
         public string EstimateFinishTime { get; set; }
-        public DateTime LastModifiedTime { get; set; }
         public int TypeId { get; set; }
     }
 }

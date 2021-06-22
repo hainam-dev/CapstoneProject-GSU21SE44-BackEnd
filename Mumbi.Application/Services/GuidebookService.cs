@@ -87,7 +87,6 @@ namespace Mumbi.Application.Services
             guidebook.GuidebookContent = request.GuidebookContent;
             guidebook.Image = request.Image;
             guidebook.EstimateFinishTime = request.EstimateFinishTime;
-            guidebook.LastModifiedTime = request.LastModifiedTime;
             guidebook.TypeId = request.TypeId;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();

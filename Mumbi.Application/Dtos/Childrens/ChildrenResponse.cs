@@ -9,7 +9,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public string Nickname { get; set; }
         public string Image { get; set; }
         public int? Gender { get; set; }
-        public DateTime? BirthDay { get; set; }
+        public String BirthDay { get; set; }
         public string BloodGroup { get; set; }
         public string RhBloodGroup { get; set; }  
         public string Fingertips { get; set; }
@@ -20,7 +20,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public double? AvgMilk { get; set; }
         public string MomId { get; set; }   
         public string DadId { get; set; }
-        public DateTime? CalculatedBornDate { get; set; }
+        public DateTime CalculatedBornDate { get; set; }
         public double? FemurLength { get; set; }
         public double? FetalHeartRate { get; set; }
         public int? PregnancyWeek { get; set; }
