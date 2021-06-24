@@ -20,6 +20,7 @@ namespace Mumbi.Application.Interfaces
         IGuidebookMomRepository GuidebookMomRepository { get; }
         IStaffRepository StaffRepository { get; }
         IDoctorRepository DoctorRepository { get; }
+        ITokenRepository TokenRepository { get; }
 
         Task<int> SaveAsync();
     }

@@ -28,6 +28,8 @@ namespace Mumbi.Application.Mapping
             CreateMap<Dad, DadResponse>();
             // Diary
             CreateMap<Diary, DiaryResponse>();
+            // DiaryPublic
+            CreateMap<Diary, DiaryPublicResponse>();
             // NewsType
             CreateMap<NewsType, NewsTypeResponse>();
             // News

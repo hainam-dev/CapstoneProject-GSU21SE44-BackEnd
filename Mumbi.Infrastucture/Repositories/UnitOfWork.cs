@@ -36,6 +36,7 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
         public IStaffRepository StaffRepository { get; set; }
         public IDoctorRepository DoctorRepository { get; set; }
+        public ITokenRepository TokenRepository { get; set; }
 
         private void InitRepository()
         {
@@ -54,6 +55,7 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookMomRepository = new GuidebookMomRepository(_context);
             StaffRepository = new StaffRepository(_context);
             DoctorRepository = new DoctorRepository(_context);
+            TokenRepository = new TokenRepository(_context);
         }
 
         public async Task<int> SaveAsync()

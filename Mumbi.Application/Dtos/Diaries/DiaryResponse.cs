@@ -15,6 +15,7 @@ namespace Mumbi.Application.Dtos.Diaries
         public DateTime CreatedTime { get; set; }
         public DateTime LastModifiedTime { get; set; }
         public bool IsPublic { get; set; }
+        public bool IsApproved { get; set; }
         public string ChildId { get; set; }
     }
 }

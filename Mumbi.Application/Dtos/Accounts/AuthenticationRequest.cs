@@ -3,5 +3,6 @@
     public class AuthenticationRequest
     {
         public string IdToken { get; set; }
+        public string FCMToken { get; set; }
     }
 }

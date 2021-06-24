@@ -37,10 +37,21 @@ namespace Mumbi.Application.Services
                 IsPublic = request.IsPublic,
                 ChildId = request.ChildId,
                 IsDeleted = false,
+                IsApproved = false,
             };
             await _unitOfWork.DiaryRepository.AddAsync(diary);
             await _unitOfWork.SaveAsync();
             return new Response<string>("Thêm nhật ký thành công, id: " + diary.Id);
+        }
+        public async Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic()
+        {
+            var diaryPublic = await _unitOfWork.DiaryRepository.GetAsync(x => x.IsPublic == true && x.IsDeleted == false);
+            if (diaryPublic == null)
+            {
+                return new Response<List<DiaryPublicResponse>>("Chưa có dữ liệu");
+            }
+            var response = _mapper.Map<List<DiaryPublicResponse>>(diaryPublic);
+            return new Response<List<DiaryPublicResponse>>(response);
         }
 
         public async Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(string childId)
@@ -77,6 +88,7 @@ namespace Mumbi.Application.Services
             diary.DiaryContent = request.DiaryContent;
             diary.LastModifiedTime = DateTime.Now;
             diary.IsPublic = request.IsPublic;
+            diary.IsApproved = request.IsApproved;
 
             _unitOfWork.DiaryRepository.UpdateAsync(diary);
             await _unitOfWork.SaveAsync();
@@ -101,6 +113,8 @@ namespace Mumbi.Application.Services
             await _unitOfWork.SaveAsync();
             return new Response<string>($"Xóa nhật ký id \'{Id}\' thành công!");
         }
+
+        
     }
 
     

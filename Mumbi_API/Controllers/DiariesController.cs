@@ -23,14 +23,19 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _diaryService.AddDiary(request));
         }
+        [HttpGet("GetDiaryPublic")]
+        public async Task<IActionResult> GetDiaryPublic()
+        {
+            return Ok(await _diaryService.GetDiaryPublic());
 
+        }
         [HttpGet("GetDiaryOfChildren/{childId}")]
         public async Task<IActionResult> GetDiaryOfChildren(string childId)
         {
             return Ok(await _diaryService.GetDiaryOfChildren(childId));
 
         }
-        [HttpPut("UpdateDad/{Id}")]
+        [HttpPut("UpdateDiary/{Id}")]
         public async Task<IActionResult> UpdateDiary(string childID, int Id, UpdateDiaryRequest request)
         {
             if(childID != request.ChildId)

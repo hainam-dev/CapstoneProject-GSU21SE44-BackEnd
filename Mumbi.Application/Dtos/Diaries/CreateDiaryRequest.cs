@@ -16,5 +16,6 @@ namespace Mumbi.Application.Dtos.Diaries
         public bool IsPublic { get; set; }
         public string ChildId { get; set; }
         public bool IsDeleted { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

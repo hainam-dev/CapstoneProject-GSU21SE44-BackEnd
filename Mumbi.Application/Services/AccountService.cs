@@ -41,6 +41,7 @@ namespace Mumbi.Application.Services
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
                                                                       includeProperties: "Mom,Staff,Doctor");
 
+
                 if (currentAccount != null && currentAccount.IsDeleted == true)
                 {
                     return new Response<AuthenticationResponse>($"Xác thực đã bị lỗi. Tài khoản \'{account_firebase.Email}\' không khả dụng");
@@ -99,15 +100,24 @@ namespace Mumbi.Application.Services
                         await _unitOfWork.MomRepository.AddAsync(mom_info);
                     }
 
+                    var fcmToken = new Token
+                    {
+                        AccountId = account_firebase.Email,
+                        Token1 = request.FCMToken,
+                    };
                     await _unitOfWork.SaveAsync();
                     currentAccount = account_Info;
                 }
-
+                var fcm = await _unitOfWork.TokenRepository.GetAsync(x => x.AccountId == currentAccount.AccountId);
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
                 AuthenticationResponse response = new AuthenticationResponse();
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
+                foreach (var getFCM in fcm)
+                {
+                    response.FCMToken = getFCM.Token1;
+                }
                 if (currentAccount.Mom != null)
                 {
                     response.Fullname = currentAccount.Mom.FullName;
