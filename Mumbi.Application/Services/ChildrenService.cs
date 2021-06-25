@@ -50,7 +50,7 @@ namespace Mumbi.Application.Services
                     CalculatedBornDate = request.CalculatedBornDate,
                     MotherMenstrualCycleTime = request.MotherMenstrualCycleTime,
                     PregnancyType = request.PregnancyType
-                    
+
                 };
                 child.IsBorn = false;
                 await _unitOfWork.PregnancyInformationRepository.AddAsync(pregnancyInfo);
@@ -125,7 +125,7 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildrenRepository.FirstAsync(x => x.Id == request.Id);
             if (child != null)
             {
-                if(child.IsBorn == true)
+                if (child.IsBorn == true)
                 {
                     child.Weight = request.Weight;
                     child.Height = request.Height;
@@ -134,7 +134,7 @@ namespace Mumbi.Application.Services
                     child.HourSleep = request.HourSleep;
                     child.AvgMilk = request.AvgMilk;
 
-                        _unitOfWork.ChildrenRepository.UpdateAsync(child);
+                    _unitOfWork.ChildrenRepository.UpdateAsync(child);
                 }
                 else
                 {
@@ -148,7 +148,7 @@ namespace Mumbi.Application.Services
 
                     _unitOfWork.PregnancyInformationRepository.UpdateAsync(pregnancy);
                 }
-                
+
                 await _unitOfWork.SaveAsync();
                 return new Response<string>("Cập nhật thông tin em bé thành công", child.Id);
             }
@@ -193,7 +193,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<ChildrenResponse>();
             var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "PregnancyInformation");
-            if(child != null)
+            if (child != null)
             {
                 response = _mapper.Map<List<ChildrenResponse>>(child);
             }
@@ -213,6 +213,6 @@ namespace Mumbi.Application.Services
             return new Response<List<ChildrenResponse>>(response);
         }
 
-        
+
     }
 }
