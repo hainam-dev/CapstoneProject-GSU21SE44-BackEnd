@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Mumbi.Application.Dtos.Childrens
 {
-    public class CreateChildrenRequest
+    public class UpdateChildrenInformationRequest
     {
+        public string Id { get; set; }
         public string FullName { get; set; }
         public string Nickname { get; set; }
         public string Image { get; set; }

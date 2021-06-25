@@ -13,7 +13,7 @@ namespace Mumbi.Infrastucture.Repositories
    
     public class TokenRepository : GenericRepository<Token>, ITokenRepository
     {
-        private readonly DbSet<Child> _token;
+        private readonly DbSet<Token> _token;
 
         public TokenRepository(ApplicationDbContext dbContext) : base(dbContext)
         {

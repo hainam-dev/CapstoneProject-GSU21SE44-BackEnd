@@ -11,8 +11,8 @@ namespace Mumbi.Application.Interfaces
         Task<Response<ChildrenResponse>> GetChildrenById(string id);
         Task<Response<List<ChildrenResponse>>> GetChildrenByMomId(string momId);
         Task<Response<string>> AddChildren(CreateChildrenRequest request);
-        Task<Response<string>> UpdateChildrenInformation(UpdateChildrenInfoResquest request);
-        Task<Response<string>> UpdatePregnancyInformation(UpdatePregnancyInfoRequest request);
+        Task<Response<string>> UpdateChildrenHealth(UpdateChildrenHealthResquest request);
+        Task<Response<string>> UpdateChildrenInformation(UpdateChildrenInformationRequest request);
         Task<Response<string>> DeleteChildren(string id);
     }
 }

@@ -44,26 +44,25 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _childrenService.GetChildrenByMomId(momId));
         }
-
-        [HttpPut("updateChildrenInfo/{Id}")]
-        public async Task<IActionResult> UpdateChildren(string Id, UpdateChildrenInfoResquest request)
-        {
-            if(Id != request.Id)
-            {
-                return BadRequest();
-            }
-
-            return Ok(await _childrenService.UpdateChildrenInformation(request));
-        }
-        [HttpPut("updatePregnancyInfo/{Id}")]
-        public async Task<IActionResult> UpdatePregnancy(string Id, UpdatePregnancyInfoRequest request)
+        [HttpPut("updateChildrenInformation/{Id}")]
+        public async Task<IActionResult> UpdateChildrenInformation(string Id, UpdateChildrenInformationRequest request)
         {
             if (Id != request.Id)
             {
                 return BadRequest();
             }
 
-            return Ok(await _childrenService.UpdatePregnancyInformation(request));
+            return Ok(await _childrenService.UpdateChildrenInformation(request));
+        }
+        [HttpPut("updateChildrenHealth/{Id}")]
+        public async Task<IActionResult> UpdateChildrenHealth(string Id, UpdateChildrenHealthResquest request)
+        {
+            if(Id != request.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await _childrenService.UpdateChildrenHealth(request));
         }
 
         [HttpPut("DeleteChildren/{Id}")]
