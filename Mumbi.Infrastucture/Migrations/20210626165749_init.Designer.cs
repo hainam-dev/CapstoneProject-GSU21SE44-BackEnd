@@ -10,8 +10,8 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210625144505_add-headvortex-child")]
-    partial class addheadvortexchild
+    [Migration("20210626165749_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,10 +119,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
 
-                    b.Property<string>("Fingertips")
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
+                    b.Property<int?>("Fingertips")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("((0))");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -136,8 +136,10 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<double?>("HeadCircumference")
                         .HasColumnType("float");
 
-                    b.Property<int>("HeadVortex")
-                        .HasColumnType("int");
+                    b.Property<int?>("HeadVortex")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("((0))");
 
                     b.Property<double?>("Height")
                         .HasColumnType("float");
@@ -149,8 +151,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
-                    b.Property<bool>("IsBorn")
-                        .HasColumnType("bit");
+                    b.Property<bool?>("IsBorn")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -262,8 +267,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit");
+                    b.Property<bool?>("IsApproved")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -279,42 +287,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasIndex("ChildId");
 
                     b.ToTable("Diary");
-                });
-
-            modelBuilder.Entity("Mumbi.Domain.Entities.Doctor", b =>
-                {
-                    b.Property<string>("AccountId")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("Birthday")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("FromHospital")
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Image")
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("Phonenumber")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("AccountId");
-
-                    b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
@@ -849,48 +821,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.ToTable("StandardIndex");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Symptom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("SymptomName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Symptom");
-                });
-
-            modelBuilder.Entity("Mumbi.Domain.Entities.SymptomVaccine", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IsEffected")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SymptomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VaccineId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SymptomId");
-
-                    b.HasIndex("VaccineId");
-
-                    b.ToTable("SymptomVaccine");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Token", b =>
                 {
                     b.Property<int>("Id")
@@ -902,11 +832,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("Token1")
+                    b.Property<string>("FcmToken")
                         .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)")
-                        .HasColumnName("Token");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValueSql("(N'')");
 
                     b.HasKey("Id");
 
@@ -1071,17 +1001,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Child");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Doctor", b =>
-                {
-                    b.HasOne("Mumbi.Domain.Entities.Account", "Account")
-                        .WithOne("Doctor")
-                        .HasForeignKey("Mumbi.Domain.Entities.Doctor", "AccountId")
-                        .HasConstraintName("FK_Doctor_Account")
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.GuidebookType", "Type")
@@ -1226,25 +1145,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.SymptomVaccine", b =>
-                {
-                    b.HasOne("Mumbi.Domain.Entities.Symptom", "Symptom")
-                        .WithMany("SymptomVaccines")
-                        .HasForeignKey("SymptomId")
-                        .HasConstraintName("FK_SymptomVaccine_Symptom")
-                        .IsRequired();
-
-                    b.HasOne("Mumbi.Domain.Entities.Vaccine", "Vaccine")
-                        .WithMany("SymptomVaccines")
-                        .HasForeignKey("VaccineId")
-                        .HasConstraintName("FK_SymptomVaccine_Vaccine")
-                        .IsRequired();
-
-                    b.Navigation("Symptom");
-
-                    b.Navigation("Vaccine");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Token", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.Account", "Account")
@@ -1277,8 +1177,6 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Account", b =>
                 {
-                    b.Navigation("Doctor");
-
                     b.Navigation("Mom");
 
                     b.Navigation("Reminders");
@@ -1351,11 +1249,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Symptom", b =>
-                {
-                    b.Navigation("SymptomVaccines");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Tooth", b =>
                 {
                     b.Navigation("ToothChildren");
@@ -1364,8 +1257,6 @@ namespace Mumbi.Infrastucture.Migrations
             modelBuilder.Entity("Mumbi.Domain.Entities.Vaccine", b =>
                 {
                     b.Navigation("InjectionSchedules");
-
-                    b.Navigation("SymptomVaccines");
                 });
 #pragma warning restore 612, 618
         }

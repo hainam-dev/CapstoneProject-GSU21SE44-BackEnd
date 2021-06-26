@@ -14,11 +14,10 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        [Column("FcmToken")]
-        public string FcmToken { get; set; }
-        [Required]
         [StringLength(100)]
         public string AccountId { get; set; }
+        [Required]
+        public string FcmToken { get; set; }
 
         [ForeignKey(nameof(AccountId))]
         [InverseProperty("Tokens")]

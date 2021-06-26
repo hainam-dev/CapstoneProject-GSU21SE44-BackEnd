@@ -23,11 +23,12 @@ namespace Mumbi.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
         public bool IsPublic { get; set; }
-        public bool IsApproved { get; set; }
         [Required]
         [StringLength(50)]
         public string ChildId { get; set; }
         public bool IsDeleted { get; set; }
+        [Required]
+        public bool IsApproved { get; set; }
 
         [ForeignKey(nameof(ChildId))]
         [InverseProperty("Diaries")]

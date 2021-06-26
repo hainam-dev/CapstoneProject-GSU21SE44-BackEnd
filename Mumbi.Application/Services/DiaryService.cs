@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
-using Mumbi.Application.Dtos.Dads;
+using Mumbi.Application.Constants;
 using Mumbi.Application.Dtos.Diaries;
-using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -40,10 +38,14 @@ namespace Mumbi.Application.Services
                 IsApproved = false,
             };
             await _unitOfWork.DiaryRepository.AddAsync(diary);
-            //if(request.IsPublic)
-            //{
-            //    bool sent = SendNotificationService.SendNotificationAsync(listToken, "request public diary", "Mom id request public diary id", "");
-            //}
+            if (request.IsPublic)
+            {
+                var staffs = await _unitOfWork.AccountRepository.GetAsync(x => x.RoleId == RoleConstant.STAFF_ROLE && x.IsDeleted == false);
+                foreach(var staff in staffs)
+                {
+                    await sendNotification(staff.AccountId, "Request public diary", "Mom id request public diary id");
+                }
+            }
             await _unitOfWork.SaveAsync();
             return new Response<string>("Thêm nhật ký thành công, id: " + diary.Id);
         }
@@ -64,7 +66,7 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildrenRepository.FirstAsync(x => x.Id == childId && x.IsDeleted == false);
             if (child == null)
             {
-                return new Response<List<DiaryResponse>> ($"Không tìm thấy bé \'{childId}\'.");
+                return new Response<List<DiaryResponse>>($"Không tìm thấy bé \'{childId}\'.");
             }
             var diary = await _unitOfWork.DiaryRepository.GetAsync(x => x.ChildId == childId && x.IsDeleted == false);
             if (diary == null)
@@ -118,8 +120,20 @@ namespace Mumbi.Application.Services
             return new Response<string>($"Xóa nhật ký id \'{Id}\' thành công!");
         }
 
-        
+        private async Task<bool> sendNotification(string receiverId, string title, string body)
+        {
+            try
+            {
+                var fcmTokens = await _unitOfWork.TokenRepository.GetAsync(x => x.AccountId == receiverId);
+                var deviceTokens = fcmTokens.Select(x => x.FcmToken).ToArray();
+                return await SendNotificationService.SendNotificationAsync(deviceTokens, title, body);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 
-    
+
 }

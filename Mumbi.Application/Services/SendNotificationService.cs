@@ -21,7 +21,7 @@ namespace Mumbi.Application.Services
         /// <param name="body">Description of notification</param>
         /// <param name="data">Object with all extra information you want to send hidden in the notification</param>
         /// <returns></returns>
-        public static async Task<bool> SendNotificationAsync(string[] deviceTokens, string title, string body, object data)
+        public static async Task<bool> SendNotificationAsync(string[] deviceTokens, string title, string body)
         {
             bool sent = false;
 
@@ -33,10 +33,9 @@ namespace Mumbi.Application.Services
                 {
                     notification = new Notification()
                     {
-                        title = title,
-                        text = body
+                        Title = title,
+                        Text = body
                     },
-                    data = data,
                     registration_ids = deviceTokens
                 };
 

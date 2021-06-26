@@ -29,8 +29,6 @@ namespace Mumbi.Domain.Entities
         [InverseProperty("Accounts")]
         public virtual Role Role { get; set; }
         [InverseProperty("Account")]
-        public virtual Doctor Doctor { get; set; }
-        [InverseProperty("Account")]
         public virtual Mom Mom { get; set; }
         [InverseProperty("Account")]
         public virtual Staff Staff { get; set; }

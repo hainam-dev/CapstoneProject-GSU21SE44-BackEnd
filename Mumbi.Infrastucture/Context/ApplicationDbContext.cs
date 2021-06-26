@@ -24,7 +24,6 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Child> Children { get; set; }
         public virtual DbSet<Dad> Dads { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
-        public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Guidebook> Guidebooks { get; set; }
         public virtual DbSet<GuidebookMom> GuidebookMoms { get; set; }
         public virtual DbSet<GuidebookType> GuidebookTypes { get; set; }
@@ -39,8 +38,6 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StandardIndex> StandardIndices { get; set; }
-        public virtual DbSet<Symptom> Symptoms { get; set; }
-        public virtual DbSet<SymptomVaccine> SymptomVaccines { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<Tooth> Teeth { get; set; }
         public virtual DbSet<ToothChild> ToothChildren { get; set; }
@@ -49,7 +46,7 @@ namespace Mumbi.Infrastucture.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -96,9 +93,13 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
-                entity.Property(e => e.Fingertips).IsUnicode(false);
+                entity.Property(e => e.Fingertips).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.HeadVortex).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Image).IsUnicode(false);
+
+                entity.Property(e => e.IsBorn).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.Property(e => e.MomId).IsUnicode(false);
 
@@ -142,30 +143,13 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.Image).IsUnicode(false);
 
+                entity.Property(e => e.IsApproved).HasDefaultValueSql("(CONVERT([bit],(0)))");
+
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.Diaries)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Diary_Child");
-            });
-
-            modelBuilder.Entity<Doctor>(entity =>
-            {
-                entity.Property(e => e.AccountId).IsUnicode(false);
-
-                entity.Property(e => e.Birthday).IsUnicode(false);
-
-                entity.Property(e => e.FromHospital).IsUnicode(false);
-
-                entity.Property(e => e.Image).IsUnicode(false);
-
-                entity.Property(e => e.Phonenumber).IsUnicode(false);
-
-                entity.HasOne(d => d.Account)
-                    .WithOne(p => p.Doctor)
-                    .HasForeignKey<Doctor>(d => d.AccountId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Doctor_Account");
             });
 
             modelBuilder.Entity<Guidebook>(entity =>
@@ -360,28 +344,13 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.Unit).IsUnicode(false);
             });
 
-            modelBuilder.Entity<SymptomVaccine>(entity =>
-            {
-                entity.HasOne(d => d.Symptom)
-                    .WithMany(p => p.SymptomVaccines)
-                    .HasForeignKey(d => d.SymptomId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SymptomVaccine_Symptom");
-
-                entity.HasOne(d => d.Vaccine)
-                    .WithMany(p => p.SymptomVaccines)
-                    .HasForeignKey(d => d.VaccineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SymptomVaccine_Vaccine");
-            });
-
             modelBuilder.Entity<Token>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
-                entity.Property(e => e.FcmToken).IsUnicode(false);
+                entity.Property(e => e.FcmToken).HasDefaultValueSql("(N'')");
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Tokens)

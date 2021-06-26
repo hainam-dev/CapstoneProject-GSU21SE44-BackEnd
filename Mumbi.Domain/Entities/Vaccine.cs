@@ -14,7 +14,6 @@ namespace Mumbi.Domain.Entities
         public Vaccine()
         {
             InjectionSchedules = new HashSet<InjectionSchedule>();
-            SymptomVaccines = new HashSet<SymptomVaccine>();
         }
 
         [Key]
@@ -33,7 +32,5 @@ namespace Mumbi.Domain.Entities
 
         [InverseProperty(nameof(InjectionSchedule.Vaccine))]
         public virtual ICollection<InjectionSchedule> InjectionSchedules { get; set; }
-        [InverseProperty(nameof(SymptomVaccine.Vaccine))]
-        public virtual ICollection<SymptomVaccine> SymptomVaccines { get; set; }
     }
 }

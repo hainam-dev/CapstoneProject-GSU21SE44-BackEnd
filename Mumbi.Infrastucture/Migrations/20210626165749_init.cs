@@ -22,9 +22,6 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "Diary");
 
             migrationBuilder.DropTable(
-                name: "Doctor");
-
-            migrationBuilder.DropTable(
                 name: "GuidebookMom");
 
             migrationBuilder.DropTable(
@@ -49,9 +46,6 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "StandardIndex");
 
             migrationBuilder.DropTable(
-                name: "SymptomVaccine");
-
-            migrationBuilder.DropTable(
                 name: "Token");
 
             migrationBuilder.DropTable(
@@ -64,16 +58,13 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "Guidebook");
 
             migrationBuilder.DropTable(
+                name: "Vaccine");
+
+            migrationBuilder.DropTable(
                 name: "News");
 
             migrationBuilder.DropTable(
                 name: "PregnancyActivityType");
-
-            migrationBuilder.DropTable(
-                name: "Symptom");
-
-            migrationBuilder.DropTable(
-                name: "Vaccine");
 
             migrationBuilder.DropTable(
                 name: "Child");

@@ -38,7 +38,6 @@ namespace Mumbi.Domain.Entities
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
         public int? Fingertips { get; set; }
-        public int? HeadVortex { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
         public double? HeadCircumference { get; set; }
@@ -50,6 +49,7 @@ namespace Mumbi.Domain.Entities
         public bool IsDeleted { get; set; }
         [Required]
         public bool IsBorn { get; set; }
+        public int? HeadVortex { get; set; }
 
         [ForeignKey(nameof(MomId))]
         [InverseProperty("Children")]
