@@ -381,7 +381,7 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
-                entity.Property(e => e.Token1).IsUnicode(false);
+                entity.Property(e => e.FcmToken).IsUnicode(false);
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Tokens)

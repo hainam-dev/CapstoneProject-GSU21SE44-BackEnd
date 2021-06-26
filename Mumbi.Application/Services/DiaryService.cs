@@ -40,6 +40,10 @@ namespace Mumbi.Application.Services
                 IsApproved = false,
             };
             await _unitOfWork.DiaryRepository.AddAsync(diary);
+            //if(request.IsPublic)
+            //{
+            //    bool sent = SendNotificationService.SendNotificationAsync(listToken, "request public diary", "Mom id request public diary id", "");
+            //}
             await _unitOfWork.SaveAsync();
             return new Response<string>("Thêm nhật ký thành công, id: " + diary.Id);
         }

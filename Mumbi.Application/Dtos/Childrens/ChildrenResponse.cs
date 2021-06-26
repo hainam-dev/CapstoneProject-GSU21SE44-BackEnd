@@ -8,7 +8,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public string FullName { get; set; }
         public string Nickname { get; set; }
         public string Image { get; set; }
-        public int? Gender { get; set; }
+        public string Gender { get; set; }
         public String BirthDay { get; set; }
         public string BloodGroup { get; set; }
         public string RhBloodGroup { get; set; }  
@@ -27,5 +27,6 @@ namespace Mumbi.Application.Dtos.Childrens
         public string PregnancyType { get; set; }
         public int? MotherMenstrualCycleTime { get; set; }
         public double? MotherWeight { get; set; }
+        public bool IsBorn { get; set; }
     }
 }

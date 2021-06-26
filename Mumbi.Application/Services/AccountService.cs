@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
                 UserRecord account_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(decodedToken.Uid);
                 Account currentAccount = await _unitOfWork.AccountRepository
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
-                                                                      includeProperties: "Mom,Staff,Doctor");
+                                                                      includeProperties: "Mom,Staff");
 
 
                 if (currentAccount != null && currentAccount.IsDeleted == true)
@@ -71,20 +71,6 @@ namespace Mumbi.Application.Services
                         await _unitOfWork.StaffRepository.AddAsync(staff_info);
 
                     }
-                    else if (getRole[0].ToString() == "doctormumbi")
-                    {
-                        account_Info.RoleId = RoleConstant.DOCTOR_ROLE;
-                        await _unitOfWork.AccountRepository.AddAsync(account_Info);
-
-                        var doctor_info = new Doctor
-                        {
-                            AccountId = account_firebase.Email,
-                            FullName = account_firebase.DisplayName,
-                            Phonenumber = account_firebase.PhoneNumber,
-                            Image = account_firebase.PhotoUrl
-                        };
-                        await _unitOfWork.DoctorRepository.AddAsync(doctor_info);
-                    }
                     else
                     {
                         account_Info.RoleId = RoleConstant.USER_ROLE;
@@ -100,11 +86,12 @@ namespace Mumbi.Application.Services
                         await _unitOfWork.MomRepository.AddAsync(mom_info);
                     }
 
-                    var fcmToken = new Token
+                    var token_info = new Token
                     {
                         AccountId = account_firebase.Email,
-                        Token1 = request.FCMToken,
+                        FcmToken = request.FCMToken,
                     };
+                    await _unitOfWork.TokenRepository.AddAsync(token_info);
                     await _unitOfWork.SaveAsync();
                     currentAccount = account_Info;
                 }
@@ -116,7 +103,7 @@ namespace Mumbi.Application.Services
                 response.Role = currentAccount.RoleId;
                 foreach (var getFCM in fcm)
                 {
-                    response.FCMToken = getFCM.Token1;
+                    response.FCMToken = getFCM.FcmToken;
                 }
                 if (currentAccount.Mom != null)
                 {
@@ -128,12 +115,6 @@ namespace Mumbi.Application.Services
                     response.Fullname = currentAccount.Staff.FullName;
                     response.Photo = currentAccount.Staff.Image;
                 }
-                else
-                {
-                    response.Fullname = currentAccount.Doctor.FullName;
-                    response.Photo = currentAccount.Doctor.Image;
-                }
-
 
                 return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }

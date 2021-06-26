@@ -9,6 +9,7 @@ using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Dtos.NewsType;
+using Mumbi.Application.Dtos.Staffs;
 using Mumbi.Domain.Entities;
 namespace Mumbi.Application.Mapping
 {
@@ -18,6 +19,7 @@ namespace Mumbi.Application.Mapping
         {
             // Child
             CreateMap<Child, ChildrenResponse>();
+            CreateMap<Child, ChildrenResponse>();
 
             // Pregnancy Info
             CreateMap<PregnancyInformation, ChildrenResponse>();
@@ -26,6 +28,8 @@ namespace Mumbi.Application.Mapping
             CreateMap<Mom, MomResponse>();
             // Dad
             CreateMap<Dad, DadResponse>();
+            //Staff
+            CreateMap<Staff, StaffResponse>();
             // Diary
             CreateMap<Diary, DiaryResponse>();
             // DiaryPublic

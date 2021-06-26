@@ -19,7 +19,6 @@ namespace Mumbi.Application.Interfaces
         IGuidebookTypeRepository GuidebookTypeRepository { get; }
         IGuidebookMomRepository GuidebookMomRepository { get; }
         IStaffRepository StaffRepository { get; }
-        IDoctorRepository DoctorRepository { get; }
         ITokenRepository TokenRepository { get; }
 
         Task<int> SaveAsync();

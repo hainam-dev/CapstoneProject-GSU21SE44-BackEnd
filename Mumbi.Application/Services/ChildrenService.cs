@@ -81,7 +81,6 @@ namespace Mumbi.Application.Services
                     }
                     else
                     {
-                        child.IsBorn = true;
                         child.Birthday = request.BirthDay;
                         child.BloodGroup = request.BloodGroup;
                         child.RhBloodGroup = request.RhBloodGroup;
@@ -107,7 +106,6 @@ namespace Mumbi.Application.Services
                     }
                     else
                     {
-                        child.IsBorn = false;
                         pregnancy.CalculatedBornDate = request.CalculatedBornDate;
                         pregnancy.PregnancyType = request.PregnancyType;
                         pregnancy.MotherMenstrualCycleTime = request.MotherMenstrualCycleTime;

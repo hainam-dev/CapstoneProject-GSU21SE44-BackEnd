@@ -14,8 +14,8 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        [Column("Token")]
-        public string Token1 { get; set; }
+        [Column("FcmToken")]
+        public string FcmToken { get; set; }
         [Required]
         [StringLength(100)]
         public string AccountId { get; set; }

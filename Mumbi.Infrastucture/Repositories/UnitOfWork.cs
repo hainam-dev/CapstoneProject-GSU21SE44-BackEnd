@@ -35,7 +35,6 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookTypeRepository GuidebookTypeRepository { get; set; }
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
         public IStaffRepository StaffRepository { get; set; }
-        public IDoctorRepository DoctorRepository { get; set; }
         public ITokenRepository TokenRepository { get; set; }
 
         private void InitRepository()
@@ -54,7 +53,6 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookTypeRepository = new GuidebookTypeRepository(_context);
             GuidebookMomRepository = new GuidebookMomRepository(_context);
             StaffRepository = new StaffRepository(_context);
-            DoctorRepository = new DoctorRepository(_context);
             TokenRepository = new TokenRepository(_context);
         }
 
