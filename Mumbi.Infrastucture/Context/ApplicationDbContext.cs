@@ -346,8 +346,6 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Token>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.AccountId).IsUnicode(false);
 
                 entity.Property(e => e.FcmToken).HasDefaultValueSql("(N'')");

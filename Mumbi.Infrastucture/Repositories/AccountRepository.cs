@@ -2,6 +2,7 @@
 using Mumbi.Application.Interfaces.Repositories;
 using Mumbi.Domain.Entities;
 using Mumbi.Infrastucture.Context;
+using System.Threading.Tasks;
 
 namespace Mumbi.Infrastucture.Repositories
 {

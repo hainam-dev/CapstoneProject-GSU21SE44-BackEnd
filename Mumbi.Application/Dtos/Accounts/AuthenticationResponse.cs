@@ -7,6 +7,5 @@
         public string Role { get; set; }
         public string Photo { get; set; }
         public string JWToken { get; set; }
-        public string FCMToken { get; set; }
     }
 }

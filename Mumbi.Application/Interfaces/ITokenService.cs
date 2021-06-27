@@ -8,5 +8,6 @@ namespace Mumbi.Application.Interfaces
 {
     public interface ITokenService
     {
+
     }
 }

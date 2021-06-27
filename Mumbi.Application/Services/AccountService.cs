@@ -41,7 +41,6 @@ namespace Mumbi.Application.Services
                                                           .FirstAsync(u => u.AccountId == account_firebase.Email,
                                                                       includeProperties: "Mom,Staff");
 
-
                 if (currentAccount != null && currentAccount.IsDeleted == true)
                 {
                     return new Response<AuthenticationResponse>($"Xác thực đã bị lỗi. Tài khoản \'{account_firebase.Email}\' không khả dụng");
@@ -70,6 +69,7 @@ namespace Mumbi.Application.Services
                         };
                         await _unitOfWork.StaffRepository.AddAsync(staff_info);
 
+                        currentAccount.Staff = staff_info;
                     }
                     else
                     {
@@ -84,6 +84,8 @@ namespace Mumbi.Application.Services
                             Image = account_firebase.PhotoUrl
                         };
                         await _unitOfWork.MomRepository.AddAsync(mom_info);
+
+                        currentAccount.Mom = mom_info;
                     }
 
                     var token_info = new Token
@@ -92,39 +94,30 @@ namespace Mumbi.Application.Services
                         FcmToken = request.FCMToken,
                     };
                     await _unitOfWork.TokenRepository.AddAsync(token_info);
+
                     currentAccount = account_Info;
                 }
+
+                // Check token is not existed then add to database
+                var isUniqueToken = _unitOfWork.TokenRepository.IsUniqueFCMTOken(request.FCMToken);
+                if (isUniqueToken)
+                {
+                    var token_info = new Token
+                    {
+                        AccountId = account_firebase.Email,
+                        FcmToken = request.FCMToken,
+                    };
+                    await _unitOfWork.TokenRepository.AddAsync(token_info);
+                }
+
+                await _unitOfWork.SaveAsync();
+
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
                 AuthenticationResponse response = new AuthenticationResponse();
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                var FcmToken_info = await _unitOfWork.TokenRepository.GetAsync(x => x.AccountId == currentAccount.AccountId);
-                if (FcmToken_info.Count > 0)
-                {
-                    foreach (var FcmToken in FcmToken_info)
-                    {
-                        if (request.FCMToken != FcmToken.FcmToken)
-                        {
-                            var token_info = new Token
-                            {
-                                AccountId = currentAccount.AccountId,
-                                FcmToken = request.FCMToken,
-                            };
-                            await _unitOfWork.TokenRepository.AddAsync(token_info);
-                        }
-                        response.FCMToken = FcmToken.FcmToken;
-                    }
-                }
-                else
-                {
-                    var token_info = new Token
-                    {
-                        AccountId = currentAccount.AccountId,
-                        FcmToken = request.FCMToken,
-                    };
-                    await _unitOfWork.TokenRepository.AddAsync(token_info);
-                }
+
                 if (currentAccount.Mom != null)
                 {
                     response.Fullname = currentAccount.Mom.FullName;
@@ -135,7 +128,7 @@ namespace Mumbi.Application.Services
                     response.Fullname = currentAccount.Staff.FullName;
                     response.Photo = currentAccount.Staff.Image;
                 }
-                await _unitOfWork.SaveAsync();
+
                 return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }
             catch (FirebaseAuthException ex)
