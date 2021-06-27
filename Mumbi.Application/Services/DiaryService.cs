@@ -40,7 +40,7 @@ namespace Mumbi.Application.Services
             await _unitOfWork.DiaryRepository.AddAsync(diary);
             if (request.IsPublic)
             {
-                var staffs = await _unitOfWork.AccountRepository.GetAsync(x => x.RoleId == RoleConstant.STAFF_ROLE && x.IsDeleted == false);
+                var staffs = await _unitOfWork.AccountRepository.GetAsync(x => x.RoleId == RoleConstant.USER_ROLE && x.IsDeleted == false);
                 foreach(var staff in staffs)
                 {
                     await sendNotification(staff.AccountId, "Request public diary", "Mom id request public diary id");

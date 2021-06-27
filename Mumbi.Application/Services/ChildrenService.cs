@@ -202,7 +202,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<ChildrenResponse>();
 
-            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.MomId == momId, includeProperties: "PregnancyInformation");
+            var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.MomId == momId && x.IsDeleted == false, includeProperties: "PregnancyInformation");
             if (child == null)
             {
                 return new Response<List<ChildrenResponse>>($"Không tìm thấy mẹ \'{momId}\'");

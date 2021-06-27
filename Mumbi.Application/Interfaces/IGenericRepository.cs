@@ -8,13 +8,13 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IList<T>> GetAllAsync();
         
-        Task<IEnumerable<T>> GetPagedReponseAsync(int pageNumber, int pageSize,
+        Task<IList<T>> GetPagedReponseAsync(int pageNumber, int pageSize,
                                                   Expression<Func<T, bool>> filter,
                                                   Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                                   string includeProperties = "");
-        Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null,
+        Task<IList<T>> GetAsync(Expression<Func<T, bool>> filter = null,
                                       Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                       string includeProperties = "");
         Task<T> FirstAsync(Expression<Func<T, bool>> filter, string includeProperties = "");
@@ -22,6 +22,6 @@ namespace Mumbi.Application.Interfaces
         Task<T> AddAsync(T entity);
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
-        void DeleteAllAsync(IEnumerable<T> entities);
+        void DeleteAllAsync(IList<T> entities);
     }
 }

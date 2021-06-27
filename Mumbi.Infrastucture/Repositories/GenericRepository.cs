@@ -24,7 +24,7 @@ namespace Mumbi.Infrastucture.Repositories
             return entity;
         }
 
-        public void DeleteAllAsync(IEnumerable<T> entities)
+        public void DeleteAllAsync(IList<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
         }
@@ -51,12 +51,12 @@ namespace Mumbi.Infrastucture.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IList<T>> GetAllAsync()
         {
             return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public async Task<IList<T>> GetAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = _context.Set<T>();
             if (filter != null)
@@ -85,7 +85,7 @@ namespace Mumbi.Infrastucture.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetPagedReponseAsync(int pageNumber, int pageSize, Expression<Func<T, bool>> filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public async Task<IList<T>> GetPagedReponseAsync(int pageNumber, int pageSize, Expression<Func<T, bool>> filter, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = _context.Set<T>();
             if (filter != null)

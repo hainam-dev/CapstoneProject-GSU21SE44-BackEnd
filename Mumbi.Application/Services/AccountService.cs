@@ -92,18 +92,38 @@ namespace Mumbi.Application.Services
                         FcmToken = request.FCMToken,
                     };
                     await _unitOfWork.TokenRepository.AddAsync(token_info);
-                    await _unitOfWork.SaveAsync();
                     currentAccount = account_Info;
                 }
-                var fcm = await _unitOfWork.TokenRepository.GetAsync(x => x.AccountId == currentAccount.AccountId);
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentAccount);
                 AuthenticationResponse response = new AuthenticationResponse();
                 response.Email = currentAccount.AccountId;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentAccount.RoleId;
-                foreach (var getFCM in fcm)
+                var FcmToken_info = await _unitOfWork.TokenRepository.GetAsync(x => x.AccountId == currentAccount.AccountId);
+                if (FcmToken_info.Count > 0)
                 {
-                    response.FCMToken = getFCM.FcmToken;
+                    foreach (var FcmToken in FcmToken_info)
+                    {
+                        if (request.FCMToken != FcmToken.FcmToken)
+                        {
+                            var token_info = new Token
+                            {
+                                AccountId = currentAccount.AccountId,
+                                FcmToken = request.FCMToken,
+                            };
+                            await _unitOfWork.TokenRepository.AddAsync(token_info);
+                        }
+                        response.FCMToken = FcmToken.FcmToken;
+                    }
+                }
+                else
+                {
+                    var token_info = new Token
+                    {
+                        AccountId = currentAccount.AccountId,
+                        FcmToken = request.FCMToken,
+                    };
+                    await _unitOfWork.TokenRepository.AddAsync(token_info);
                 }
                 if (currentAccount.Mom != null)
                 {
@@ -115,7 +135,7 @@ namespace Mumbi.Application.Services
                     response.Fullname = currentAccount.Staff.FullName;
                     response.Photo = currentAccount.Staff.Image;
                 }
-
+                await _unitOfWork.SaveAsync();
                 return new Response<AuthenticationResponse>(response, $"Đã xác thực {account_firebase.Email}");
             }
             catch (FirebaseAuthException ex)
