@@ -75,6 +75,7 @@ namespace Mumbi.Application.Services
                     if (request.ChildrenStatus == (int)ChildrenStatusEnum.Pregnancy)
                     {
                         child.IsBorn = false;
+                        var pregnancy_info = new PregnancyInformation();
                         pregnancy.CalculatedBornDate = request.CalculatedBornDate;
                         pregnancy.PregnancyType = request.PregnancyType;
                         pregnancy.MotherMenstrualCycleTime = request.MotherMenstrualCycleTime;
@@ -112,7 +113,10 @@ namespace Mumbi.Application.Services
                     }
                 }
                 _unitOfWork.ChildrenRepository.UpdateAsync(child);
-                _unitOfWork.PregnancyInformationRepository.UpdateAsync(pregnancy);
+                if(pregnancy != null)
+                {
+                    _unitOfWork.PregnancyInformationRepository.UpdateAsync(pregnancy);
+                }
                 await _unitOfWork.SaveAsync();
                 return new Response<string>("Cập nhật thông tin em bé thành công", child.Id);
             }

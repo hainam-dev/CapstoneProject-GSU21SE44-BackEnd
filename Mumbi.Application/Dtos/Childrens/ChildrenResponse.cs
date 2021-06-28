@@ -12,7 +12,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public String BirthDay { get; set; }
         public string BloodGroup { get; set; }
         public string RhBloodGroup { get; set; }  
-        public string Fingertips { get; set; }
+        public int Fingertips { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
         public double? HeadCircumference { get; set; }
@@ -23,6 +23,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public DateTime CalculatedBornDate { get; set; }
         public double? FemurLength { get; set; }
         public double? FetalHeartRate { get; set; }
+        public int HeadVortex { get; set; }
         public int? PregnancyWeek { get; set; }
         public string PregnancyType { get; set; }
         public int? MotherMenstrualCycleTime { get; set; }

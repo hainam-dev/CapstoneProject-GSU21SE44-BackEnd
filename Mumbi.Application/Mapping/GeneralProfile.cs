@@ -19,8 +19,10 @@ namespace Mumbi.Application.Mapping
         {
             // Child
             CreateMap<Child, ChildrenResponse>();
-            CreateMap<Child, ChildrenResponse>();
-
+            CreateMap<PregnancyInformation, ChildrenResponse>().ForMember(
+                dest => dest.Id, 
+                opt => opt.MapFrom(src => src.ChildId)
+                ).ForMember(dest => dest.PregnancyWeek, opt => opt.MapFrom(src => src.PregnancyWeek));
             // Pregnancy Info
             CreateMap<PregnancyInformation, ChildrenResponse>();
 
