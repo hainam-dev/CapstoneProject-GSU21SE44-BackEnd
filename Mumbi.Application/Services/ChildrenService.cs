@@ -195,10 +195,11 @@ namespace Mumbi.Application.Services
         {
             var response = new List<ChildrenResponse>();
             var child = await _unitOfWork.ChildrenRepository.GetAsync(x => x.IsDeleted == false, includeProperties: "PregnancyInformation");
-            if (child != null)
+            if (child.Count > 0)
             {
                 response = _mapper.Map<List<ChildrenResponse>>(child);
             }
+
             return new Response<List<ChildrenResponse>>(response);
         }
 

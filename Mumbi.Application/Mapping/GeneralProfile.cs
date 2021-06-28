@@ -18,11 +18,34 @@ namespace Mumbi.Application.Mapping
         public GeneralProfile()
         {
             // Child
-            CreateMap<Child, ChildrenResponse>();
-            CreateMap<PregnancyInformation, ChildrenResponse>().ForMember(
-                dest => dest.Id, 
-                opt => opt.MapFrom(src => src.ChildId)
-                ).ForMember(dest => dest.PregnancyWeek, opt => opt.MapFrom(src => src.PregnancyWeek));
+            CreateMap<Child, ChildrenResponse>().ForMember(
+                dest => dest.Weight,
+                opt => opt.MapFrom(src => src.PregnancyInformation.Weight)
+            ).ForMember(
+                dest => dest.CalculatedBornDate,
+                opt => opt.MapFrom(src => src.PregnancyInformation.CalculatedBornDate)
+            ).ForMember(
+                dest => dest.HeadCircumference,
+                opt => opt.MapFrom(src => src.PregnancyInformation.HeadCircumference)
+            ).ForMember(
+                dest => dest.FemurLength,
+                opt => opt.MapFrom(src => src.PregnancyInformation.FemurLength)
+            ).ForMember(
+                dest => dest.FetalHeartRate,
+                opt => opt.MapFrom(src => src.PregnancyInformation.FetalHeartRate)
+            ).ForMember(
+                dest => dest.PregnancyWeek,
+                opt => opt.MapFrom(src => src.PregnancyInformation.PregnancyWeek)
+            ).ForMember(
+                dest => dest.PregnancyType,
+                opt => opt.MapFrom(src => src.PregnancyInformation.PregnancyType)
+            ).ForMember(
+                dest => dest.MotherMenstrualCycleTime,
+                opt => opt.MapFrom(src => src.PregnancyInformation.MotherMenstrualCycleTime)
+            ).ForMember(
+                dest => dest.MotherWeight,
+                opt => opt.MapFrom(src => src.PregnancyInformation.MotherWeight)
+            );
             // Pregnancy Info
             CreateMap<PregnancyInformation, ChildrenResponse>();
 
