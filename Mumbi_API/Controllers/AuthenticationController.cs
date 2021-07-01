@@ -8,20 +8,20 @@ namespace Mumbi_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
 
-        public AccountsController(IAccountService accountService)
+        public AuthenticationController(IUserService userService)
         {
-            _accountService = accountService;
+            _userService = userService;
         }
 
         [AllowAnonymous]
         [HttpPost("Authenticate")]
         public async Task<IActionResult> AuthenticateWithGoogle(AuthenticationRequest request)
         {
-            var response = await _accountService.Authenticate(request);
+            var response = await _userService.Authenticate(request);
             return Ok(response);
         }
     }

@@ -18,12 +18,12 @@ namespace Mumbi.Domain.Entities
 
         [Key]
         public int Id { get; set; }
-        public int Month { get; set; }
         [Required]
-        public string ActionName { get; set; }
+        public string Name { get; set; }
         [Required]
         [StringLength(20)]
-        public string ActionType { get; set; }
+        public string Type { get; set; }
+        public byte Month { get; set; }
 
         [InverseProperty(nameof(ActionChild.Action))]
         public virtual ICollection<ActionChild> ActionChildren { get; set; }

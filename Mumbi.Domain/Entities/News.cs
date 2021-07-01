@@ -23,17 +23,20 @@ namespace Mumbi.Domain.Entities
         public string Title { get; set; }
         [Required]
         public string NewsContent { get; set; }
-        public string Image { get; set; }
-        [StringLength(10)]
-        public string EstimateFinishTime { get; set; }
-        [StringLength(200)]
+        [Column("ImageURL")]
+        public string ImageUrl { get; set; }
+        public short? EstimateFinishTime { get; set; }
+        [StringLength(100)]
         public string CreatedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? CreatedTime { get; set; }
+        [StringLength(100)]
+        public string LastModifiedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
+        [Column("Type_Id")]
         public int? TypeId { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool DelFlag { get; set; }
 
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(NewsType.News))]

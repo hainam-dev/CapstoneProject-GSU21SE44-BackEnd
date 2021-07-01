@@ -13,17 +13,17 @@ namespace Mumbi.Domain.Entities
     {
         public Role()
         {
-            Accounts = new HashSet<Account>();
+            Users = new HashSet<User>();
         }
 
         [Key]
-        [StringLength(20)]
+        [StringLength(10)]
         public string Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string RoleName { get; set; }
 
-        [InverseProperty(nameof(Account.Role))]
-        public virtual ICollection<Account> Accounts { get; set; }
+        [InverseProperty(nameof(User.Role))]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

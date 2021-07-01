@@ -11,18 +11,22 @@ namespace Mumbi.Domain.Entities
     [Table("Tooth")]
     public partial class Tooth
     {
-        public Tooth()
-        {
-            ToothChildren = new HashSet<ToothChild>();
-        }
-
         [Key]
         public int Id { get; set; }
-        public int? ToothNumber { get; set; }
+        [Column("Child_Id")]
+        public int ChildId { get; set; }
+        [StringLength(100)]
+        public string Name { get; set; }
+        public byte? Position { get; set; }
+        [Column("ImageURL")]
+        public string ImageUrl { get; set; }
         [StringLength(50)]
-        public string ToothName { get; set; }
+        public string GrowTime { get; set; }
+        public string Note { get; set; }
+        public bool GrownFlag { get; set; }
 
-        [InverseProperty(nameof(ToothChild.Tooth))]
-        public virtual ICollection<ToothChild> ToothChildren { get; set; }
+        [ForeignKey(nameof(ChildId))]
+        [InverseProperty(nameof(ChildInfo.Teeth))]
+        public virtual ChildInfo Child { get; set; }
     }
 }

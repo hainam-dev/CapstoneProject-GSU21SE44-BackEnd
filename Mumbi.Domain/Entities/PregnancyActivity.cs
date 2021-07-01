@@ -13,20 +13,20 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        [StringLength(16)]
-        public string ActivityName { get; set; }
-        public string MediaFile { get; set; }
-        [Required]
-        [StringLength(30)]
-        public string IsDone { get; set; }
+        [Column("Child_Id")]
+        public int? ChildId { get; set; }
+        [StringLength(100)]
+        public string Name { get; set; }
+        [Column("MediaFileURL")]
+        public string MediaFileUrl { get; set; }
+        [Column("Type_Id")]
         public int? TypeId { get; set; }
-        [StringLength(50)]
-        public string ChildId { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool FinishedFlag { get; set; }
+        public bool DelFlag { get; set; }
 
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty("PregnancyActivities")]
-        public virtual Child Child { get; set; }
+        [InverseProperty(nameof(ChildInfo.PregnancyActivities))]
+        public virtual ChildInfo Child { get; set; }
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(PregnancyActivityType.PregnancyActivities))]
         public virtual PregnancyActivityType Type { get; set; }

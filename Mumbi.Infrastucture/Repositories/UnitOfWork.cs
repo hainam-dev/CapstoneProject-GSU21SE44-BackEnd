@@ -16,7 +16,7 @@ namespace Mumbi.Infrastucture.Repositories
             InitRepository();
         }
 
-        public IAccountRepository AccountRepository { get; set; }
+        public IUserRepository UserRepository { get; set; }
 
         public IRoleRepository RoleRepository { get; set; }
 
@@ -34,13 +34,14 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookRepository GuidebookRepository { get; set; }
         public IGuidebookTypeRepository GuidebookTypeRepository { get; set; }
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
-        public IStaffRepository StaffRepository { get; set; }
         public ITokenRepository TokenRepository { get; set; }
+        public IUserInfoRepository UserInfoRepository { get; set; }
 
         private void InitRepository()
         {
             RoleRepository = new RoleRepository(_context);
-            AccountRepository = new AccountRepository(_context);
+            UserRepository = new UserRepository(_context);
+            UserInfoRepository = new UserInfoRepository(_context);
             MomRepository = new MomRepository(_context);
             ChildrenRepository = new ChildrenRepository(_context);
             PregnancyInformationRepository = new PregnancyInformationRepository(_context);
@@ -52,7 +53,6 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookRepository = new GuidebookRepository(_context);
             GuidebookTypeRepository = new GuidebookTypeRepository(_context);
             GuidebookMomRepository = new GuidebookMomRepository(_context);
-            StaffRepository = new StaffRepository(_context);
             TokenRepository = new TokenRepository(_context);
         }
 

@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Options;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
-using Mumbi.Domain.Settings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -30,13 +26,13 @@ namespace Mumbi.Application.Services
                 Id = Guid.NewGuid().ToString(),
                 Title = request.Title,
                 NewsContent = request.NewsContent,
-                Image = request.Image,
-                EstimateFinishTime = request.EstimateFinishTime,
+                ImageUrl = request.Image,
+                //EstimateFinishTime = request.EstimateFinishTime,
                 CreatedBy = request.CreatedBy,
                 CreatedTime = DateTime.Now,
                 LastModifiedTime = DateTime.Now,
                 TypeId = request.TypeId,
-                IsDeleted = false,
+                DelFlag = false,
             };
             await _unitOfWork.NewsRepository.AddAsync(news);
             await _unitOfWork.SaveAsync();
@@ -45,7 +41,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<NewsResponse>>> GetAllNews()
         {
-            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.IsDeleted == false);
+            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.DelFlag == false);
             if (news == null)
             {
                 return new Response<List<NewsResponse>>("Chưa có dữ liệu");
@@ -57,7 +53,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<NewsResponse>> GetNewsById(string Id)
         {
             var response = new NewsResponse();
-            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.IsDeleted == false);
+            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if(news == null)
             {
                 return new Response<NewsResponse>($"Không tìm thấy news id \'{Id}\'");
@@ -69,7 +65,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<NewsByTypeIdResponse>>> GetNewsByTypeId(int typeId)
         {
             var response = new List<NewsByTypeIdResponse>();
-            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == typeId && x.IsDeleted == false);
+            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
             if (news == null)
             {
                 return new Response<List<NewsByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
@@ -80,15 +76,15 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> UpdateNewsRequest(UpdateNewsRequest request)
         {
-            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == request.Id && x.IsDeleted == false);
+            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
             if (news == null)
             {
                 return new Response<string>($"Không tìm thấy news id \'{request.Id}\'");
             }
             news.Title = request.Title;
             news.NewsContent = request.NewsContent;
-            news.Image = request.Image;
-            news.EstimateFinishTime = request.EstimateFinishTime;
+            news.ImageUrl = request.Image;
+            //news.EstimateFinishTime = request.EstimateFinishTime;
             news.TypeId = request.TypeId;
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();
@@ -97,7 +93,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> DeleteNews(string Id)
         {
-            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.IsDeleted == false);
+            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (news == null)
             {
                 return new Response<string>($"Không tìm thấy news type có id \'{Id}\'.");
@@ -107,7 +103,7 @@ namespace Mumbi.Application.Services
             {
                 return new Response<string>($"News id \'{Id}\' chưa có dữ liệu");
             }
-            news.IsDeleted = true;
+            news.DelFlag = true;
             _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();

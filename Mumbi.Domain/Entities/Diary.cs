@@ -13,25 +13,25 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string Image { get; set; }
+        [Column("Child_Id")]
+        public int ChildId { get; set; }
+        [Column("ImageURL")]
+        public string ImageUrl { get; set; }
         [Required]
         public string DiaryContent { get; set; }
-        [StringLength(200)]
+        [StringLength(100)]
         public string CreatedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? CreatedTime { get; set; }
+        [StringLength(200)]
+        public string LastModifiedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
-        public bool IsPublic { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string ChildId { get; set; }
-        public bool IsDeleted { get; set; }
-        [Required]
-        public bool IsApproved { get; set; }
+        public bool ApprovedFlag { get; set; }
+        public bool DelFlag { get; set; }
 
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty("Diaries")]
-        public virtual Child Child { get; set; }
+        [InverseProperty(nameof(ChildInfo.Diaries))]
+        public virtual ChildInfo Child { get; set; }
     }
 }

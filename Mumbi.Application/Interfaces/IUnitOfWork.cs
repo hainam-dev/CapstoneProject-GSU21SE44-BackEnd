@@ -5,7 +5,8 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IUnitOfWork
     {
-        IAccountRepository AccountRepository { get; }
+        IUserRepository UserRepository { get; }
+        IUserInfoRepository UserInfoRepository { get; }
         IRoleRepository RoleRepository { get; }
         IMomRepository MomRepository { get; }
         IDadRepository DadRepository { get; }
@@ -18,7 +19,6 @@ namespace Mumbi.Application.Interfaces
         IGuidebookRepository GuidebookRepository { get; }
         IGuidebookTypeRepository GuidebookTypeRepository { get; }
         IGuidebookMomRepository GuidebookMomRepository { get; }
-        IStaffRepository StaffRepository { get; }
         ITokenRepository TokenRepository { get; }
 
         Task<int> SaveAsync();

@@ -14,13 +14,14 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [Required]
+        [Column("User_Id")]
         [StringLength(100)]
-        public string AccountId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string FcmToken { get; set; }
 
-        [ForeignKey(nameof(AccountId))]
+        [ForeignKey(nameof(UserId))]
         [InverseProperty("Tokens")]
-        public virtual Account Account { get; set; }
+        public virtual User User { get; set; }
     }
 }

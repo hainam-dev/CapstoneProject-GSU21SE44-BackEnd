@@ -8,22 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Action_Child")]
-    public partial class ActionChild
+    [Table("Pregnancy_Info")]
+    public partial class PregnancyInfo
     {
         [Key]
         public int Id { get; set; }
         [Column("Child_Id")]
         public int ChildId { get; set; }
-        [Column("Action_Id")]
-        public int ActionId { get; set; }
-        public bool CheckedFlag { get; set; }
+        [StringLength(50)]
+        public string PregnancyWeek { get; set; }
+        public double? Weight { get; set; }
+        public double? BiparietalDiameter { get; set; }
+        public double? FemurLength { get; set; }
+        public double? FetalHeartRate { get; set; }
+        public double? MotherWeight { get; set; }
 
-        [ForeignKey(nameof(ActionId))]
-        [InverseProperty("ActionChildren")]
-        public virtual Action Action { get; set; }
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty(nameof(ChildInfo.ActionChildren))]
+        [InverseProperty(nameof(ChildInfo.PregnancyInfos))]
         public virtual ChildInfo Child { get; set; }
     }
 }

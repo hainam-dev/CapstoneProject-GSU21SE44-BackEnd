@@ -8,25 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Reminder")]
-    public partial class Reminder
+    [Table("UsersNotification")]
+    public partial class UsersNotification
     {
         [Key]
         public int Id { get; set; }
+        [Column("Notification_Id")]
+        public int NotificationId { get; set; }
         [Required]
         [Column("User_Id")]
         [StringLength(100)]
         public string UserId { get; set; }
-        [StringLength(100)]
-        public string Type { get; set; }
-        [Column(TypeName = "time(0)")]
-        public TimeSpan? Time { get; set; }
-        [StringLength(100)]
-        public string Frequency { get; set; }
-        public bool? EnabledFlag { get; set; }
 
+        [ForeignKey(nameof(NotificationId))]
+        [InverseProperty("UsersNotifications")]
+        public virtual Notification Notification { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty("Reminders")]
+        [InverseProperty("UsersNotifications")]
         public virtual User User { get; set; }
     }
 }

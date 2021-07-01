@@ -13,27 +13,27 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Column("Child_Id")]
+        [StringLength(50)]
+        public string ChildId { get; set; }
+        [Column("Mom_Id")]
+        [StringLength(100)]
+        public string MomId { get; set; }
+        [Column("Vaccine_Id")]
         public int VaccineId { get; set; }
         [StringLength(15)]
         public string Phonenumber { get; set; }
+        public byte? OrderOfInjection { get; set; }
         [StringLength(50)]
-        public string ChildId { get; set; }
-        [StringLength(100)]
-        public string MomId { get; set; }
-        public int? OrderOfInjection { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? InjectionDate { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? NextInjectionDate { get; set; }
+        public string InjectionDate { get; set; }
+        [StringLength(50)]
+        public string NextInjectionDate { get; set; }
         public int? Price { get; set; }
-        public bool? IsInjection { get; set; }
+        public bool? InjectedFlag { get; set; }
 
-        [ForeignKey(nameof(ChildId))]
-        [InverseProperty("InjectionSchedules")]
-        public virtual Child Child { get; set; }
         [ForeignKey(nameof(MomId))]
-        [InverseProperty("InjectionSchedules")]
-        public virtual Mom Mom { get; set; }
+        [InverseProperty(nameof(MomInfo.InjectionSchedules))]
+        public virtual MomInfo Mom { get; set; }
         [ForeignKey(nameof(VaccineId))]
         [InverseProperty("InjectionSchedules")]
         public virtual Vaccine Vaccine { get; set; }

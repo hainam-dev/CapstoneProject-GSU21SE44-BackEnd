@@ -2,7 +2,7 @@
 
 namespace Mumbi.Application.Interfaces.Repositories
 {
-    public interface IAccountRepository : IGenericRepository<Account>
+    public interface IUserRepository : IGenericRepository<User>
     {
 
     }

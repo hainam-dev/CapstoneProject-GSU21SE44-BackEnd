@@ -28,13 +28,13 @@ namespace Mumbi.Application.Services
                 Id = Guid.NewGuid().ToString(),
                 Title = request.Title,
                 GuidebookContent = request.GuidebookContent,
-                Image = request.Image,
-                EstimateFinishTime = request.EstimateFinishTime,
+                ImageUrl = request.Image,
+                //EstimatedFinishTime = request.EstimateFinishTime,
                 CreatedBy = request.CreatedBy,
                 CreatedTime = DateTime.Now,
                 LastModifiedTime = DateTime.Now,
-                TypeId = request.TypeId,
-                IsDeleted = false,
+                GuidebookTypeId = request.TypeId,
+                DelFlag = false,
             };
             await _unitOfWork.GuidebookRepository.AddAsync(guidebook);
             await _unitOfWork.SaveAsync();
@@ -43,7 +43,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<GuidebookResponse>>> GetAllGuidebook()
         {
-            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.IsDeleted == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<List<GuidebookResponse>>("Chưa có dữ liệu");
@@ -55,7 +55,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<GuidebookResponse>> GetGuidebookById(string Id)
         {
             var response = new GuidebookResponse();
-            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.IsDeleted == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<GuidebookResponse>($"Không tìm thấy guidebook id \'{Id}\'");
@@ -67,7 +67,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<GuidebookByTypeIdResponse>>> GetGuidebookByTypeId(int typeId)
         {
             var response = new List<GuidebookByTypeIdResponse>();
-            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.TypeId == typeId && x.IsDeleted == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.GuidebookTypeId == typeId && x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<List<GuidebookByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
@@ -78,16 +78,16 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> UpdateGuidebookRequest(UpdateGuidebookRequest request)
         {
-            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == request.Id && x.IsDeleted == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<string>($"Không tìm thấy guidebook id \'{request.Id}\'");
             }
             guidebook.Title = request.Title;
             guidebook.GuidebookContent = request.GuidebookContent;
-            guidebook.Image = request.Image;
-            guidebook.EstimateFinishTime = request.EstimateFinishTime;
-            guidebook.TypeId = request.TypeId;
+            guidebook.ImageUrl = request.Image;
+            //guidebook.EstimateFinishTime = request.EstimateFinishTime;
+            guidebook.GuidebookTypeId = request.TypeId;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();
             return new Response<string>("Cập nhật guidebook thành công");
@@ -95,7 +95,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> DeleteGuidebook(string Id)
         {
-            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.IsDeleted == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<string>($"Không tìm thấy guidebook type có id \'{Id}\'.");
@@ -105,7 +105,7 @@ namespace Mumbi.Application.Services
             {
                 return new Response<string>($"Guidebook id \'{Id}\' chưa có dữ liệu");
             }
-            guidebook.IsDeleted = true;
+            guidebook.DelFlag = true;
             _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();

@@ -8,32 +8,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Dad")]
-    public partial class Dad
+    [Table("Dad_Info")]
+    public partial class DadInfo
     {
-        [Key]
+        [Required]
         [StringLength(50)]
         public string Id { get; set; }
+        [Key]
+        [Column("Mom_Id")]
+        [StringLength(100)]
+        public string MomId { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
-        [StringLength(200)]
-        public string Image { get; set; }
-        [StringLength(50)]
-        public string Birthday { get; set; }
+        [Column("ImageURL")]
+        [StringLength(100)]
+        public string ImageUrl { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? Birthday { get; set; }
         [StringLength(15)]
         public string Phonenumber { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string MomId { get; set; }
-        public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(MomId))]
-        [InverseProperty("Dads")]
-        public virtual Mom Mom { get; set; }
+        [InverseProperty(nameof(MomInfo.DadInfo))]
+        public virtual MomInfo Mom { get; set; }
     }
 }

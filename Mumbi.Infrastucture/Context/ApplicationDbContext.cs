@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Mumbi.Domain.Entities;
-using System;
-
 
 #nullable disable
 
@@ -18,31 +18,33 @@ namespace Mumbi.Infrastucture.Context
         {
         }
 
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Domain.Entities.Action> Actions { get; set; }
+        public virtual DbSet<Mumbi.Domain.Entities.Action> Actions { get; set; }
         public virtual DbSet<ActionChild> ActionChildren { get; set; }
-        public virtual DbSet<Child> Children { get; set; }
-        public virtual DbSet<Dad> Dads { get; set; }
+        public virtual DbSet<ChildHistory> ChildHistories { get; set; }
+        public virtual DbSet<ChildInfo> ChildInfos { get; set; }
+        public virtual DbSet<DadInfo> DadInfos { get; set; }
         public virtual DbSet<Diary> Diaries { get; set; }
         public virtual DbSet<Guidebook> Guidebooks { get; set; }
         public virtual DbSet<GuidebookMom> GuidebookMoms { get; set; }
         public virtual DbSet<GuidebookType> GuidebookTypes { get; set; }
         public virtual DbSet<InjectionSchedule> InjectionSchedules { get; set; }
-        public virtual DbSet<Mom> Moms { get; set; }
+        public virtual DbSet<MomInfo> MomInfos { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<NewsMom> NewsMoms { get; set; }
         public virtual DbSet<NewsType> NewsTypes { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<PregnancyActivity> PregnancyActivities { get; set; }
         public virtual DbSet<PregnancyActivityType> PregnancyActivityTypes { get; set; }
-        public virtual DbSet<PregnancyInformation> PregnancyInformations { get; set; }
+        public virtual DbSet<PregnancyInfo> PregnancyInfos { get; set; }
         public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StandardIndex> StandardIndices { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<Tooth> Teeth { get; set; }
-        public virtual DbSet<ToothChild> ToothChildren { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserInfo> UserInfos { get; set; }
+        public virtual DbSet<UsersNotification> UsersNotifications { get; set; }
         public virtual DbSet<Vaccine> Vaccines { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -53,25 +55,8 @@ namespace Mumbi.Infrastucture.Context
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<Account>(entity =>
-            {
-                entity.Property(e => e.AccountId).IsUnicode(false);
-
-                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.RoleId).IsUnicode(false);
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.Accounts)
-                    .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Account_Role");
-            });
-
             modelBuilder.Entity<ActionChild>(entity =>
             {
-                entity.Property(e => e.ChildId).IsUnicode(false);
-
                 entity.HasOne(d => d.Action)
                     .WithMany(p => p.ActionChildren)
                     .HasForeignKey(d => d.ActionId)
@@ -82,89 +67,89 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.ActionChildren)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ActionChild_Child");
+                    .HasConstraintName("FK_Action_Child_Child_Info");
             });
 
-            modelBuilder.Entity<Child>(entity =>
+            modelBuilder.Entity<ChildHistory>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
+                entity.Property(e => e.Date).IsUnicode(false);
 
+                entity.HasOne(d => d.Child)
+                    .WithMany(p => p.ChildHistories)
+                    .HasForeignKey(d => d.ChildId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Child_History_Child_Info");
+            });
+
+            modelBuilder.Entity<ChildInfo>(entity =>
+            {
                 entity.Property(e => e.Birthday).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
-                entity.Property(e => e.Fingertips).HasDefaultValueSql("((0))");
+                entity.Property(e => e.EstimatedBornDate).IsUnicode(false);
 
-                entity.Property(e => e.HeadVortex).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Fingertips).IsUnicode(false);
 
-                entity.Property(e => e.Image).IsUnicode(false);
-
-                entity.Property(e => e.IsBorn).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
                 entity.Property(e => e.MomId).IsUnicode(false);
 
                 entity.Property(e => e.RhBloodGroup).IsUnicode(false);
 
                 entity.HasOne(d => d.Mom)
-                    .WithMany(p => p.Children)
+                    .WithMany(p => p.ChildInfos)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Child_Mom");
+                    .HasConstraintName("FK_Child_Info_Mom_Info");
             });
 
-            modelBuilder.Entity<Dad>(entity =>
+            modelBuilder.Entity<DadInfo>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
+                entity.HasKey(e => e.MomId)
+                    .HasName("PK_Dad");
 
-                entity.Property(e => e.Birthday).IsUnicode(false);
+                entity.Property(e => e.MomId).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
-                entity.Property(e => e.Image).IsUnicode(false);
+                entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.MomId).IsUnicode(false);
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.Property(e => e.RhBloodGroup).IsUnicode(false);
 
                 entity.HasOne(d => d.Mom)
-                    .WithMany(p => p.Dads)
-                    .HasForeignKey(d => d.MomId)
+                    .WithOne(p => p.DadInfo)
+                    .HasForeignKey<DadInfo>(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Dad_Mom");
+                    .HasConstraintName("FK_Dad_Info_Mom_Info");
             });
 
             modelBuilder.Entity<Diary>(entity =>
             {
-                entity.Property(e => e.ChildId).IsUnicode(false);
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
-                entity.Property(e => e.CreatedBy).IsUnicode(false);
-
-                entity.Property(e => e.Image).IsUnicode(false);
-
-                entity.Property(e => e.IsApproved).HasDefaultValueSql("(CONVERT([bit],(0)))");
+                entity.Property(e => e.LastModifiedBy).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.Diaries)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Diary_Child");
+                    .HasConstraintName("FK_Diary_Child_Info");
             });
 
             modelBuilder.Entity<Guidebook>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.CreatedBy).IsUnicode(false);
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
-                entity.Property(e => e.EstimateFinishTime).IsUnicode(false);
-
-                entity.Property(e => e.Image).IsUnicode(false);
-
-                entity.HasOne(d => d.Type)
+                entity.HasOne(d => d.GuidebookType)
                     .WithMany(p => p.Guidebooks)
-                    .HasForeignKey(d => d.TypeId)
+                    .HasForeignKey(d => d.GuidebookTypeId)
                     .HasConstraintName("FK_Guidebook_GuildbookType");
             });
 
@@ -184,28 +169,27 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.GuidebookMoms)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GuidebookMom_Mom");
+                    .HasConstraintName("FK_Guidebook_Mom_Mom_Info");
             });
 
             modelBuilder.Entity<InjectionSchedule>(entity =>
             {
                 entity.Property(e => e.ChildId).IsUnicode(false);
 
-                entity.Property(e => e.IsInjection).HasDefaultValueSql("((0))");
+                entity.Property(e => e.InjectedFlag).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.InjectionDate).IsUnicode(false);
 
                 entity.Property(e => e.MomId).IsUnicode(false);
 
-                entity.Property(e => e.Phonenumber).IsUnicode(false);
+                entity.Property(e => e.NextInjectionDate).IsUnicode(false);
 
-                entity.HasOne(d => d.Child)
-                    .WithMany(p => p.InjectionSchedules)
-                    .HasForeignKey(d => d.ChildId)
-                    .HasConstraintName("FK_InjectionSchedule_Child");
+                entity.Property(e => e.Phonenumber).IsUnicode(false);
 
                 entity.HasOne(d => d.Mom)
                     .WithMany(p => p.InjectionSchedules)
                     .HasForeignKey(d => d.MomId)
-                    .HasConstraintName("FK_InjectionSchedule_Mom");
+                    .HasConstraintName("FK_InjectionSchedule_Mom_Info");
 
                 entity.HasOne(d => d.Vaccine)
                     .WithMany(p => p.InjectionSchedules)
@@ -214,39 +198,28 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_InjectionSchedule_Vaccine1");
             });
 
-            modelBuilder.Entity<Mom>(entity =>
+            modelBuilder.Entity<MomInfo>(entity =>
             {
-                entity.HasKey(e => e.AccountId)
-                    .HasName("PK_Parent");
-
-                entity.Property(e => e.AccountId).IsUnicode(false);
-
-                entity.Property(e => e.Birthday).IsUnicode(false);
+                entity.Property(e => e.Id).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
-                entity.Property(e => e.Image).IsUnicode(false);
-
-                entity.Property(e => e.Phonenumber).IsUnicode(false);
+                entity.Property(e => e.DadId).IsUnicode(false);
 
                 entity.Property(e => e.RhBloodGroup).IsUnicode(false);
 
-                entity.HasOne(d => d.Account)
-                    .WithOne(p => p.Mom)
-                    .HasForeignKey<Mom>(d => d.AccountId)
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.MomInfo)
+                    .HasForeignKey<MomInfo>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Mom_Account");
+                    .HasConstraintName("FK_Mom_Info_Users");
             });
 
             modelBuilder.Entity<News>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.CreatedBy).IsUnicode(false);
-
-                entity.Property(e => e.EstimateFinishTime).IsUnicode(false);
-
-                entity.Property(e => e.Image).IsUnicode(false);
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.News)
@@ -264,7 +237,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.NewsMoms)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NewsMom_Mom");
+                    .HasConstraintName("FK_News_Mom_Mom_Info");
 
                 entity.HasOne(d => d.News)
                     .WithMany(p => p.NewsMoms)
@@ -273,68 +246,62 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_NewsMom_News");
             });
 
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.Property(e => e.Title).IsUnicode(false);
+            });
+
             modelBuilder.Entity<PregnancyActivity>(entity =>
             {
-                entity.Property(e => e.ChildId).IsUnicode(false);
-
-                entity.Property(e => e.IsDone)
-                    .IsUnicode(false)
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.MediaFile).IsUnicode(false);
+                entity.Property(e => e.MediaFileUrl).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.PregnancyActivities)
                     .HasForeignKey(d => d.ChildId)
-                    .HasConstraintName("FK_PregnancyActivity_Child");
+                    .HasConstraintName("FK_PregnancyActivity_Child_Info");
 
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.PregnancyActivities)
                     .HasForeignKey(d => d.TypeId)
-                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
+                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivity_Type");
             });
 
             modelBuilder.Entity<PregnancyActivityType>(entity =>
             {
-                entity.Property(e => e.IsDeleted).HasDefaultValueSql("((0))");
+                entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.SuitableAge).IsUnicode(false);
             });
 
-            modelBuilder.Entity<PregnancyInformation>(entity =>
+            modelBuilder.Entity<PregnancyInfo>(entity =>
             {
-                entity.HasKey(e => e.ChildId)
-                    .HasName("PK_Pregnancy");
-
-                entity.Property(e => e.ChildId).IsUnicode(false);
-
                 entity.HasOne(d => d.Child)
-                    .WithOne(p => p.PregnancyInformation)
-                    .HasForeignKey<PregnancyInformation>(d => d.ChildId)
+                    .WithMany(p => p.PregnancyInfos)
+                    .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PregnancyInformation_Child");
+                    .HasConstraintName("FK_Pregnancy_Info_Child_Info");
             });
 
             modelBuilder.Entity<Reminder>(entity =>
             {
-                entity.Property(e => e.AccountId).IsUnicode(false);
+                entity.Property(e => e.EnabledFlag).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Frequency).IsUnicode(false);
 
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((0))");
+                entity.Property(e => e.UserId).IsUnicode(false);
 
-                entity.HasOne(d => d.Account)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Reminders)
-                    .HasForeignKey(d => d.AccountId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reminder_Account1");
+                    .HasConstraintName("FK_Reminder_Users");
             });
 
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.Name).IsUnicode(false);
+                entity.Property(e => e.RoleName).IsUnicode(false);
             });
 
             modelBuilder.Entity<StandardIndex>(entity =>
@@ -346,49 +313,77 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Token>(entity =>
             {
-                entity.Property(e => e.AccountId).IsUnicode(false);
+                entity.Property(e => e.FcmToken).IsUnicode(false);
 
-                entity.Property(e => e.FcmToken).HasDefaultValueSql("(N'')");
+                entity.Property(e => e.UserId).IsUnicode(false);
 
-                entity.HasOne(d => d.Account)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Tokens)
-                    .HasForeignKey(d => d.AccountId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Token_Account");
             });
 
-            modelBuilder.Entity<ToothChild>(entity =>
+            modelBuilder.Entity<Tooth>(entity =>
             {
-                entity.Property(e => e.ChildId).IsUnicode(false);
+                entity.Property(e => e.GrowTime).IsUnicode(false);
+
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
-                    .WithMany(p => p.ToothChildren)
+                    .WithMany(p => p.Teeth)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ToothChild_Child");
-
-                entity.HasOne(d => d.Tooth)
-                    .WithMany(p => p.ToothChildren)
-                    .HasForeignKey(d => d.ToothId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ToothChild_Tooth");
+                    .HasConstraintName("FK_Tooth_Child_Info");
             });
 
-            modelBuilder.Entity<Staff>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.AccountId).IsUnicode(false);
+                entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.Property(e => e.Email).IsUnicode(false);
+
+                entity.Property(e => e.RoleId).IsUnicode(false);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Users_Role");
+            });
+
+            modelBuilder.Entity<UserInfo>(entity =>
+            {
+                entity.Property(e => e.Id).IsUnicode(false);
 
                 entity.Property(e => e.Birthday).IsUnicode(false);
 
-                entity.Property(e => e.Image).IsUnicode(false);
+                entity.Property(e => e.ImageUrl).IsUnicode(false);
 
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
 
-                entity.HasOne(d => d.Account)
-                    .WithOne(p => p.Staff)
-                    .HasForeignKey<Staff>(d => d.AccountId)
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.UserInfo)
+                    .HasForeignKey<UserInfo>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Staff_Account");
+                    .HasConstraintName("FK_Users_Info_Users");
+            });
+
+            modelBuilder.Entity<UsersNotification>(entity =>
+            {
+                entity.Property(e => e.UserId).IsUnicode(false);
+
+                entity.HasOne(d => d.Notification)
+                    .WithMany(p => p.UsersNotifications)
+                    .HasForeignKey(d => d.NotificationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UsersNotification_Notification");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UsersNotifications)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UsersNotification_Users");
             });
 
             OnModelCreatingPartial(modelBuilder);

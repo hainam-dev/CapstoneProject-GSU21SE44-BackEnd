@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Mom")]
-    public partial class Mom
+    [Table("Mom_Info")]
+    public partial class MomInfo
     {
-        public Mom()
+        public MomInfo()
         {
-            Children = new HashSet<Child>();
-            Dads = new HashSet<Dad>();
+            ChildInfos = new HashSet<ChildInfo>();
             GuidebookMoms = new HashSet<GuidebookMom>();
             InjectionSchedules = new HashSet<InjectionSchedule>();
             NewsMoms = new HashSet<NewsMom>();
@@ -22,29 +21,25 @@ namespace Mumbi.Domain.Entities
 
         [Key]
         [StringLength(100)]
-        public string AccountId { get; set; }
-        [Required]
-        [StringLength(200)]
-        public string FullName { get; set; }
-        public string Image { get; set; }
-        [StringLength(50)]
-        public string Birthday { get; set; }
-        [StringLength(15)]
-        public string Phonenumber { get; set; }
+        public string Id { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
+        [Required]
+        [Column("Dad_Id")]
+        [StringLength(50)]
+        public string DadId { get; set; }
 
-        [ForeignKey(nameof(AccountId))]
+        [ForeignKey(nameof(Id))]
+        [InverseProperty(nameof(User.MomInfo))]
+        public virtual User IdNavigation { get; set; }
         [InverseProperty("Mom")]
-        public virtual Account Account { get; set; }
-        [InverseProperty(nameof(Child.Mom))]
-        public virtual ICollection<Child> Children { get; set; }
-        [InverseProperty(nameof(Dad.Mom))]
-        public virtual ICollection<Dad> Dads { get; set; }
+        public virtual DadInfo DadInfo { get; set; }
+        [InverseProperty(nameof(ChildInfo.Mom))]
+        public virtual ICollection<ChildInfo> ChildInfos { get; set; }
         [InverseProperty(nameof(GuidebookMom.Mom))]
         public virtual ICollection<GuidebookMom> GuidebookMoms { get; set; }
         [InverseProperty(nameof(InjectionSchedule.Mom))]

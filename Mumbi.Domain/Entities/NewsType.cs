@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("NewsType")]
+    [Table("News_Type")]
     public partial class NewsType
     {
         public NewsType()
@@ -21,7 +21,7 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(100)]
         public string Type { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool DelFlag { get; set; }
 
         [InverseProperty("Type")]
         public virtual ICollection<News> News { get; set; }

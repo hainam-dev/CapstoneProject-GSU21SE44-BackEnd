@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mumbi.Application.Interfaces
 {
-    public interface IAccountService
+    public interface IUserService
     {
         Task<Response<AuthenticationResponse>> Authenticate(AuthenticationRequest request);
     }

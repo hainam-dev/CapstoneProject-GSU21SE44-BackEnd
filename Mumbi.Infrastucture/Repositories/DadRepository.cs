@@ -6,13 +6,13 @@ using Mumbi.Infrastucture.Context;
 
 namespace Mumbi.Infrastucture.Repositories
 {
-    public class DadRepository : GenericRepository<Dad>, IDadRepository
+    public class DadRepository : GenericRepository<DadInfo>, IDadRepository
     {
-        private readonly DbSet<Dad> _dad;
+        private readonly DbSet<DadInfo> _dad;
 
         public DadRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _dad = dbContext.Set<Dad>();
+            _dad = dbContext.Set<DadInfo>();
         }
     }
 }

@@ -8,23 +8,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Staff")]
-    public partial class Staff
+    [Table("User_Info")]
+    public partial class UserInfo
     {
         [Key]
         [StringLength(100)]
-        public string AccountId { get; set; }
+        public string Id { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
-        [StringLength(50)]
-        public string Phonenumber { get; set; }
-        public string Image { get; set; }
+        [Column("ImageURL")]
+        public string ImageUrl { get; set; }
         [StringLength(50)]
         public string Birthday { get; set; }
+        [StringLength(10)]
+        public string Phonenumber { get; set; }
 
-        [ForeignKey(nameof(AccountId))]
-        [InverseProperty("Staff")]
-        public virtual Account Account { get; set; }
+        [ForeignKey(nameof(Id))]
+        [InverseProperty(nameof(User.UserInfo))]
+        public virtual User IdNavigation { get; set; }
     }
 }

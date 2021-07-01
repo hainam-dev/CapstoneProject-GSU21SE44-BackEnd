@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("PregnancyActivityType")]
+    [Table("PregnancyActivity_Type")]
     public partial class PregnancyActivityType
     {
         public PregnancyActivityType()
@@ -20,10 +20,10 @@ namespace Mumbi.Domain.Entities
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string ActivityType { get; set; }
+        public string Type { get; set; }
         [StringLength(10)]
         public string SuitableAge { get; set; }
-        public bool? IsDeleted { get; set; }
+        public bool? DelFlag { get; set; }
 
         [InverseProperty(nameof(PregnancyActivity.Type))]
         public virtual ICollection<PregnancyActivity> PregnancyActivities { get; set; }

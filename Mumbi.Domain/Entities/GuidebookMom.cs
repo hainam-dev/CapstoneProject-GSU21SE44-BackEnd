@@ -8,15 +8,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("GuidebookMom")]
+    [Table("Guidebook_Mom")]
     public partial class GuidebookMom
     {
         [Key]
         public int Id { get; set; }
         [Required]
+        [Column("Mom_Id")]
         [StringLength(100)]
         public string MomId { get; set; }
         [Required]
+        [Column("Guidebook_Id")]
         [StringLength(50)]
         public string GuidebookId { get; set; }
 
@@ -24,7 +26,7 @@ namespace Mumbi.Domain.Entities
         [InverseProperty("GuidebookMoms")]
         public virtual Guidebook Guidebook { get; set; }
         [ForeignKey(nameof(MomId))]
-        [InverseProperty("GuidebookMoms")]
-        public virtual Mom Mom { get; set; }
+        [InverseProperty(nameof(MomInfo.GuidebookMoms))]
+        public virtual MomInfo Mom { get; set; }
     }
 }

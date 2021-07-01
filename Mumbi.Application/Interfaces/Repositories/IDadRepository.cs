@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mumbi.Application.Interfaces.Repositories
 {
-    public interface IDadRepository : IGenericRepository<Dad>
+    public interface IDadRepository : IGenericRepository<DadInfo>
     {
     }
 }

@@ -19,16 +19,12 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [StringLength(200)]
-        public string VaccineName { get; set; }
-        public string DiseaseName { get; set; }
-        public string DiseaseDescription { get; set; }
-        [StringLength(50)]
-        public string WayToUse { get; set; }
-        public int? Month { get; set; }
-        [StringLength(200)]
-        public string ProductionCountry { get; set; }
+        public string Name { get; set; }
+        public string Disease { get; set; }
+        [StringLength(100)]
+        public string ProducingCountry { get; set; }
         public int? Price { get; set; }
-        public bool IsMandatory { get; set; }
+        public bool Mandatory { get; set; }
 
         [InverseProperty(nameof(InjectionSchedule.Vaccine))]
         public virtual ICollection<InjectionSchedule> InjectionSchedules { get; set; }

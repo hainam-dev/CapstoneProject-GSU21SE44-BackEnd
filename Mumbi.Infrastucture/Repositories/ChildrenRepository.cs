@@ -5,13 +5,13 @@ using Mumbi.Infrastucture.Context;
 
 namespace Mumbi.Infrastucture.Repositories
 {
-    public class ChildrenRepository : GenericRepository<Child>, IChildrenRepository
+    public class ChildrenRepository : GenericRepository<ChildInfo>, IChildrenRepository
     {
-        private readonly DbSet<Child> _child;
+        private readonly DbSet<ChildInfo> _child;
 
         public ChildrenRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _child = dbContext.Set<Child>();
+            _child = dbContext.Set<ChildInfo>();
         }
     }
 }
