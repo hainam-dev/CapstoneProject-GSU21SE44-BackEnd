@@ -13,7 +13,7 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int ChildId { get; set; }
+        public string ChildId { get; set; }
         [Column("ImageURL")]
         public string ImageUrl { get; set; }
         [Required]
@@ -27,6 +27,7 @@ namespace Mumbi.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
         public bool ApprovedFlag { get; set; }
+        public bool PublicFlag { get; set; }
         public bool DelFlag { get; set; }
 
         [ForeignKey(nameof(ChildId))]

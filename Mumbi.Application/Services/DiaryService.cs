@@ -27,12 +27,12 @@ namespace Mumbi.Application.Services
         {
             //var diary = new Diary
             //{
-            //    Image = request.Image,
+            //    ImageUrl = request.ImageURL,
             //    DiaryContent = request.DiaryContent,
             //    CreatedBy = request.CreatedBy,
             //    CreatedTime = DateTime.Now,
             //    LastModifiedTime = DateTime.Now,
-            //    IsPublic = request.IsPublic,
+            //    PublicFlag = request.PublicFlag,
             //    ChildId = request.ChildId,
             //    IsDeleted = false,
             //    IsApproved = false,
@@ -41,7 +41,7 @@ namespace Mumbi.Application.Services
             //if (request.IsPublic)
             //{
             //    var staffs = await _unitOfWork.AccountRepository.GetAsync(x => x.RoleId == RoleConstant.USER_ROLE && x.IsDeleted == false);
-            //    foreach(var staff in staffs)
+            //    foreach (var staff in staffs)
             //    {
             //        await sendNotification(staff.AccountId, "Request public diary", "Mom id request public diary id");
             //    }

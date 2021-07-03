@@ -22,7 +22,8 @@ namespace Mumbi.Domain.Entities
         }
 
         [Key]
-        public int Id { get; set; }
+        [StringLength(100)]
+        public string Id { get; set; }
         [Required]
         [StringLength(100)]
         public string MomId { get; set; }
@@ -44,7 +45,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
         [StringLength(10)]
-        public string Fingertips { get; set; }
+        public int Fingertips { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
         public double? HeadCircumference { get; set; }
