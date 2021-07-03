@@ -8,8 +8,8 @@ namespace Mumbi.Application.Interfaces
         IUserRepository UserRepository { get; }
         IUserInfoRepository UserInfoRepository { get; }
         IRoleRepository RoleRepository { get; }
-        IMomRepository MomRepository { get; }
-        IDadRepository DadRepository { get; }
+        IMomInfoRepository MomInfoRepository { get; }
+        IDadInfoRepository DadInfoRepository { get; }
         IChildrenRepository ChildrenRepository { get; }
         IPregnancyInformationRepository PregnancyInformationRepository { get; }
         IDiaryRepository DiaryRepository { get; }

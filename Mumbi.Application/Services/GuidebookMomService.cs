@@ -30,7 +30,7 @@ namespace Mumbi.Application.Services
             };
             await _unitOfWork.GuidebookMomRepository.AddAsync(guidebookMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm guidebook type thành công, id: " + guidebookMom.Id);
+            return new Response<string>("Thêm guidebook mom thành công, id: " + guidebookMom.Id);
         }
 
         public async Task<Response<List<GuidebookMomResponse>>> GetGuidebookMomByMomId(string momId)
@@ -54,7 +54,7 @@ namespace Mumbi.Application.Services
             }
             _unitOfWork.GuidebookMomRepository.DeleteAsync(guidebookMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa guidebook type id \'{Id}\' thành công!");
+            return new Response<string>($"Xóa guidebook type Id \'{Id}\' thành công!");
         }
     }
 }

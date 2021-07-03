@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
                 UserRecord user_firebase = await FirebaseAuth.DefaultInstance.GetUserAsync(decodedToken.Uid);
                 User currentUser = await _unitOfWork.UserRepository
                                                           .FirstAsync(u => u.Email == user_firebase.Email,
-                                                                      includeProperties: "UsersInfo, MomInfo");
+                                                                      includeProperties: "UserInfo,MomInfo");
 
                 if (currentUser != null && currentUser.DelFlag == true)
                 {
@@ -64,40 +64,46 @@ namespace Mumbi.Application.Services
                     else
                     {
                         user_registration.RoleId = RoleConstant.USER_ROLE;
-                    }
+                        var momInfo = new MomInfo
+                        {
+                            Id = user_registration.Id
+                        };
+                        await _unitOfWork.MomInfoRepository.AddAsync(momInfo);
 
+                    }
                     await _unitOfWork.UserRepository.AddAsync(user_registration);
 
-                    var user_info = new UserInfo
+                    var userInfo = new UserInfo
                     {
                         Id = user_registration.Id,
                         FullName = user_firebase.DisplayName,
                         ImageUrl = user_firebase.PhotoUrl,
                         Phonenumber = user_firebase.PhoneNumber
+                        
                     };
-                    await _unitOfWork.UserInfoRepository.AddAsync(user_info);
+                    await _unitOfWork.UserInfoRepository.AddAsync(userInfo);
 
-                    var token_info = new Token
+                    var token = new Token
                     {
                         UserId = user_registration.Id,
                         FcmToken = request.FCMToken,
                     };
-                    await _unitOfWork.TokenRepository.AddAsync(token_info);
+                    await _unitOfWork.TokenRepository.AddAsync(token);
 
                     currentUser = user_registration;
-                    currentUser.UserInfo = user_info;
+                    currentUser.UserInfo = userInfo;
                 }
 
                 // Check token is not existed then add to database
                 var isUniqueToken = _unitOfWork.TokenRepository.IsUniqueFCMTOken(request.FCMToken);
                 if (isUniqueToken)
                 {
-                    var token_info = new Token
+                    var token = new Token
                     {
                         UserId = currentUser.Id,
                         FcmToken = request.FCMToken,
                     };
-                    await _unitOfWork.TokenRepository.AddAsync(token_info);
+                    await _unitOfWork.TokenRepository.AddAsync(token);
                 }
 
                 await _unitOfWork.SaveAsync();

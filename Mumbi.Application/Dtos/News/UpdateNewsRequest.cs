@@ -11,8 +11,9 @@ namespace Mumbi.Application.Dtos.News
         public string Id { get; set; }
         public string Title { get; set; }
         public string NewsContent { get; set; }
-        public string Image { get; set; }
-        public string EstimateFinishTime { get; set; }
+        public string ImageURL { get; set; }
+        public short EstimateFinishTime { get; set; }
+        public string LastModifiedBy { get; set; }
         public int TypeId { get; set; }
     }
 }

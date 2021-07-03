@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mumbi.Application.Dtos.Staffs
 {
-    public class UpdateStaffRequest
+    public class UpdateStaffInfoRequest
     {
-        public string AccountId { get; set; }
+        public string Id { get; set; }
         public string FullName { get; set; }
-        public string Image { get; set; }
+        public string ImageURL { get; set; }
         public string BirthDay { get; set; }
         public string Phonenumber { get; set; }
     }

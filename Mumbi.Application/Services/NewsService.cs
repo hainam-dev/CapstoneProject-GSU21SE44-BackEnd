@@ -26,10 +26,11 @@ namespace Mumbi.Application.Services
                 Id = Guid.NewGuid().ToString(),
                 Title = request.Title,
                 NewsContent = request.NewsContent,
-                ImageUrl = request.Image,
-                //EstimateFinishTime = request.EstimateFinishTime,
+                ImageUrl = request.ImageURL,
+                EstimateFinishTime = request.EstimateFinishTime,
                 CreatedBy = request.CreatedBy,
                 CreatedTime = DateTime.Now,
+                LastModifiedBy = request.LastModifiedBy,
                 LastModifiedTime = DateTime.Now,
                 TypeId = request.TypeId,
                 DelFlag = false,
@@ -83,12 +84,14 @@ namespace Mumbi.Application.Services
             }
             news.Title = request.Title;
             news.NewsContent = request.NewsContent;
-            news.ImageUrl = request.Image;
-            //news.EstimateFinishTime = request.EstimateFinishTime;
+            news.ImageUrl = request.ImageURL;
+            news.EstimateFinishTime = request.EstimateFinishTime;
+            news.LastModifiedBy = request.LastModifiedBy;
+            news.LastModifiedTime = DateTime.Now;
             news.TypeId = request.TypeId;
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Cập nhật news type thành công");
+            return new Response<string>("Cập nhật news thành công");
         }
 
         public async Task<Response<string>> DeleteNews(string Id)
@@ -96,15 +99,17 @@ namespace Mumbi.Application.Services
             var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (news == null)
             {
-                return new Response<string>($"Không tìm thấy news type có id \'{Id}\'.");
+                return new Response<string>($"Không tìm thấy news id \'{Id}\'.");
             }
             var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == Id);
-            if (newsMom == null)
+            if (newsMom != null)
             {
-                return new Response<string>($"News id \'{Id}\' chưa có dữ liệu");
+                news.DelFlag = true;
+                _unitOfWork.NewsRepository.UpdateAsync(news);
+                _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
+                return new Response<string>($"Xóa news id \'{Id}\' thành công!");
             }
             news.DelFlag = true;
-            _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
             _unitOfWork.NewsRepository.UpdateAsync(news);
             await _unitOfWork.SaveAsync();
             return new Response<string>($"Xóa news id \'{Id}\' thành công!");

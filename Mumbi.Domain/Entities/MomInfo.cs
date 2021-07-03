@@ -28,7 +28,6 @@ namespace Mumbi.Domain.Entities
         public string RhBloodGroup { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
-        [Required]
         [Column("Dad_Id")]
         [StringLength(50)]
         public string DadId { get; set; }

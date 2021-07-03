@@ -30,7 +30,7 @@ namespace Mumbi.Application.Services
             };
             await _unitOfWork.GuidebookTypeRepository.AddAsync(guidebookType);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm guidebook type thành công, id: " + guidebookType.Id);
+            return new Response<string>("Thêm guidebook type thành công, Id: " + guidebookType.Id);
         }
 
         public async Task<Response<List<GuidebookTypeResponse>>> GetAllGuidebookType()
@@ -50,7 +50,7 @@ namespace Mumbi.Application.Services
             var guidebookType = await _unitOfWork.GuidebookTypeRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebookType == null)
             {
-                return new Response<GuidebookTypeResponse>($"Không có guidebook type id \'{Id}\'");
+                return new Response<GuidebookTypeResponse>($"Không có guidebook type Id \'{Id}\'");
             }
             response = _mapper.Map<GuidebookTypeResponse>(guidebookType);
             return new Response<GuidebookTypeResponse>(response);
@@ -61,7 +61,7 @@ namespace Mumbi.Application.Services
             var guidebookType = await _unitOfWork.GuidebookTypeRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
             if (guidebookType == null)
             {
-                return new Response<string>($"Không tìm thấy guidebook type có id \'{request.Id}\'.");
+                return new Response<string>($"Không tìm thấy guidebook type có Id \'{request.Id}\'.");
             }
             guidebookType.Type = request.Type;
             _unitOfWork.GuidebookTypeRepository.UpdateAsync(guidebookType);
@@ -75,29 +75,27 @@ namespace Mumbi.Application.Services
             var guidebookType = await _unitOfWork.GuidebookTypeRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebookType == null)
             {
-                return new Response<string>($"Không tìm thấy guidebook type có id \'{Id}\'.");
+                return new Response<string>($"Không tìm thấy guidebook type có Id \'{Id}\'.");
             }
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.GuidebookTypeId == Id && x.DelFlag == false);
-            if (guidebook == null)
+            if (guidebook != null)
             {
-                return new Response<string>($"Type id \'{Id}\' chưa có dữ liệu");
-            }
-            foreach (var deleteGuidebook in guidebook)
-            {
-                deleteGuidebook.DelFlag = true;
-                var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.GuidebookId == deleteGuidebook.Id);
-                if(guidebookMom != null)
+                foreach (var deleteGuidebook in guidebook)
                 {
-                    _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
-                    await _unitOfWork.SaveAsync();
+                    var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.GuidebookId == deleteGuidebook.Id);
+                    if (guidebookMom != null)
+                    {
+                        _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
+                    }
+                    deleteGuidebook.DelFlag = true;
+                    _unitOfWork.GuidebookRepository.UpdateAsync(deleteGuidebook);
                 }
-                _unitOfWork.GuidebookRepository.UpdateAsync(deleteGuidebook);
-                await _unitOfWork.SaveAsync();
             }
+            
             guidebookType.DelFlag = true;
             _unitOfWork.GuidebookTypeRepository.UpdateAsync(guidebookType);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa guidebook type id \'{Id}\' thành công!");
+            return new Response<string>($"Xóa guidebook type Id \'{Id}\' thành công!");
         }
     }
 }

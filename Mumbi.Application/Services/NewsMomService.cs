@@ -32,7 +32,7 @@ namespace Mumbi.Application.Services
             };
             await _unitOfWork.NewsMomRepository.AddAsync(newsMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm news type thành công, id: " + newsMom.Id);
+            return new Response<string>("Thêm news mom thành công, id: " + newsMom.Id);
         }
 
         public async Task<Response<List<NewsMomResponse>>> GetNewsMomByMomId(string momId)

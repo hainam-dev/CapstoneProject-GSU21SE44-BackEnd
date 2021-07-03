@@ -27,7 +27,7 @@ namespace Mumbi.Application.Services
             };
             await _unitOfWork.NewsTypeRepository.AddAsync(newsType);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm news type thành công, id: " + newsType.Id);
+            return new Response<string>("Thêm news type thành công, Id: " + newsType.Id);
         }
 
         public async Task<Response<List<NewsTypeResponse>>> GetAllNewsType()
@@ -47,7 +47,7 @@ namespace Mumbi.Application.Services
             var newsType = await _unitOfWork.NewsTypeRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (newsType == null)
             {
-                return new Response<NewsTypeResponse>($"Không có news type id \'{Id}\'");
+                return new Response<NewsTypeResponse>($"Không tìm thấy news type có Id \'{Id}\'");
             }
              response = _mapper.Map<NewsTypeResponse>(newsType);
             return new Response<NewsTypeResponse>(response);
@@ -58,12 +58,11 @@ namespace Mumbi.Application.Services
             var newsType = await _unitOfWork.NewsTypeRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
             if (newsType == null)
             {
-                return new Response<string>($"Không tìm thấy news type có id \'{request.Id}\'.");
+                return new Response<string>($"Không tìm thấy news type có Id \'{request.Id}\'.");
             }
             newsType.Type = request.Type;
             _unitOfWork.NewsTypeRepository.UpdateAsync(newsType);
             await _unitOfWork.SaveAsync();
-
             return new Response<string>("Cập nhật news type thành công");
         }
 
@@ -72,27 +71,26 @@ namespace Mumbi.Application.Services
             var newsType = await _unitOfWork.NewsTypeRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (newsType == null)
             {
-                return new Response<string>($"Không tìm thấy news type có id \'{Id}\'.");
+                return new Response<string>($"Không tìm thấy news type có Id \'{Id}\'.");
             }
             var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == Id && x.DelFlag == false);
-            if (news == null)
+            if (news != null)
             {
-                return new Response<string>($"Type id \'{Id}\' chưa có dữ liệu");
-            }
-            foreach(var deleteNews in news)
-            {
-                var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == deleteNews.Id);
-                if (newsMom != null)
+                foreach (var deleteNews in news)
                 {
-                    _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
+                    var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == deleteNews.Id);
+                    if (newsMom != null)
+                    {
+                        _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
+                    }
+                    deleteNews.DelFlag = true;
+                    _unitOfWork.NewsRepository.UpdateAsync(deleteNews);
                 }
-                deleteNews.DelFlag = true;
-                _unitOfWork.NewsRepository.UpdateAsync(deleteNews);
             }
             newsType.DelFlag = true;
             _unitOfWork.NewsTypeRepository.UpdateAsync(newsType);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa news type id \'{Id}\' thành công!");
+            return new Response<string>($"Xóa news type Id \'{Id}\' thành công!");
         }
     }
 }

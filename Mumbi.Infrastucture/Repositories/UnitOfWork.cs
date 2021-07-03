@@ -20,13 +20,13 @@ namespace Mumbi.Infrastucture.Repositories
 
         public IRoleRepository RoleRepository { get; set; }
 
-        public IMomRepository MomRepository { get; set; }
+        public IMomInfoRepository MomInfoRepository { get; set; }
 
         public IChildrenRepository ChildrenRepository { get; set; }
 
         public IPregnancyInformationRepository PregnancyInformationRepository { get; set; }
 
-        public IDadRepository DadRepository { get; set; }
+        public IDadInfoRepository DadInfoRepository { get; set; }
         public IDiaryRepository DiaryRepository { get; set; }
         public INewsRepository NewsRepository { get; set; }
         public INewsTypeRepository NewsTypeRepository { get; set; }
@@ -42,10 +42,10 @@ namespace Mumbi.Infrastucture.Repositories
             RoleRepository = new RoleRepository(_context);
             UserRepository = new UserRepository(_context);
             UserInfoRepository = new UserInfoRepository(_context);
-            MomRepository = new MomRepository(_context);
+            MomInfoRepository = new MomInfoRepository(_context);
             ChildrenRepository = new ChildrenRepository(_context);
             PregnancyInformationRepository = new PregnancyInformationRepository(_context);
-            DadRepository = new DadRepository(_context);
+            DadInfoRepository = new DadInfoRepository(_context);
             DiaryRepository = new DiaryRepository(_context);
             NewsRepository = new NewsRepository(_context);
             NewsTypeRepository = new NewsTypeRepository(_context);
