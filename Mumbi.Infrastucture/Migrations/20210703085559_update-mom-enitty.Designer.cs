@@ -10,8 +10,8 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210701191348_init")]
-    partial class init
+    [Migration("20210703085559_update-mom-enitty")]
+    partial class updatemomenitty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,15 +54,13 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ActionId")
-                        .HasColumnType("int")
-                        .HasColumnName("Action_Id");
+                        .HasColumnType("int");
 
                     b.Property<bool>("CheckedFlag")
                         .HasColumnType("bit");
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -70,7 +68,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("ChildId");
 
-                    b.ToTable("Action_Child");
+                    b.ToTable("ActionChild");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ChildHistory", b =>
@@ -81,8 +79,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.Property<string>("Date")
                         .IsRequired()
@@ -103,7 +100,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("ChildId");
 
-                    b.ToTable("Child_History");
+                    b.ToTable("ChildHistory");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ChildInfo", b =>
@@ -172,8 +169,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Mom_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Nickname")
                         .HasMaxLength(200)
@@ -191,7 +187,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("MomId");
 
-                    b.ToTable("Child_Info");
+                    b.ToTable("ChildInfo");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.DadInfo", b =>
@@ -199,8 +195,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<string>("MomId")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Mom_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime");
@@ -239,7 +234,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasKey("MomId")
                         .HasName("PK_Dad");
 
-                    b.ToTable("Dad_Info");
+                    b.ToTable("DadInfo");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Diary", b =>
@@ -253,8 +248,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
@@ -314,10 +308,6 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GuidebookTypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("GuidebookType_Id");
-
                     b.Property<string>("ImageUrl")
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)")
@@ -335,9 +325,12 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int?>("TypeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("GuidebookTypeId");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Guidebook");
                 });
@@ -353,15 +346,13 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Guidebook_Id");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("MomId")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Mom_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -369,7 +360,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("MomId");
 
-                    b.ToTable("Guidebook_Mom");
+                    b.ToTable("GuidebookMom");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookType", b =>
@@ -389,7 +380,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guidebook_Type");
+                    b.ToTable("GuidebookType");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectionSchedule", b =>
@@ -402,8 +393,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<string>("ChildId")
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool?>("InjectedFlag")
                         .ValueGeneratedOnAdd()
@@ -418,8 +408,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<string>("MomId")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Mom_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("NextInjectionDate")
                         .HasMaxLength(50)
@@ -438,8 +427,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("VaccineId")
-                        .HasColumnType("int")
-                        .HasColumnName("Vaccine_Id");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -463,11 +451,9 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("varchar(10)");
 
                     b.Property<string>("DadId")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("Dad_Id");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<double?>("Height")
                         .HasColumnType("float");
@@ -482,7 +468,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mom_Info");
+                    b.ToTable("MomInfo");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.News", b =>
@@ -527,8 +513,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("TypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("Type_Id");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -548,15 +533,13 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("Mom_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("NewsId")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("News_Id");
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -564,7 +547,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("NewsId");
 
-                    b.ToTable("News_Mom");
+                    b.ToTable("NewsMom");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.NewsType", b =>
@@ -584,7 +567,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("News_Type");
+                    b.ToTable("NewsType");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Notification", b =>
@@ -624,8 +607,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.Property<bool>("DelFlag")
                         .HasColumnType("bit");
@@ -643,8 +625,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("TypeId")
-                        .HasColumnType("int")
-                        .HasColumnName("Type_Id");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -679,10 +660,10 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PregnancyActivity_Type");
+                    b.ToTable("PregnancyActivityType");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.PregnancyInfo", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.PregnancyHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -693,8 +674,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.Property<double?>("FemurLength")
                         .HasColumnType("float");
@@ -716,7 +696,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("ChildId");
 
-                    b.ToTable("Pregnancy_Info");
+                    b.ToTable("PregnancyHistory");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Reminder", b =>
@@ -747,8 +727,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("User_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -827,8 +806,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("User_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -845,8 +823,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int")
-                        .HasColumnName("Child_Id");
+                        .HasColumnType("int");
 
                     b.Property<string>("GrowTime")
                         .HasMaxLength(50)
@@ -898,8 +875,7 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("Role_Id");
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
@@ -937,10 +913,10 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User_Info");
+                    b.ToTable("UserInfo");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.UsersNotification", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.UserNotification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -948,15 +924,13 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("NotificationId")
-                        .HasColumnType("int")
-                        .HasColumnName("Notification_Id");
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("User_Id");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -964,7 +938,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersNotification");
+                    b.ToTable("UserNotification");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Vaccine", b =>
@@ -1007,7 +981,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
                         .WithMany("ActionChildren")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_Action_Child_Child_Info")
+                        .HasConstraintName("FK_ActionChild_ChildInfo")
                         .IsRequired();
 
                     b.Navigation("Action");
@@ -1020,7 +994,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
                         .WithMany("ChildHistories")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_Child_History_Child_Info")
+                        .HasConstraintName("FK_ChildHistory_ChildInfo")
                         .IsRequired();
 
                     b.Navigation("Child");
@@ -1031,7 +1005,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithMany("ChildInfos")
                         .HasForeignKey("MomId")
-                        .HasConstraintName("FK_Child_Info_Mom_Info")
+                        .HasConstraintName("FK_ChildInfo_MomInfo")
                         .IsRequired();
 
                     b.Navigation("Mom");
@@ -1042,7 +1016,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithOne("DadInfo")
                         .HasForeignKey("Mumbi.Domain.Entities.DadInfo", "MomId")
-                        .HasConstraintName("FK_Dad_Info_Mom_Info")
+                        .HasConstraintName("FK_DadInfo_MomInfo")
                         .IsRequired();
 
                     b.Navigation("Mom");
@@ -1053,7 +1027,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
                         .WithMany("Diaries")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_Diary_Child_Info")
+                        .HasConstraintName("FK_Diary_ChildInfo")
                         .IsRequired();
 
                     b.Navigation("Child");
@@ -1061,12 +1035,12 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
                 {
-                    b.HasOne("Mumbi.Domain.Entities.GuidebookType", "GuidebookType")
+                    b.HasOne("Mumbi.Domain.Entities.GuidebookType", "Type")
                         .WithMany("Guidebooks")
-                        .HasForeignKey("GuidebookTypeId")
+                        .HasForeignKey("TypeId")
                         .HasConstraintName("FK_Guidebook_GuildbookType");
 
-                    b.Navigation("GuidebookType");
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.GuidebookMom", b =>
@@ -1080,7 +1054,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithMany("GuidebookMoms")
                         .HasForeignKey("MomId")
-                        .HasConstraintName("FK_Guidebook_Mom_Mom_Info")
+                        .HasConstraintName("FK_GuidebookMom_MomInfo")
                         .IsRequired();
 
                     b.Navigation("Guidebook");
@@ -1093,12 +1067,12 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithMany("InjectionSchedules")
                         .HasForeignKey("MomId")
-                        .HasConstraintName("FK_InjectionSchedule_Mom_Info");
+                        .HasConstraintName("FK_InjectionSchedule_MomInfo");
 
                     b.HasOne("Mumbi.Domain.Entities.Vaccine", "Vaccine")
                         .WithMany("InjectionSchedules")
                         .HasForeignKey("VaccineId")
-                        .HasConstraintName("FK_InjectionSchedule_Vaccine1")
+                        .HasConstraintName("FK_InjectionSchedule_Vaccine")
                         .IsRequired();
 
                     b.Navigation("Mom");
@@ -1111,7 +1085,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.User", "IdNavigation")
                         .WithOne("MomInfo")
                         .HasForeignKey("Mumbi.Domain.Entities.MomInfo", "Id")
-                        .HasConstraintName("FK_Mom_Info_Users")
+                        .HasConstraintName("FK_MomInfo_User")
                         .IsRequired();
 
                     b.Navigation("IdNavigation");
@@ -1132,7 +1106,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithMany("NewsMoms")
                         .HasForeignKey("MomId")
-                        .HasConstraintName("FK_News_Mom_Mom_Info")
+                        .HasConstraintName("FK_NewsMom_MomInfo")
                         .IsRequired();
 
                     b.HasOne("Mumbi.Domain.Entities.News", "News")
@@ -1151,24 +1125,24 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
                         .WithMany("PregnancyActivities")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_PregnancyActivity_Child_Info");
+                        .HasConstraintName("FK_PregnancyActivity_ChildInfo");
 
                     b.HasOne("Mumbi.Domain.Entities.PregnancyActivityType", "Type")
                         .WithMany("PregnancyActivities")
                         .HasForeignKey("TypeId")
-                        .HasConstraintName("FK_PregnancyActivity_PregnancyActivity_Type");
+                        .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
 
                     b.Navigation("Child");
 
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.PregnancyInfo", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.PregnancyHistory", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
-                        .WithMany("PregnancyInfos")
+                        .WithMany("PregnancyHistories")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_Pregnancy_Info_Child_Info")
+                        .HasConstraintName("FK_PregnancyHistory_ChildInfo")
                         .IsRequired();
 
                     b.Navigation("Child");
@@ -1190,7 +1164,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.User", "User")
                         .WithMany("Tokens")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Token_Account")
+                        .HasConstraintName("FK_Token_User")
                         .IsRequired();
 
                     b.Navigation("User");
@@ -1201,7 +1175,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
                         .WithMany("Teeth")
                         .HasForeignKey("ChildId")
-                        .HasConstraintName("FK_Tooth_Child_Info")
+                        .HasConstraintName("FK_Tooth_ChildInfo")
                         .IsRequired();
 
                     b.Navigation("Child");
@@ -1212,7 +1186,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
-                        .HasConstraintName("FK_Users_Role")
+                        .HasConstraintName("FK_User_Role")
                         .IsRequired();
 
                     b.Navigation("Role");
@@ -1223,24 +1197,24 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.User", "IdNavigation")
                         .WithOne("UserInfo")
                         .HasForeignKey("Mumbi.Domain.Entities.UserInfo", "Id")
-                        .HasConstraintName("FK_Users_Info_Users")
+                        .HasConstraintName("FK_UserInfo_User")
                         .IsRequired();
 
                     b.Navigation("IdNavigation");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.UsersNotification", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.UserNotification", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.Notification", "Notification")
-                        .WithMany("UsersNotifications")
+                        .WithMany("UserNotifications")
                         .HasForeignKey("NotificationId")
-                        .HasConstraintName("FK_UsersNotification_Notification")
+                        .HasConstraintName("FK_UserNotification_Notification")
                         .IsRequired();
 
                     b.HasOne("Mumbi.Domain.Entities.User", "User")
-                        .WithMany("UsersNotifications")
+                        .WithMany("UserNotifications")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_UsersNotification_Users")
+                        .HasConstraintName("FK_UserNotification_User")
                         .IsRequired();
 
                     b.Navigation("Notification");
@@ -1263,7 +1237,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Navigation("PregnancyActivities");
 
-                    b.Navigation("PregnancyInfos");
+                    b.Navigation("PregnancyHistories");
 
                     b.Navigation("Teeth");
                 });
@@ -1303,7 +1277,7 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Notification", b =>
                 {
-                    b.Navigation("UsersNotifications");
+                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.PregnancyActivityType", b =>
@@ -1326,7 +1300,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Navigation("UserInfo");
 
-                    b.Navigation("UsersNotifications");
+                    b.Navigation("UserNotifications");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Vaccine", b =>

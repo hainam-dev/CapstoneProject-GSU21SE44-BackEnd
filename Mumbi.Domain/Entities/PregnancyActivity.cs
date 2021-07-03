@@ -13,13 +13,11 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Column("Child_Id")]
         public int? ChildId { get; set; }
         [StringLength(100)]
         public string Name { get; set; }
         [Column("MediaFileURL")]
         public string MediaFileUrl { get; set; }
-        [Column("Type_Id")]
         public int? TypeId { get; set; }
         public bool FinishedFlag { get; set; }
         public bool DelFlag { get; set; }

@@ -35,13 +35,12 @@ namespace Mumbi.Domain.Entities
         public string LastModifiedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
-        [Column("GuidebookType_Id")]
-        public int? GuidebookTypeId { get; set; }
+        public int? TypeId { get; set; }
         public bool DelFlag { get; set; }
 
-        [ForeignKey(nameof(GuidebookTypeId))]
-        [InverseProperty("Guidebooks")]
-        public virtual GuidebookType GuidebookType { get; set; }
+        [ForeignKey(nameof(TypeId))]
+        [InverseProperty(nameof(GuidebookType.Guidebooks))]
+        public virtual GuidebookType Type { get; set; }
         [InverseProperty(nameof(GuidebookMom.Guidebook))]
         public virtual ICollection<GuidebookMom> GuidebookMoms { get; set; }
     }

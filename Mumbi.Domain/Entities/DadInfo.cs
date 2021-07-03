@@ -8,14 +8,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Dad_Info")]
+    [Table("DadInfo")]
     public partial class DadInfo
     {
         [Required]
         [StringLength(50)]
         public string Id { get; set; }
         [Key]
-        [Column("Mom_Id")]
         [StringLength(100)]
         public string MomId { get; set; }
         [Required]

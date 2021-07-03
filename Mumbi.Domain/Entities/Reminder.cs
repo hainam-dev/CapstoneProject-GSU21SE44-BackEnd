@@ -14,7 +14,6 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        [Column("User_Id")]
         [StringLength(100)]
         public string UserId { get; set; }
         [StringLength(100)]

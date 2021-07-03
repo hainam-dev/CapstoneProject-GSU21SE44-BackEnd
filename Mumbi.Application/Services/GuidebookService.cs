@@ -34,7 +34,7 @@ namespace Mumbi.Application.Services
                 CreatedTime = DateTime.Now,
                 LastModifiedBy = request.LastModifiedBy,
                 LastModifiedTime = DateTime.Now,
-                GuidebookTypeId = request.TypeId,
+                TypeId = request.TypeId,
                 DelFlag = false,
             };
             await _unitOfWork.GuidebookRepository.AddAsync(guidebook);
@@ -68,7 +68,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<GuidebookByTypeIdResponse>>> GetGuidebookByTypeId(int typeId)
         {
             var response = new List<GuidebookByTypeIdResponse>();
-            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.GuidebookTypeId == typeId && x.DelFlag == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
             if (guidebook == null)
             {
                 return new Response<List<GuidebookByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
@@ -90,7 +90,7 @@ namespace Mumbi.Application.Services
             guidebook.EstimatedFinishTime = request.EstimateFinishTime;
             guidebook.LastModifiedBy = request.LastModifiedBy;
             guidebook.LastModifiedTime = DateTime.Now;
-            guidebook.GuidebookTypeId = request.TypeId;
+            guidebook.TypeId = request.TypeId;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();
             return new Response<string>("Cập nhật guidebook thành công");

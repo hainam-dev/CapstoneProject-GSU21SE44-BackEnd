@@ -13,7 +13,7 @@ namespace Mumbi.Domain.Entities
     {
         public Notification()
         {
-            UsersNotifications = new HashSet<UsersNotification>();
+            UserNotifications = new HashSet<UserNotification>();
         }
 
         [Key]
@@ -28,7 +28,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string CreatedBy { get; set; }
 
-        [InverseProperty(nameof(UsersNotification.Notification))]
-        public virtual ICollection<UsersNotification> UsersNotifications { get; set; }
+        [InverseProperty(nameof(UserNotification.Notification))]
+        public virtual ICollection<UserNotification> UserNotifications { get; set; }
     }
 }

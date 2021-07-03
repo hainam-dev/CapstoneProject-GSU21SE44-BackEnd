@@ -77,7 +77,7 @@ namespace Mumbi.Application.Services
             {
                 return new Response<string>($"Không tìm thấy guidebook type có Id \'{Id}\'.");
             }
-            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.GuidebookTypeId == Id && x.DelFlag == false);
+            var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.TypeId == Id && x.DelFlag == false);
             if (guidebook != null)
             {
                 foreach (var deleteGuidebook in guidebook)

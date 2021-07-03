@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("News_Type")]
+    [Table("NewsType")]
     public partial class NewsType
     {
         public NewsType()

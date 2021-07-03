@@ -8,14 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Action_Child")]
+    [Table("ActionChild")]
     public partial class ActionChild
     {
         [Key]
         public int Id { get; set; }
-        [Column("Child_Id")]
         public int ChildId { get; set; }
-        [Column("Action_Id")]
         public int ActionId { get; set; }
         public bool CheckedFlag { get; set; }
 

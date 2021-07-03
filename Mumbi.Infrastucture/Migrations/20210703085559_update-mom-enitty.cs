@@ -2,13 +2,13 @@
 
 namespace Mumbi.Infrastucture.Migrations
 {
-    public partial class updateentityMominfo : Migration
+    public partial class updatemomenitty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Dad_Id",
-                table: "Mom_Info",
+                name: "DadId",
+                table: "MomInfo",
                 type: "varchar(50)",
                 unicode: false,
                 maxLength: 50,
@@ -22,8 +22,8 @@ namespace Mumbi.Infrastucture.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Dad_Id",
-                table: "Mom_Info",
+                name: "DadId",
+                table: "MomInfo",
                 type: "varchar(50)",
                 unicode: false,
                 maxLength: 50,

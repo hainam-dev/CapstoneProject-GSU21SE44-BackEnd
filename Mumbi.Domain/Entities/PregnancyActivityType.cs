@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("PregnancyActivity_Type")]
+    [Table("PregnancyActivityType")]
     public partial class PregnancyActivityType
     {
         public PregnancyActivityType()

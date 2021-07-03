@@ -15,7 +15,7 @@ namespace Mumbi.Domain.Entities
         {
             Reminders = new HashSet<Reminder>();
             Tokens = new HashSet<Token>();
-            UsersNotifications = new HashSet<UsersNotification>();
+            UserNotifications = new HashSet<UserNotification>();
         }
 
         [Key]
@@ -25,7 +25,6 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string Email { get; set; }
         [Required]
-        [Column("Role_Id")]
         [StringLength(10)]
         public string RoleId { get; set; }
         public bool DelFlag { get; set; }
@@ -41,7 +40,7 @@ namespace Mumbi.Domain.Entities
         public virtual ICollection<Reminder> Reminders { get; set; }
         [InverseProperty(nameof(Token.User))]
         public virtual ICollection<Token> Tokens { get; set; }
-        [InverseProperty(nameof(UsersNotification.User))]
-        public virtual ICollection<UsersNotification> UsersNotifications { get; set; }
+        [InverseProperty(nameof(UserNotification.User))]
+        public virtual ICollection<UserNotification> UserNotifications { get; set; }
     }
 }

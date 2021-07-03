@@ -13,7 +13,6 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Column("Child_Id")]
         public int ChildId { get; set; }
         [StringLength(100)]
         public string Name { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Child_Info")]
+    [Table("ChildInfo")]
     public partial class ChildInfo
     {
         public ChildInfo()
@@ -17,14 +17,13 @@ namespace Mumbi.Domain.Entities
             ChildHistories = new HashSet<ChildHistory>();
             Diaries = new HashSet<Diary>();
             PregnancyActivities = new HashSet<PregnancyActivity>();
-            PregnancyInfos = new HashSet<PregnancyInfo>();
+            PregnancyHistories = new HashSet<PregnancyHistory>();
             Teeth = new HashSet<Tooth>();
         }
 
         [Key]
         public int Id { get; set; }
         [Required]
-        [Column("Mom_Id")]
         [StringLength(100)]
         public string MomId { get; set; }
         [Required]
@@ -66,8 +65,8 @@ namespace Mumbi.Domain.Entities
         public virtual ICollection<Diary> Diaries { get; set; }
         [InverseProperty(nameof(PregnancyActivity.Child))]
         public virtual ICollection<PregnancyActivity> PregnancyActivities { get; set; }
-        [InverseProperty(nameof(PregnancyInfo.Child))]
-        public virtual ICollection<PregnancyInfo> PregnancyInfos { get; set; }
+        [InverseProperty(nameof(PregnancyHistory.Child))]
+        public virtual ICollection<PregnancyHistory> PregnancyHistories { get; set; }
         [InverseProperty(nameof(Tooth.Child))]
         public virtual ICollection<Tooth> Teeth { get; set; }
     }

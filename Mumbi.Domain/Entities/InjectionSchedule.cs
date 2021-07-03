@@ -13,13 +13,10 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        [Column("Child_Id")]
         [StringLength(50)]
         public string ChildId { get; set; }
-        [Column("Mom_Id")]
         [StringLength(100)]
         public string MomId { get; set; }
-        [Column("Vaccine_Id")]
         public int VaccineId { get; set; }
         [StringLength(15)]
         public string Phonenumber { get; set; }

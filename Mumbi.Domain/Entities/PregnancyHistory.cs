@@ -8,21 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("ChildHistory")]
-    public partial class ChildHistory
+    [Table("PregnancyHistory")]
+    public partial class PregnancyHistory
     {
         [Key]
         public int Id { get; set; }
         public int ChildId { get; set; }
-        [Required]
         [StringLength(50)]
-        public string Date { get; set; }
-        public double? Height { get; set; }
+        public string PregnancyWeek { get; set; }
         public double? Weight { get; set; }
-        public double? HeadCircumference { get; set; }
+        public double? BiparietalDiameter { get; set; }
+        public double? FemurLength { get; set; }
+        public double? FetalHeartRate { get; set; }
+        public double? MotherWeight { get; set; }
 
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty(nameof(ChildInfo.ChildHistories))]
+        [InverseProperty(nameof(ChildInfo.PregnancyHistories))]
         public virtual ChildInfo Child { get; set; }
     }
 }

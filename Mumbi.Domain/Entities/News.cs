@@ -34,7 +34,6 @@ namespace Mumbi.Domain.Entities
         public string LastModifiedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
-        [Column("Type_Id")]
         public int? TypeId { get; set; }
         public bool DelFlag { get; set; }
 

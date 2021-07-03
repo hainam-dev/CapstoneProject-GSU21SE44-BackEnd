@@ -8,19 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Token")]
-    public partial class Token
+    [Table("UserNotification")]
+    public partial class UserNotification
     {
         [Key]
         public int Id { get; set; }
+        public int NotificationId { get; set; }
         [Required]
         [StringLength(100)]
         public string UserId { get; set; }
-        [Required]
-        public string FcmToken { get; set; }
 
+        [ForeignKey(nameof(NotificationId))]
+        [InverseProperty("UserNotifications")]
+        public virtual Notification Notification { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty("Tokens")]
+        [InverseProperty("UserNotifications")]
         public virtual User User { get; set; }
     }
 }

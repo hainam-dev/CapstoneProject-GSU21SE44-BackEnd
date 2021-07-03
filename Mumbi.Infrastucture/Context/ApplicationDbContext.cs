@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Mumbi.Domain.Entities;
 
 #nullable disable
@@ -35,7 +33,7 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<PregnancyActivity> PregnancyActivities { get; set; }
         public virtual DbSet<PregnancyActivityType> PregnancyActivityTypes { get; set; }
-        public virtual DbSet<PregnancyInfo> PregnancyInfos { get; set; }
+        public virtual DbSet<PregnancyHistory> PregnancyHistories { get; set; }
         public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StandardIndex> StandardIndices { get; set; }
@@ -43,7 +41,7 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Tooth> Teeth { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
-        public virtual DbSet<UsersNotification> UsersNotifications { get; set; }
+        public virtual DbSet<UserNotification> UserNotifications { get; set; }
         public virtual DbSet<Vaccine> Vaccines { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -67,7 +65,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.ActionChildren)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Action_Child_Child_Info");
+                    .HasConstraintName("FK_ActionChild_ChildInfo");
             });
 
             modelBuilder.Entity<ChildHistory>(entity =>
@@ -78,7 +76,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.ChildHistories)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Child_History_Child_Info");
+                    .HasConstraintName("FK_ChildHistory_ChildInfo");
             });
 
             modelBuilder.Entity<ChildInfo>(entity =>
@@ -101,7 +99,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.ChildInfos)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Child_Info_Mom_Info");
+                    .HasConstraintName("FK_ChildInfo_MomInfo");
             });
 
             modelBuilder.Entity<DadInfo>(entity =>
@@ -125,7 +123,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithOne(p => p.DadInfo)
                     .HasForeignKey<DadInfo>(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Dad_Info_Mom_Info");
+                    .HasConstraintName("FK_DadInfo_MomInfo");
             });
 
             modelBuilder.Entity<Diary>(entity =>
@@ -138,7 +136,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.Diaries)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Diary_Child_Info");
+                    .HasConstraintName("FK_Diary_ChildInfo");
             });
 
             modelBuilder.Entity<Guidebook>(entity =>
@@ -147,9 +145,9 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.ImageUrl).IsUnicode(false);
 
-                entity.HasOne(d => d.GuidebookType)
+                entity.HasOne(d => d.Type)
                     .WithMany(p => p.Guidebooks)
-                    .HasForeignKey(d => d.GuidebookTypeId)
+                    .HasForeignKey(d => d.TypeId)
                     .HasConstraintName("FK_Guidebook_GuildbookType");
             });
 
@@ -169,7 +167,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.GuidebookMoms)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Guidebook_Mom_Mom_Info");
+                    .HasConstraintName("FK_GuidebookMom_MomInfo");
             });
 
             modelBuilder.Entity<InjectionSchedule>(entity =>
@@ -189,13 +187,13 @@ namespace Mumbi.Infrastucture.Context
                 entity.HasOne(d => d.Mom)
                     .WithMany(p => p.InjectionSchedules)
                     .HasForeignKey(d => d.MomId)
-                    .HasConstraintName("FK_InjectionSchedule_Mom_Info");
+                    .HasConstraintName("FK_InjectionSchedule_MomInfo");
 
                 entity.HasOne(d => d.Vaccine)
                     .WithMany(p => p.InjectionSchedules)
                     .HasForeignKey(d => d.VaccineId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_InjectionSchedule_Vaccine1");
+                    .HasConstraintName("FK_InjectionSchedule_Vaccine");
             });
 
             modelBuilder.Entity<MomInfo>(entity =>
@@ -212,7 +210,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithOne(p => p.MomInfo)
                     .HasForeignKey<MomInfo>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Mom_Info_Users");
+                    .HasConstraintName("FK_MomInfo_User");
             });
 
             modelBuilder.Entity<News>(entity =>
@@ -237,7 +235,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.NewsMoms)
                     .HasForeignKey(d => d.MomId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_News_Mom_Mom_Info");
+                    .HasConstraintName("FK_NewsMom_MomInfo");
 
                 entity.HasOne(d => d.News)
                     .WithMany(p => p.NewsMoms)
@@ -258,12 +256,12 @@ namespace Mumbi.Infrastucture.Context
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.PregnancyActivities)
                     .HasForeignKey(d => d.ChildId)
-                    .HasConstraintName("FK_PregnancyActivity_Child_Info");
+                    .HasConstraintName("FK_PregnancyActivity_ChildInfo");
 
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.PregnancyActivities)
                     .HasForeignKey(d => d.TypeId)
-                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivity_Type");
+                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
             });
 
             modelBuilder.Entity<PregnancyActivityType>(entity =>
@@ -273,13 +271,13 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.SuitableAge).IsUnicode(false);
             });
 
-            modelBuilder.Entity<PregnancyInfo>(entity =>
+            modelBuilder.Entity<PregnancyHistory>(entity =>
             {
                 entity.HasOne(d => d.Child)
-                    .WithMany(p => p.PregnancyInfos)
+                    .WithMany(p => p.PregnancyHistories)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Pregnancy_Info_Child_Info");
+                    .HasConstraintName("FK_PregnancyHistory_ChildInfo");
             });
 
             modelBuilder.Entity<Reminder>(entity =>
@@ -321,7 +319,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.Tokens)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Token_Account");
+                    .HasConstraintName("FK_Token_User");
             });
 
             modelBuilder.Entity<Tooth>(entity =>
@@ -334,7 +332,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.Teeth)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Tooth_Child_Info");
+                    .HasConstraintName("FK_Tooth_ChildInfo");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -349,7 +347,7 @@ namespace Mumbi.Infrastucture.Context
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Users_Role");
+                    .HasConstraintName("FK_User_Role");
             });
 
             modelBuilder.Entity<UserInfo>(entity =>
@@ -366,24 +364,24 @@ namespace Mumbi.Infrastucture.Context
                     .WithOne(p => p.UserInfo)
                     .HasForeignKey<UserInfo>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Users_Info_Users");
+                    .HasConstraintName("FK_UserInfo_User");
             });
 
-            modelBuilder.Entity<UsersNotification>(entity =>
+            modelBuilder.Entity<UserNotification>(entity =>
             {
                 entity.Property(e => e.UserId).IsUnicode(false);
 
                 entity.HasOne(d => d.Notification)
-                    .WithMany(p => p.UsersNotifications)
+                    .WithMany(p => p.UserNotifications)
                     .HasForeignKey(d => d.NotificationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UsersNotification_Notification");
+                    .HasConstraintName("FK_UserNotification_Notification");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UsersNotifications)
+                    .WithMany(p => p.UserNotifications)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UsersNotification_Users");
+                    .HasConstraintName("FK_UserNotification_User");
             });
 
             OnModelCreatingPartial(modelBuilder);

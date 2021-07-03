@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Guidebook_Type")]
+    [Table("GuidebookType")]
     public partial class GuidebookType
     {
         public GuidebookType()
@@ -23,7 +23,7 @@ namespace Mumbi.Domain.Entities
         public string Type { get; set; }
         public bool DelFlag { get; set; }
 
-        [InverseProperty(nameof(Guidebook.GuidebookType))]
+        [InverseProperty(nameof(Guidebook.Type))]
         public virtual ICollection<Guidebook> Guidebooks { get; set; }
     }
 }

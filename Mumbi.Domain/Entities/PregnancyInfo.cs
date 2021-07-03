@@ -24,7 +24,7 @@ namespace Mumbi.Domain.Entities
         public double? MotherWeight { get; set; }
 
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty(nameof(ChildInfo.PregnancyInfos))]
+        [InverseProperty(nameof(ChildInfo.PregnancyHistories))]
         public virtual ChildInfo Child { get; set; }
     }
 }

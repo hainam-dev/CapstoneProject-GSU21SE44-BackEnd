@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Mom_Info")]
+    [Table("MomInfo")]
     public partial class MomInfo
     {
         public MomInfo()
@@ -28,7 +28,6 @@ namespace Mumbi.Domain.Entities
         public string RhBloodGroup { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
-        [Column("Dad_Id")]
         [StringLength(50)]
         public string DadId { get; set; }
 
