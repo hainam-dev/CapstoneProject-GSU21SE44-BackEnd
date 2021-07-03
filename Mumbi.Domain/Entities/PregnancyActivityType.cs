@@ -21,8 +21,7 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(50)]
         public string Type { get; set; }
-        [StringLength(10)]
-        public string SuitableAge { get; set; }
+        public byte? SuitableAge { get; set; }
         public bool? DelFlag { get; set; }
 
         [InverseProperty(nameof(PregnancyActivity.Type))]

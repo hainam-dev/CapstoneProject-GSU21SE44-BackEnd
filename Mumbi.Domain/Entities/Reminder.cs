@@ -16,11 +16,11 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(100)]
         public string UserId { get; set; }
-        [StringLength(100)]
+        [StringLength(50)]
         public string Type { get; set; }
         [Column(TypeName = "time(0)")]
         public TimeSpan? Time { get; set; }
-        [StringLength(100)]
+        [StringLength(50)]
         public string Frequency { get; set; }
         public bool? EnabledFlag { get; set; }
 

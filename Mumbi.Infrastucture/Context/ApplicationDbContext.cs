@@ -55,6 +55,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<ActionChild>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.HasOne(d => d.Action)
                     .WithMany(p => p.ActionChildren)
                     .HasForeignKey(d => d.ActionId)
@@ -70,6 +72,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<ChildHistory>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.Property(e => e.Date).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
@@ -81,13 +85,13 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<ChildInfo>(entity =>
             {
+                entity.Property(e => e.Id).IsUnicode(false);
+
                 entity.Property(e => e.Birthday).IsUnicode(false);
 
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
                 entity.Property(e => e.EstimatedBornDate).IsUnicode(false);
-
-                entity.Property(e => e.Fingertips).IsUnicode(false);
 
                 entity.Property(e => e.ImageUrl).IsUnicode(false);
 
@@ -109,6 +113,8 @@ namespace Mumbi.Infrastucture.Context
 
                 entity.Property(e => e.MomId).IsUnicode(false);
 
+                entity.Property(e => e.Birthday).IsUnicode(false);
+
                 entity.Property(e => e.BloodGroup).IsUnicode(false);
 
                 entity.Property(e => e.Id).IsUnicode(false);
@@ -128,9 +134,11 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Diary>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.Property(e => e.ImageUrl).IsUnicode(false);
 
-                entity.Property(e => e.LastModifiedBy).IsUnicode(false);
+                entity.Property(e => e.PublicFlag).HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.Diaries)
@@ -173,8 +181,6 @@ namespace Mumbi.Infrastucture.Context
             modelBuilder.Entity<InjectionSchedule>(entity =>
             {
                 entity.Property(e => e.ChildId).IsUnicode(false);
-
-                entity.Property(e => e.InjectedFlag).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.InjectionDate).IsUnicode(false);
 
@@ -244,13 +250,10 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_NewsMom_News");
             });
 
-            modelBuilder.Entity<Notification>(entity =>
-            {
-                entity.Property(e => e.Title).IsUnicode(false);
-            });
-
             modelBuilder.Entity<PregnancyActivity>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.Property(e => e.MediaFileUrl).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
@@ -261,18 +264,21 @@ namespace Mumbi.Infrastucture.Context
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.PregnancyActivities)
                     .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
             });
 
             modelBuilder.Entity<PregnancyActivityType>(entity =>
             {
                 entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.SuitableAge).IsUnicode(false);
             });
 
             modelBuilder.Entity<PregnancyHistory>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
+                entity.Property(e => e.Date).IsUnicode(false);
+
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.PregnancyHistories)
                     .HasForeignKey(d => d.ChildId)
@@ -304,7 +310,7 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<StandardIndex>(entity =>
             {
-                entity.Property(e => e.Category).IsUnicode(false);
+                entity.Property(e => e.Type).IsUnicode(false);
 
                 entity.Property(e => e.Unit).IsUnicode(false);
             });
@@ -324,6 +330,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<Tooth>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.Property(e => e.GrowTime).IsUnicode(false);
 
                 entity.Property(e => e.ImageUrl).IsUnicode(false);

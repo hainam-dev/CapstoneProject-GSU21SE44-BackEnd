@@ -10,8 +10,8 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210703085559_update-mom-enitty")]
-    partial class updatemomenitty
+    [Migration("20210703153156_update-injectedschedule")]
+    partial class updateinjectedschedule
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,8 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -59,8 +60,11 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<bool>("CheckedFlag")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -78,8 +82,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Date")
                         .IsRequired()
@@ -105,10 +112,10 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ChildInfo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<double?>("AvgMilk")
                         .HasColumnType("float");
@@ -134,10 +141,8 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Fingertips")
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
+                    b.Property<byte?>("Fingertips")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -197,8 +202,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<string>("Birthday")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("BloodGroup")
                         .HasMaxLength(10)
@@ -216,15 +223,14 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("ImageUrl")
-                        .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)")
+                        .HasColumnType("varchar(max)")
                         .HasColumnName("ImageURL");
 
                     b.Property<string>("Phonenumber")
-                        .HasMaxLength(15)
+                        .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("RhBloodGroup")
                         .HasMaxLength(10)
@@ -247,8 +253,11 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<bool>("ApprovedFlag")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(100)
@@ -270,12 +279,17 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnName("ImageURL");
 
                     b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(200)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime?>("LastModifiedTime")
                         .HasColumnType("datetime");
+
+                    b.Property<bool?>("PublicFlag")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
                     b.HasKey("Id");
 
@@ -395,11 +409,6 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<bool?>("InjectedFlag")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("((0))");
-
                     b.Property<string>("InjectionDate")
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -419,12 +428,15 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Phonenumber")
-                        .HasMaxLength(15)
+                        .HasMaxLength(10)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(15)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<int?>("Price")
                         .HasColumnType("int");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("VaccineId")
                         .HasColumnType("int");
@@ -590,9 +602,8 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -606,8 +617,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<bool>("DelFlag")
                         .HasColumnType("bit");
@@ -621,10 +634,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnName("MediaFileURL");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("TypeId")
+                    b.Property<int>("TypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -648,10 +661,8 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("((0))");
 
-                    b.Property<string>("SuitableAge")
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)");
+                    b.Property<byte?>("SuitableAge")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -673,8 +684,17 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<double?>("BiparietalDiameter")
                         .HasColumnType("float");
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<double?>("FemurLength")
                         .HasColumnType("float");
@@ -712,16 +732,16 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasDefaultValueSql("((0))");
 
                     b.Property<string>("Frequency")
-                        .HasMaxLength(100)
+                        .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<TimeSpan?>("Time")
                         .HasColumnType("time(0)");
 
                     b.Property<string>("Type")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -761,14 +781,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Category")
+                    b.Property<string>("Gender")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<double>("MaxValue")
                         .HasColumnType("float");
@@ -776,8 +792,14 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<double>("MinValue")
                         .HasColumnType("float");
 
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
+                    b.Property<short>("Month")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Unit")
                         .IsRequired()
@@ -822,8 +844,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChildId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("GrowTime")
                         .HasMaxLength(50)
@@ -839,8 +864,8 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnName("ImageURL");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
@@ -949,9 +974,10 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Disease")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<bool>("Mandatory")
+                    b.Property<bool>("MandatoryFlag")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -1130,7 +1156,8 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.PregnancyActivityType", "Type")
                         .WithMany("PregnancyActivities")
                         .HasForeignKey("TypeId")
-                        .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
+                        .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType")
+                        .IsRequired();
 
                     b.Navigation("Child");
 

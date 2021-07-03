@@ -21,11 +21,10 @@ namespace Mumbi.Domain.Entities
         [StringLength(200)]
         public string FullName { get; set; }
         [Column("ImageURL")]
-        [StringLength(100)]
         public string ImageUrl { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? Birthday { get; set; }
-        [StringLength(15)]
+        [StringLength(50)]
+        public string Birthday { get; set; }
+        [StringLength(10)]
         public string Phonenumber { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }

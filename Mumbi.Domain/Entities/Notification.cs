@@ -19,7 +19,7 @@ namespace Mumbi.Domain.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(200)]
         public string Title { get; set; }
         [Required]
         public string NotificationContent { get; set; }

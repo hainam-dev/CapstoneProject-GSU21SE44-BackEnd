@@ -13,11 +13,13 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int Month { get; set; }
+        public short Month { get; set; }
         [Required]
         [StringLength(20)]
-        public string Category { get; set; }
-        public int Gender { get; set; }
+        public string Type { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Gender { get; set; }
         [Required]
         [StringLength(10)]
         public string Unit { get; set; }

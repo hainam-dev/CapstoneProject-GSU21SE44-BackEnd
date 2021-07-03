@@ -13,7 +13,12 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int ChildId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string ChildId { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Date { get; set; }
         [StringLength(50)]
         public string PregnancyWeek { get; set; }
         public double? Weight { get; set; }

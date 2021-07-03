@@ -18,7 +18,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string MomId { get; set; }
         public int VaccineId { get; set; }
-        [StringLength(15)]
+        [StringLength(10)]
         public string Phonenumber { get; set; }
         public byte? OrderOfInjection { get; set; }
         [StringLength(50)]
@@ -26,7 +26,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(50)]
         public string NextInjectionDate { get; set; }
         public int? Price { get; set; }
-        public bool? InjectedFlag { get; set; }
+        public byte Status { get; set; }
 
         [ForeignKey(nameof(MomId))]
         [InverseProperty(nameof(MomInfo.InjectionSchedules))]
