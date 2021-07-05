@@ -10,8 +10,9 @@ namespace Mumbi.Application.Interfaces
         IRoleRepository RoleRepository { get; }
         IMomInfoRepository MomInfoRepository { get; }
         IDadInfoRepository DadInfoRepository { get; }
-        IChildrenRepository ChildrenRepository { get; }
-        IPregnancyInformationRepository PregnancyInformationRepository { get; }
+        IChildInfoRepository ChildInfoRepository { get; }
+        IChildHistoryRepository ChildHistoryRepository { get; }
+        IPregnancyHistoryRepository PregnancyHistoryRepository { get; }
         IDiaryRepository DiaryRepository { get; }
         INewsRepository NewsRepository { get; }
         INewsTypeRepository NewsTypeRepository { get; }

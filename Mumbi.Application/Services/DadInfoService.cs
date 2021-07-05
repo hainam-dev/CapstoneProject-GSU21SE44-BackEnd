@@ -76,7 +76,7 @@ namespace Mumbi.Application.Services
             }
             dadInfo.FullName = request.FullName;
             dadInfo.ImageUrl = request.ImageURL;
-            dadInfo.Birthday = request.BirthDay;
+            dadInfo.Birthday = request.Birthday;
             dadInfo.Phonenumber = request.Phonenumber;
             dadInfo.BloodGroup = request.BloodGroup;
             dadInfo.RhBloodGroup = request.RhBloodGroup;

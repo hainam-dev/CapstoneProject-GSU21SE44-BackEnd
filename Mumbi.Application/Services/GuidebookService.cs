@@ -109,6 +109,7 @@ namespace Mumbi.Application.Services
                 guidebook.DelFlag = true;
                 _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
                 _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
+                await _unitOfWork.SaveAsync();
                 return new Response<string>($"Xóa guidebook id \'{Id}\' thành công!");
             }
             guidebook.DelFlag = true;

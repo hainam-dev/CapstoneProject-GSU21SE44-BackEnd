@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Dtos\Dads\UpdateMomRequest.cs" />
+    <Compile Remove="Dtos\DadInfo\UpdateMomRequest.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Dtos\ChildHistory\" />
     <Folder Include="Parameters\" />
   </ItemGroup>
 

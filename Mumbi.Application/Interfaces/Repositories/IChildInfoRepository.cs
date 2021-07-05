@@ -2,7 +2,7 @@
 
 namespace Mumbi.Application.Interfaces.Repositories
 {
-    public interface IChildrenRepository : IGenericRepository<ChildInfo>
+    public interface IChildInfoRepository : IGenericRepository<ChildInfo>
     {
 
     }

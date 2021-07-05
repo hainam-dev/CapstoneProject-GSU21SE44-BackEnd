@@ -107,6 +107,7 @@ namespace Mumbi.Application.Services
                 news.DelFlag = true;
                 _unitOfWork.NewsRepository.UpdateAsync(news);
                 _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
+                await _unitOfWork.SaveAsync();
                 return new Response<string>($"Xóa news id \'{Id}\' thành công!");
             }
             news.DelFlag = true;

@@ -12,7 +12,9 @@ namespace Mumbi.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserInfoService, UserInfoService>();
-            services.AddTransient<IChildrenService, ChildrenService>();
+            services.AddTransient<IChildInfoService, ChildInfoService>();
+            services.AddTransient<IChildHistoryService, ChildHistoryService>();
+            services.AddTransient<IPregnancyHistoryService, PregnancyHistoryService>();
             services.AddTransient<IMomInfoService, MomInfoService>();
             services.AddTransient<IDadInfoService, DadInfoService>();
             services.AddTransient<IDiaryService, DiaryService>();

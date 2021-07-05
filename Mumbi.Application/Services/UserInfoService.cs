@@ -23,7 +23,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<StaffInfoResponse>> GetStaffInfoById(String Id)
         {
             var response = new StaffInfoResponse();
-            var user = await _unitOfWork.UserRepository.FirstAsync(x => x.DelFlag == false && x.RoleId == "role02", includeProperties: "UserInfo");
+            var user = await _unitOfWork.UserRepository.FirstAsync(x => x.DelFlag == false && x.Id == Id, includeProperties: "UserInfo");
             if (user == null)
             {
                 return new Response<StaffInfoResponse>($"Không tìm thấy tài khoản \'{Id}\'.");

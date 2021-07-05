@@ -18,7 +18,8 @@ namespace Mumbi.Application.Mapping
         public GeneralProfile()
         {
             // Child
-            //CreateMap<Child, ChildrenResponse>().ForMember(
+            CreateMap<ChildInfo, ChildInfoResponse>();
+            //.ForMember(
             //    dest => dest.Weight,
             //    opt => opt.MapFrom(src => src.PregnancyInformation.Weight)
             //).ForMember(
@@ -47,7 +48,7 @@ namespace Mumbi.Application.Mapping
             //    opt => opt.MapFrom(src => src.PregnancyInformation.MotherWeight)
             //);
             // Pregnancy Info
-            CreateMap<PregnancyInfo, ChildrenResponse>();
+            CreateMap<PregnancyHistory, ChildInfoResponse>();
 
             // DadIndo
             CreateMap<DadInfo, DadInfoResponse>();
@@ -98,7 +99,7 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Height,
                 opt => opt.MapFrom(src => src.MomInfo.Height)
             ).ForMember(
-                dest => dest.Height,
+                dest => dest.Dad_Id,
                 opt => opt.MapFrom(src => src.MomInfo.DadId)
             );
             // Staff

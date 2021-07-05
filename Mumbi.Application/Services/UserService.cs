@@ -110,6 +110,7 @@ namespace Mumbi.Application.Services
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentUser);
                 AuthenticationResponse response = new AuthenticationResponse();
+                response.Id = currentUser.Id;
                 response.Email = currentUser.Email;
                 response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 response.Role = currentUser.RoleId;

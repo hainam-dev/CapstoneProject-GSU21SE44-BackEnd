@@ -24,7 +24,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<MomInfoResponse>>> GetAllMomInfo()
         {
             var response = new List<MomInfoResponse>();
-            var user = await _unitOfWork.UserRepository.GetAsync(x => x.DelFlag == false && x.RoleId == "role01", includeProperties: "UserInfo");
+            var user = await _unitOfWork.UserRepository.GetAsync(x => x.DelFlag == false && x.RoleId == "role01", includeProperties: "UserInfo,MomInfo");
             if (user != null)
             {
                 response = _mapper.Map<List<MomInfoResponse>>(user);
@@ -36,7 +36,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<MomInfoResponse>> GetMomInfoById(String Id)
         {
             var response = new MomInfoResponse();
-            var user = await _unitOfWork.UserRepository.FirstAsync(x => x.DelFlag == false && x.RoleId == "role01", includeProperties: "UserInfo");
+            var user = await _unitOfWork.UserRepository.FirstAsync(x => x.DelFlag == false && x.Id == Id, includeProperties: "UserInfo,MomInfo");
             if (user == null)
             {
                 return new Response<MomInfoResponse>($"Không tìm thấy tài khoản \'{Id}\'.");
