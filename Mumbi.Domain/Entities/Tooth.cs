@@ -25,6 +25,7 @@ namespace Mumbi.Domain.Entities
         public string GrowTime { get; set; }
         public string Note { get; set; }
         public bool GrownFlag { get; set; }
+        public int ToothIndex { get; set; }
 
         [ForeignKey(nameof(ChildId))]
         [InverseProperty(nameof(ChildInfo.Teeth))]
