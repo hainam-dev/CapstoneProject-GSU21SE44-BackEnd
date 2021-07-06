@@ -28,7 +28,7 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _guidebookMomService.GetGuidebookMomByMomId(momId));
         }
-        [HttpPut("DeleteGuidebookMom/{Id}")]
+        [HttpDelete("DeleteGuidebookMom/{Id}")]
         public async Task<IActionResult> DeleteGuidebookType(int Id)
         {
             return Ok(await _guidebookMomService.DeleteGuidebookMom(Id));

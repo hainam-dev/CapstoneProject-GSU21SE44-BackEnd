@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Apis.Auth.OAuth2.Responses;
 using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Dtos.Diaries;
@@ -10,6 +11,7 @@ using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Dtos.NewsType;
 using Mumbi.Application.Dtos.Staffs;
+using Mumbi.Application.Dtos.Tokens;
 using Mumbi.Domain.Entities;
 namespace Mumbi.Application.Mapping
 {
@@ -17,37 +19,9 @@ namespace Mumbi.Application.Mapping
     {
         public GeneralProfile()
         {
+           
             // Child
             CreateMap<ChildInfo, ChildInfoResponse>();
-            //.ForMember(
-            //    dest => dest.Weight,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.Weight)
-            //).ForMember(
-            //    dest => dest.CalculatedBornDate,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.CalculatedBornDate)
-            //).ForMember(
-            //    dest => dest.HeadCircumference,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.HeadCircumference)
-            //).ForMember(
-            //    dest => dest.FemurLength,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.FemurLength)
-            //).ForMember(
-            //    dest => dest.FetalHeartRate,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.FetalHeartRate)
-            //).ForMember(
-            //    dest => dest.PregnancyWeek,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.PregnancyWeek)
-            //).ForMember(
-            //    dest => dest.PregnancyType,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.PregnancyType)
-            //).ForMember(
-            //    dest => dest.MotherMenstrualCycleTime,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.MotherMenstrualCycleTime)
-            //).ForMember(
-            //    dest => dest.MotherWeight,
-            //    opt => opt.MapFrom(src => src.PregnancyInformation.MotherWeight)
-            //);
-            // Pregnancy Info
             CreateMap<PregnancyHistory, ChildInfoResponse>();
 
             // DadIndo
@@ -70,6 +44,8 @@ namespace Mumbi.Application.Mapping
             CreateMap<Guidebook, GuidebookByTypeIdResponse>();
             // GuidebookMom
             CreateMap<GuidebookMom, GuidebookMomResponse>();
+            //Token
+            CreateMap<Token, FcmTokenResponse>();
             // User
             CreateMap<User, MomInfoResponse>().ForMember(
                 dest => dest.Id,

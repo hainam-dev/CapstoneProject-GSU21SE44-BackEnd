@@ -28,7 +28,7 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _newsMomService.GetNewsMomByMomId(momId));
         }
-        [HttpPut("DeleteNewsMom/{Id}")]
+        [HttpDelete("DeleteNewsMom/{Id}")]
         public async Task<IActionResult> DeleteNewsType(int Id)
         {
             return Ok(await _newsMomService.DeleteNewsMom(Id));

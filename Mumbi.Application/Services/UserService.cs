@@ -83,13 +83,6 @@ namespace Mumbi.Application.Services
                     };
                     await _unitOfWork.UserInfoRepository.AddAsync(userInfo);
 
-                    var token = new Token
-                    {
-                        UserId = user_registration.Id,
-                        FcmToken = request.FCMToken,
-                    };
-                    await _unitOfWork.TokenRepository.AddAsync(token);
-
                     currentUser = user_registration;
                     currentUser.UserInfo = userInfo;
                 }
@@ -105,7 +98,6 @@ namespace Mumbi.Application.Services
                     };
                     await _unitOfWork.TokenRepository.AddAsync(token);
                 }
-
                 await _unitOfWork.SaveAsync();
 
                 JwtSecurityToken jwtSecurityToken = await GenerateJWTToken(currentUser);
