@@ -39,6 +39,7 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<StandardIndex> StandardIndices { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<Tooth> Teeth { get; set; }
+        public virtual DbSet<ToothInfo> ToothInfos { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
         public virtual DbSet<UserNotification> UserNotifications { get; set; }
@@ -332,15 +333,27 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.ChildId).IsUnicode(false);
 
-                entity.Property(e => e.GrowTime).IsUnicode(false);
-
                 entity.Property(e => e.ImageUrl).IsUnicode(false);
+
+                entity.Property(e => e.ToothId).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
                     .WithMany(p => p.Teeth)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tooth_ChildInfo");
+
+                entity.HasOne(d => d.ToothNavigation)
+                    .WithMany(p => p.Teeth)
+                    .HasForeignKey(d => d.ToothId)
+                    .HasConstraintName("FK_Tooth_ToothInfo");
+            });
+
+            modelBuilder.Entity<ToothInfo>(entity =>
+            {
+                entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.Property(e => e.GrowTime).IsUnicode(false);
             });
 
             modelBuilder.Entity<User>(entity =>

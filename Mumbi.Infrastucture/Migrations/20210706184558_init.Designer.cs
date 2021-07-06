@@ -10,8 +10,8 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210704184110_add-column-ChildHistory")]
-    partial class addcolumnChildHistory
+    [Migration("20210706184558_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,8 +100,8 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<double?>("Height")
                         .HasColumnType("float");
 
-                    b.Property<byte>("WeekOlds")
-                        .HasColumnType("tinyint");
+                    b.Property<short?>("WeekOlds")
+                        .HasColumnType("smallint");
 
                     b.Property<double?>("Weight")
                         .HasColumnType("float");
@@ -853,10 +853,8 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("GrowTime")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.Property<DateTime?>("GrowDate")
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("GrownFlag")
                         .HasColumnType("bit");
@@ -866,21 +864,47 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("varchar(max)")
                         .HasColumnName("ImageURL");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte?>("Position")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("ToothId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChildId");
 
+                    b.HasIndex("ToothId");
+
                     b.ToTable("Tooth");
+                });
+
+            modelBuilder.Entity("Mumbi.Domain.Entities.ToothInfo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("GrowTime")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte>("Position")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ToothInfo");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.User", b =>
@@ -1208,7 +1232,14 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasConstraintName("FK_Tooth_ChildInfo")
                         .IsRequired();
 
+                    b.HasOne("Mumbi.Domain.Entities.ToothInfo", "ToothNavigation")
+                        .WithMany("Teeth")
+                        .HasForeignKey("ToothId")
+                        .HasConstraintName("FK_Tooth_ToothInfo");
+
                     b.Navigation("Child");
+
+                    b.Navigation("ToothNavigation");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.User", b =>
@@ -1318,6 +1349,11 @@ namespace Mumbi.Infrastucture.Migrations
             modelBuilder.Entity("Mumbi.Domain.Entities.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Mumbi.Domain.Entities.ToothInfo", b =>
+                {
+                    b.Navigation("Teeth");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.User", b =>

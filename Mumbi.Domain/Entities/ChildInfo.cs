@@ -37,20 +37,20 @@ namespace Mumbi.Domain.Entities
         [StringLength(20)]
         public string Gender { get; set; }
         [StringLength(50)]
-        public string EstimatedBornDate { get; set; }
-        [StringLength(50)]
         public string Birthday { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
         public byte? Fingertips { get; set; }
+        public byte? HeadVortex { get; set; }
         public double? Weight { get; set; }
         public double? Height { get; set; }
         public double? HeadCircumference { get; set; }
         public double? HourSleep { get; set; }
         public double? AvgMilk { get; set; }
-        public byte? HeadVortex { get; set; }
+        [StringLength(50)]
+        public string EstimatedBornDate { get; set; }
         public bool BornFlag { get; set; }
         public bool DelFlag { get; set; }
 

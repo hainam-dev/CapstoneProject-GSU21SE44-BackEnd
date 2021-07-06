@@ -19,10 +19,10 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(50)]
         public string Date { get; set; }
-        public byte WeekOlds { get; set; }
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public double? HeadCircumference { get; set; }
+        public short? WeekOlds { get; set; }
 
         [ForeignKey(nameof(ChildId))]
         [InverseProperty(nameof(ChildInfo.ChildHistories))]

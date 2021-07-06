@@ -7,7 +7,7 @@ namespace Mumbi.Infrastucture.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
+            
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -74,6 +74,9 @@ namespace Mumbi.Infrastucture.Migrations
 
             migrationBuilder.DropTable(
                 name: "ChildInfo");
+
+            migrationBuilder.DropTable(
+                name: "ToothInfo");
 
             migrationBuilder.DropTable(
                 name: "Notification");
