@@ -35,6 +35,9 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
         public ITokenRepository TokenRepository { get; set; }
         public IUserInfoRepository UserInfoRepository { get; set; }
+        public IToothRepository ToothRepository { get; set; }
+        public IToothInfoRepository ToothInfoRepository { get; set; }
+
 
         private void InitRepository()
         {
@@ -54,6 +57,8 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookTypeRepository = new GuidebookTypeRepository(_context);
             GuidebookMomRepository = new GuidebookMomRepository(_context);
             TokenRepository = new TokenRepository(_context);
+            ToothRepository = new ToothRepository(_context);
+            ToothInfoRepository = new ToothInfoRepository(_context);
         }
 
         public async Task<int> SaveAsync()

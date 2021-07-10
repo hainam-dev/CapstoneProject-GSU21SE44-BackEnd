@@ -25,7 +25,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<MomInfoResponse>();
             var user = await _unitOfWork.UserRepository.GetAsync(x => x.DelFlag == false && x.RoleId == "role01", includeProperties: "UserInfo,MomInfo");
-            if (user != null)
+            if (user.Count > 0)
             {
                 response = _mapper.Map<List<MomInfoResponse>>(user);
                 return new Response<List<MomInfoResponse>>(response);

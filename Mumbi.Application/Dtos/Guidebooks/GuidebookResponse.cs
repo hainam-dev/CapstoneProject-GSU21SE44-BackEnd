@@ -18,5 +18,6 @@ namespace Mumbi.Application.Dtos.Guidebooks
         public string LastModifiedBy { get; set; }
         public DateTime LastModifiedTime { get; set; }
         public int TypeId { get; set; }
+        public string Type { get; set; }
     }
 }

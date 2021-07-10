@@ -10,6 +10,7 @@ namespace Mumbi.Application.Interfaces
     public interface IDiaryService
     {
         Task<Response<string>> AddDiary(CreateDiaryRequest request);
+        Task<Response<List<DiaryPublicResponse>>> GetDiaryToApprove();
         Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic();
         Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(string childId);
         Task<Response<string>> UpdateDiaryRequest(UpdateDiaryRequest request);

@@ -37,7 +37,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<GuidebookMomResponse>();
             var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.MomId == momId);
-            if (guidebookMom == null)
+            if (guidebookMom.Count == 0)
             {
                 return new Response<List<GuidebookMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
             }

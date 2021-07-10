@@ -20,29 +20,23 @@ namespace Mumbi.Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Response<FcmTokenResponse>> GetTokenById(int Id)
+        public async Task<Response<string>> DeleteToken(string userId, string fcmToken)
         {
-            var response = new FcmTokenResponse();
-            var token = await _unitOfWork.TokenRepository.FirstAsync(x => x.Id == Id);
-            if (token == null)
+            var token = await _unitOfWork.TokenRepository.GetAsync(x => x.UserId == userId);
+            if (token.Count == 0)
             {
-                return new Response<FcmTokenResponse>($"Không tìm thấy token id \'{Id}\'");
+                return new Response<string>($"User \'{userId}\' không tồn tại.");
             }
-            response = _mapper.Map<FcmTokenResponse>(token);
-            return new Response<FcmTokenResponse>(response);
-        }
-        public async Task<Response<string>> DeleteToken(int Id)
-        {
-            var token = await _unitOfWork.TokenRepository.FirstAsync(x => x.Id == Id);
-            if (token == null)
+            foreach(var tokens in token)
             {
-                return new Response<string>($"Không tìm thấy token có id \'{Id}\'.");
+                if(fcmToken == tokens.FcmToken)
+                {
+                    _unitOfWork.TokenRepository.DeleteAsync(tokens);
+                    await _unitOfWork.SaveAsync();
+                    return new Response<string>($"Xóa token \'{fcmToken}\' thành công!");
+                }
             }
-            _unitOfWork.TokenRepository.DeleteAsync(token);
-            await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa token id \'{Id}\' thành công!");
+            return new Response<string>($"Token \'{fcmToken}\' không tồn tại.");
         }
-
-       
     }
 }

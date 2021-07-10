@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<NewsMomResponse>();
             var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.MomId == momId);
-            if (newsMom == null)
+            if (newsMom.Count == 0)
             {
                 return new Response<List<NewsMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
             }

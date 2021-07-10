@@ -36,7 +36,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<GuidebookTypeResponse>>> GetAllGuidebookType()
         {
             var guidebookType = await _unitOfWork.GuidebookTypeRepository.GetAllAsync();
-            if (guidebookType == null)
+            if (guidebookType.Count == 0)
             {
                 return new Response<List<GuidebookTypeResponse>>("Chưa có dữ liệu");
             }
@@ -78,12 +78,12 @@ namespace Mumbi.Application.Services
                 return new Response<string>($"Không tìm thấy guidebook type có Id \'{Id}\'.");
             }
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.TypeId == Id && x.DelFlag == false);
-            if (guidebook != null)
+            if (guidebook.Count > 0)
             {
                 foreach (var deleteGuidebook in guidebook)
                 {
                     var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.GuidebookId == deleteGuidebook.Id);
-                    if (guidebookMom != null)
+                    if (guidebookMom.Count > 0)
                     {
                         _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
                     }

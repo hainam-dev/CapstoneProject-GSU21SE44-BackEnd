@@ -33,7 +33,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<NewsTypeResponse>>> GetAllNewsType()
         {
             var newsType = await _unitOfWork.NewsTypeRepository.GetAllAsync();
-            if (newsType == null)
+            if (newsType.Count == 0)
             {
                 return new Response<List<NewsTypeResponse>>("Chưa có dữ liệu");
             }
@@ -74,12 +74,12 @@ namespace Mumbi.Application.Services
                 return new Response<string>($"Không tìm thấy news type có Id \'{Id}\'.");
             }
             var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == Id && x.DelFlag == false);
-            if (news != null)
+            if (news.Count > 0)
             {
                 foreach (var deleteNews in news)
                 {
                     var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == deleteNews.Id);
-                    if (newsMom != null)
+                    if (newsMom.Count > 0)
                     {
                         _unitOfWork.NewsMomRepository.DeleteAllAsync(newsMom);
                     }

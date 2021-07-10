@@ -25,6 +25,8 @@ namespace Mumbi.Application
             services.AddTransient<IGuidebookTypeService, GuidebookTypeService>();
             services.AddTransient<IGuidebookMomService, GuidebookMomService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IToothService, ToothService>();
+            services.AddTransient<IToothInfoService, ToothInfoService>();
         }
     }
 }

@@ -18,15 +18,10 @@ namespace Mumbi_API.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpGet("GetTokenBy/{Id}")]
-        public async Task<IActionResult> GetTokenById(int Id)
+        [HttpDelete("DeleteToken/{UserId}/{FcmToken}")]
+        public async Task<IActionResult> DeleteToken(string UserId,string FcmToken)
         {
-            return Ok(await _tokenService.GetTokenById(Id));
-        }
-        [HttpDelete("DeleteToken/{Id}")]
-        public async Task<IActionResult> DeleteToken(int Id)
-        {
-            return Ok(await _tokenService.DeleteToken(Id));
+            return Ok(await _tokenService.DeleteToken(UserId, FcmToken));
         }
     }
 

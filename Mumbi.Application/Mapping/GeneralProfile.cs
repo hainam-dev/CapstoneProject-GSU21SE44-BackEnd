@@ -12,6 +12,8 @@ using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Dtos.NewsType;
 using Mumbi.Application.Dtos.Staffs;
 using Mumbi.Application.Dtos.Tokens;
+using Mumbi.Application.Dtos.ToothInfo;
+using Mumbi.Application.Dtos.Tooths;
 using Mumbi.Domain.Entities;
 namespace Mumbi.Application.Mapping
 {
@@ -33,19 +35,29 @@ namespace Mumbi.Application.Mapping
             // NewsType
             CreateMap<NewsType, NewsTypeResponse>();
             // News
-            CreateMap<News, NewsResponse>();
+            CreateMap<News, NewsResponse>().ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type.Type)
+                );
             CreateMap<News, NewsByTypeIdResponse>();
             // NewsMom
             CreateMap<NewsMom, NewsMomResponse>();
             // GuidebookType
             CreateMap<GuidebookType, GuidebookTypeResponse>();
             // Guidebook
-            CreateMap<Guidebook, GuidebookResponse>();
+            CreateMap<Guidebook, GuidebookResponse>().ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type.Type)
+                );
             CreateMap<Guidebook, GuidebookByTypeIdResponse>();
             // GuidebookMom
             CreateMap<GuidebookMom, GuidebookMomResponse>();
             //Token
             CreateMap<Token, FcmTokenResponse>();
+            //Tooth
+            CreateMap<Tooth, ToothResponse>();
+            //ToothInfo
+            CreateMap<ToothInfo, ToothInfoResponse>();
             // User
             CreateMap<User, MomInfoResponse>().ForMember(
                 dest => dest.Id,

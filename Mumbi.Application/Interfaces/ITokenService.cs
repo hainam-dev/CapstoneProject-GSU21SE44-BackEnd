@@ -10,7 +10,6 @@ namespace Mumbi.Application.Interfaces
 {
     public interface ITokenService
     {
-        Task<Response<FcmTokenResponse>> GetTokenById(int Id);
-        Task<Response<string>> DeleteToken(int Id);
+        Task<Response<string>> DeleteToken(string userId, string fcmToken);
     }
 }

@@ -203,12 +203,12 @@ namespace Mumbi.Application.Services
             var response = new List<ChildInfoResponse>();
 
             var child = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == momId && x.DelFlag == false);
-            if (child == null)
+            if (child.Count == 0)
             {
                 return new Response<List<ChildInfoResponse>>($"Không tìm thấy mẹ \'{momId}\'");
             }
             response = _mapper.Map<List<ChildInfoResponse>>(child);
-            return new Response<List<ChildInfoResponse>>(response);
+            return new Response<List<ChildInfoResponse>>(response, $"Có {child.Count} người con");
         }
 
         

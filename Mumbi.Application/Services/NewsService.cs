@@ -42,8 +42,8 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<NewsResponse>>> GetAllNews()
         {
-            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.DelFlag == false);
-            if (news == null)
+            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.DelFlag == false, includeProperties: "Type");
+            if (news.Count == 0)
             {
                 return new Response<List<NewsResponse>>("Chưa có dữ liệu");
             }
@@ -67,7 +67,7 @@ namespace Mumbi.Application.Services
         {
             var response = new List<NewsByTypeIdResponse>();
             var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
-            if (news == null)
+            if (news.Count == 0)
             {
                 return new Response<List<NewsByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
             }
@@ -102,7 +102,7 @@ namespace Mumbi.Application.Services
                 return new Response<string>($"Không tìm thấy news id \'{Id}\'.");
             }
             var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.NewsId == Id);
-            if (newsMom != null)
+            if (newsMom.Count > 0)
             {
                 news.DelFlag = true;
                 _unitOfWork.NewsRepository.UpdateAsync(news);

@@ -26,6 +26,7 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(50)]
         public string GrowTime { get; set; }
+        public byte Index { get; set; }
 
         [InverseProperty(nameof(Tooth.ToothNavigation))]
         public virtual ICollection<Tooth> Teeth { get; set; }

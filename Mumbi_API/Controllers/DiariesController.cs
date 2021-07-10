@@ -23,6 +23,12 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _diaryService.AddDiary(request));
         }
+        [HttpGet("GetDiaryToApprove")]
+        public async Task<IActionResult> GetDiaryToApprove()
+        {
+            return Ok(await _diaryService.GetDiaryToApprove());
+
+        }
         [HttpGet("GetDiaryPublic")]
         public async Task<IActionResult> GetDiaryPublic()
         {

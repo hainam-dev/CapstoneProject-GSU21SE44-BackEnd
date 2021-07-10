@@ -19,7 +19,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(50)]
         public string ChildId { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? GrowDate { get; set; }
+        public DateTime? GrownDate { get; set; }
         public string Note { get; set; }
         [Column("ImageURL")]
         public string ImageUrl { get; set; }
