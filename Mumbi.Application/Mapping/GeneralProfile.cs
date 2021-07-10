@@ -21,7 +21,7 @@ namespace Mumbi.Application.Mapping
     {
         public GeneralProfile()
         {
-           
+
             // Child
             CreateMap<ChildInfo, ChildInfoResponse>();
             CreateMap<PregnancyHistory, ChildInfoResponse>();
@@ -31,7 +31,13 @@ namespace Mumbi.Application.Mapping
             // Diary
             CreateMap<Diary, DiaryResponse>();
             // DiaryPublic
-            CreateMap<Diary, DiaryPublicResponse>();
+            CreateMap<Diary, DiaryPublicResponse>().ForMember(
+                dest => dest.CreatedBy,
+                opt => opt.MapFrom(src => src.Child.Mom.IdNavigation.UserInfo.FullName)
+            ).ForMember(
+                dest => dest.ImageURLCreateBy,
+                opt => opt.MapFrom(src => src.Child.Mom.IdNavigation.UserInfo.ImageUrl)
+            );
             // NewsType
             CreateMap<NewsType, NewsTypeResponse>();
             // News

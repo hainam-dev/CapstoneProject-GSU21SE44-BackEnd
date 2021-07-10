@@ -60,7 +60,8 @@ namespace Mumbi.Application.Services
         }
         public async Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic()
         {
-            var diaryPublic = await _unitOfWork.DiaryRepository.GetAsync(x => x.DelFlag == false && x.ApprovedFlag == true);
+            var diaryPublic = await _unitOfWork.DiaryRepository.GetAsync(x => x.DelFlag == false && x.ApprovedFlag == true,
+                                                                         includeProperties: "Child.Mom.IdNavigation.UserInfo");
             if (diaryPublic.Count == 0)
             {
                 return new Response<List<DiaryPublicResponse>>("Chưa có dữ liệu");
