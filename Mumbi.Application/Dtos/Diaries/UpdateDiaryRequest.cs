@@ -14,6 +14,7 @@ namespace Mumbi.Application.Dtos.Diaries
         public string DiaryContent { get; set; }
         public string LastModifiedBy { get; set; }
         public DateTime LastModifiedTime { get; set; }
+        public DateTime PublicDate { get; set; }
         public bool PublicFlag { get; set; }
         public bool ApprovedFlag { get; set; }
     }

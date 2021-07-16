@@ -102,6 +102,7 @@ namespace Mumbi.Application.Services
             diary.DiaryContent = request.DiaryContent;
             diary.LastModifiedBy = request.LastModifiedBy;
             diary.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
+            diary.PublicDate = request.PublicDate;
             diary.PublicFlag = request.PublicFlag;
             diary.ApprovedFlag = request.ApprovedFlag;
 
@@ -111,13 +112,8 @@ namespace Mumbi.Application.Services
             return new Response<string>("Cập nhật thông tin nhật ký thành công");
         }
 
-        public async Task<Response<string>> DeleteDiary(string childId, int Id)
+        public async Task<Response<string>> DeleteDiary(int Id)
         {
-            var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == childId && x.DelFlag == false);
-            if (child == null)
-            {
-                return new Response<String>($"Không tìm thấy bé \'{childId}\'.");
-            }
             var diary = await _unitOfWork.DiaryRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (diary == null)
             {

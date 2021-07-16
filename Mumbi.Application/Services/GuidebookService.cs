@@ -29,11 +29,11 @@ namespace Mumbi.Application.Services
                 Title = request.Title,
                 GuidebookContent = request.GuidebookContent,
                 ImageUrl = request.ImageURL,
-                EstimatedFinishTime = request.EstimateFinishTime,
+                EstimateFinishTime = request.EstimateFinishTime,
                 CreatedBy = request.CreatedBy,
-                CreatedTime = DateTime.Now,
+                CreatedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
                 LastModifiedBy = request.LastModifiedBy,
-                LastModifiedTime = DateTime.Now,
+                LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
                 TypeId = request.TypeId,
                 DelFlag = false,
             };
@@ -87,9 +87,9 @@ namespace Mumbi.Application.Services
             guidebook.Title = request.Title;
             guidebook.GuidebookContent = request.GuidebookContent;
             guidebook.ImageUrl = request.ImageURL;
-            guidebook.EstimatedFinishTime = request.EstimateFinishTime;
+            guidebook.EstimateFinishTime = request.EstimateFinishTime;
             guidebook.LastModifiedBy = request.LastModifiedBy;
-            guidebook.LastModifiedTime = DateTime.Now;
+            guidebook.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
             guidebook.TypeId = request.TypeId;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();

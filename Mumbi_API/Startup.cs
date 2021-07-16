@@ -54,8 +54,6 @@ namespace Mumbi_API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseCors("CorsPolicy");

@@ -28,6 +28,7 @@ namespace Mumbi.Domain.Entities
         public string LastModifiedBy { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
+        public DateTime? PublicDate { get; set; }
         public bool ApprovedFlag { get; set; }
         [Required]
         public bool? PublicFlag { get; set; }

@@ -35,7 +35,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<GuidebookTypeResponse>>> GetAllGuidebookType()
         {
-            var guidebookType = await _unitOfWork.GuidebookTypeRepository.GetAllAsync();
+            var guidebookType = await _unitOfWork.GuidebookTypeRepository.GetAsync(x => x.DelFlag == false);
             if (guidebookType.Count == 0)
             {
                 return new Response<List<GuidebookTypeResponse>>("Chưa có dữ liệu");

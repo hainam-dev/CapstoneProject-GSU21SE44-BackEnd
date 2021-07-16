@@ -1,13 +1,13 @@
 
 {
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
-    "profile" : "Mumbi_Capstone",
+    "profile" : "Mumbi",
     "region"  : "ap-southeast-1",
-    "application" : "Mumbi_Capstone",
-    "environment" : "MumbiCapstone-dev",
-    "cname"       : "mumbicapstone-dev",
+    "application" : "mumbi",
+    "environment" : "Mumbi-env",
+    "cname"       : "mumbiapi",
     "solution-stack" : "64bit Windows Server 2019 v2.6.7 running IIS 10.0",
-    "environment-type" : "SingleInstance",
+    "environment-type" : "LoadBalanced",
     "instance-profile" : "aws-elasticbeanstalk-ec2-role",
     "service-role"     : "aws-elasticbeanstalk-service-role",
     "health-check-url" : "/",

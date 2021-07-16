@@ -32,7 +32,7 @@ namespace Mumbi.Application.Mapping
             CreateMap<Diary, DiaryResponse>();
             // DiaryPublic
             CreateMap<Diary, DiaryPublicResponse>().ForMember(
-                dest => dest.CreatedBy,
+                dest => dest.NameCreatedBy,
                 opt => opt.MapFrom(src => src.Child.Mom.IdNavigation.UserInfo.FullName)
             ).ForMember(
                 dest => dest.ImageURLCreateBy,

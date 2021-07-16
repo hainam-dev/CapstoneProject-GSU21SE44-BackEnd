@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mumbi.Infrastucture.Context;
 
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210711155335_update-estimate-Guidebook")]
+    partial class updateestimateGuidebook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,9 +287,6 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Property<DateTime?>("LastModifiedTime")
                         .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("PublicDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("PublicFlag")
                         .IsRequired()

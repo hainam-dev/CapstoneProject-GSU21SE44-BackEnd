@@ -57,9 +57,9 @@ namespace Mumbi_API.Controllers
        }
 
         [HttpPut("DeleteDiary/{Id}")]
-        public async Task<IActionResult> DeleteDiary(string childId, int Id)
+        public async Task<IActionResult> DeleteDiary(int Id)
         {
-            return Ok(await _diaryService.DeleteDiary(childId, Id));
+            return Ok(await _diaryService.DeleteDiary(Id));
         }
     }
 }

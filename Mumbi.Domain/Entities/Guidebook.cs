@@ -26,7 +26,7 @@ namespace Mumbi.Domain.Entities
         public string GuidebookContent { get; set; }
         [Column("ImageURL")]
         public string ImageUrl { get; set; }
-        public short? EstimatedFinishTime { get; set; }
+        public short? EstimateFinishTime { get; set; }
         [StringLength(100)]
         public string CreatedBy { get; set; }
         [Column(TypeName = "datetime")]

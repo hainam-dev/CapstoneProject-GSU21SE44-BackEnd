@@ -32,7 +32,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<List<NewsTypeResponse>>> GetAllNewsType()
         {
-            var newsType = await _unitOfWork.NewsTypeRepository.GetAllAsync();
+            var newsType = await _unitOfWork.NewsTypeRepository.GetAsync(x => x.DelFlag == false);
             if (newsType.Count == 0)
             {
                 return new Response<List<NewsTypeResponse>>("Chưa có dữ liệu");

@@ -131,7 +131,7 @@ namespace Mumbi.Application.Services
                     var childHistory = new ChildHistory
                     {
                         ChildId = request.Id,
-                        Date = DateTime.Now.ToString(),
+                        Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
                         Height = request.Height,
                         Weight = request.Weight,
                         HeadCircumference = request.HeadCircumference
@@ -148,7 +148,7 @@ namespace Mumbi.Application.Services
             var pregnancyHistory = new PregnancyHistory
             {
                 ChildId = request.ChildId,
-                Date = DateTime.Now.ToString(),
+                Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
                 PregnancyWeek = request.PregnancyWeek,
                 Weight = request.Weight,
                 BiparietalDiameter = request.BiparietalDiameter,
@@ -201,11 +201,15 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<ChildInfoResponse>>> GetChildInfoByMomId(string momId)
         {
             var response = new List<ChildInfoResponse>();
-
+            var mom_info = await _unitOfWork.MomInfoRepository.FirstAsync(x => x.Id == momId && x.IdNavigation.DelFlag == false);
+            if (mom_info == null)
+            {
+                return new Response<List<ChildInfoResponse>>($"Không tìm thấy mẹ \'{momId}\'");
+            }
             var child = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == momId && x.DelFlag == false);
             if (child.Count == 0)
             {
-                return new Response<List<ChildInfoResponse>>($"Không tìm thấy mẹ \'{momId}\'");
+                return new Response<List<ChildInfoResponse>>($"Id \'{momId}\' chưa có con");
             }
             response = _mapper.Map<List<ChildInfoResponse>>(child);
             return new Response<List<ChildInfoResponse>>(response, $"Có {child.Count} người con");
