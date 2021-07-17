@@ -16,7 +16,6 @@ namespace Mumbi.Domain.Entities
             ActionChildren = new HashSet<ActionChild>();
             ChildHistories = new HashSet<ChildHistory>();
             Diaries = new HashSet<Diary>();
-            PregnancyActivities = new HashSet<PregnancyActivity>();
             PregnancyHistories = new HashSet<PregnancyHistory>();
             Teeth = new HashSet<Tooth>();
         }
@@ -34,23 +33,17 @@ namespace Mumbi.Domain.Entities
         public string Nickname { get; set; }
         [Column("ImageURL")]
         public string ImageUrl { get; set; }
-        [StringLength(20)]
-        public string Gender { get; set; }
+        public byte? Gender { get; set; }
         [StringLength(50)]
         public string Birthday { get; set; }
+        [StringLength(50)]
+        public string EstimatedBornDate { get; set; }
         [StringLength(10)]
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
         public byte? Fingertips { get; set; }
         public byte? HeadVortex { get; set; }
-        public double? Weight { get; set; }
-        public double? Height { get; set; }
-        public double? HeadCircumference { get; set; }
-        public double? HourSleep { get; set; }
-        public double? AvgMilk { get; set; }
-        [StringLength(50)]
-        public string EstimatedBornDate { get; set; }
         public bool BornFlag { get; set; }
         public bool DelFlag { get; set; }
 
@@ -63,8 +56,6 @@ namespace Mumbi.Domain.Entities
         public virtual ICollection<ChildHistory> ChildHistories { get; set; }
         [InverseProperty(nameof(Diary.Child))]
         public virtual ICollection<Diary> Diaries { get; set; }
-        [InverseProperty(nameof(PregnancyActivity.Child))]
-        public virtual ICollection<PregnancyActivity> PregnancyActivities { get; set; }
         [InverseProperty(nameof(PregnancyHistory.Child))]
         public virtual ICollection<PregnancyHistory> PregnancyHistories { get; set; }
         [InverseProperty(nameof(Tooth.Child))]

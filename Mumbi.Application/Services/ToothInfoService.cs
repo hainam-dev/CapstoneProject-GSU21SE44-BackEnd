@@ -39,7 +39,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<ToothInfoResponse>> GetToothInfoByIndex(byte index)
         {
             var response = new ToothInfoResponse();
-            var toothInfo = await _unitOfWork.ToothInfoRepository.FirstAsync(x => x.Index == index);
+            var toothInfo = await _unitOfWork.ToothInfoRepository.FirstAsync(x => x.Position == index);
             if (toothInfo == null)
             {
                 return new Response<ToothInfoResponse>($"Không tìm thấy thông tin răng tại vị trí \'{index}\'");

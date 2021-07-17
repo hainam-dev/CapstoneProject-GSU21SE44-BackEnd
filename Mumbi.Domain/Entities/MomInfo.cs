@@ -26,8 +26,6 @@ namespace Mumbi.Domain.Entities
         public string BloodGroup { get; set; }
         [StringLength(10)]
         public string RhBloodGroup { get; set; }
-        public double? Weight { get; set; }
-        public double? Height { get; set; }
         [StringLength(50)]
         public string DadId { get; set; }
 

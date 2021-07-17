@@ -7,13 +7,16 @@ namespace Mumbi.Infrastucture.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            
+           
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ActionChild");
+
+            migrationBuilder.DropTable(
+                name: "Activity");
 
             migrationBuilder.DropTable(
                 name: "ChildHistory");
@@ -32,9 +35,6 @@ namespace Mumbi.Infrastucture.Migrations
 
             migrationBuilder.DropTable(
                 name: "NewsMom");
-
-            migrationBuilder.DropTable(
-                name: "PregnancyActivity");
 
             migrationBuilder.DropTable(
                 name: "PregnancyHistory");
@@ -58,19 +58,22 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "UserNotification");
 
             migrationBuilder.DropTable(
+                name: "Vaccine");
+
+            migrationBuilder.DropTable(
                 name: "Action");
+
+            migrationBuilder.DropTable(
+                name: "ActivityType");
 
             migrationBuilder.DropTable(
                 name: "Guidebook");
 
             migrationBuilder.DropTable(
-                name: "Vaccine");
+                name: "InjectedPerson");
 
             migrationBuilder.DropTable(
                 name: "News");
-
-            migrationBuilder.DropTable(
-                name: "PregnancyActivityType");
 
             migrationBuilder.DropTable(
                 name: "ChildInfo");

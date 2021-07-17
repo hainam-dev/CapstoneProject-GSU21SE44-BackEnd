@@ -18,6 +18,8 @@ namespace Mumbi.Infrastucture.Context
 
         public virtual DbSet<Mumbi.Domain.Entities.Action> Actions { get; set; }
         public virtual DbSet<ActionChild> ActionChildren { get; set; }
+        public virtual DbSet<Activity> Activities { get; set; }
+        public virtual DbSet<ActivityType> ActivityTypes { get; set; }
         public virtual DbSet<ChildHistory> ChildHistories { get; set; }
         public virtual DbSet<ChildInfo> ChildInfos { get; set; }
         public virtual DbSet<DadInfo> DadInfos { get; set; }
@@ -25,14 +27,13 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<Guidebook> Guidebooks { get; set; }
         public virtual DbSet<GuidebookMom> GuidebookMoms { get; set; }
         public virtual DbSet<GuidebookType> GuidebookTypes { get; set; }
+        public virtual DbSet<InjectedPerson> InjectedPeople { get; set; }
         public virtual DbSet<InjectionSchedule> InjectionSchedules { get; set; }
         public virtual DbSet<MomInfo> MomInfos { get; set; }
         public virtual DbSet<News> News { get; set; }
         public virtual DbSet<NewsMom> NewsMoms { get; set; }
         public virtual DbSet<NewsType> NewsTypes { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
-        public virtual DbSet<PregnancyActivity> PregnancyActivities { get; set; }
-        public virtual DbSet<PregnancyActivityType> PregnancyActivityTypes { get; set; }
         public virtual DbSet<PregnancyHistory> PregnancyHistories { get; set; }
         public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -69,6 +70,24 @@ namespace Mumbi.Infrastucture.Context
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ActionChild_ChildInfo");
+            });
+
+            modelBuilder.Entity<Activity>(entity =>
+            {
+                entity.Property(e => e.MediaFileUrl).IsUnicode(false);
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.Activities)
+                    .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
+            });
+
+            modelBuilder.Entity<ActivityType>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<ChildHistory>(entity =>
@@ -179,28 +198,36 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_GuidebookMom_MomInfo");
             });
 
+            modelBuilder.Entity<InjectedPerson>(entity =>
+            {
+                entity.Property(e => e.Id).IsUnicode(false);
+
+                entity.Property(e => e.Birthday).IsUnicode(false);
+
+                entity.Property(e => e.Phonenumber).IsUnicode(false);
+            });
+
             modelBuilder.Entity<InjectionSchedule>(entity =>
             {
-                entity.Property(e => e.ChildId).IsUnicode(false);
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.InjectedPersonId).IsUnicode(false);
 
                 entity.Property(e => e.InjectionDate).IsUnicode(false);
 
                 entity.Property(e => e.MomId).IsUnicode(false);
 
-                entity.Property(e => e.NextInjectionDate).IsUnicode(false);
+                entity.Property(e => e.VaccineBatch).IsUnicode(false);
 
-                entity.Property(e => e.Phonenumber).IsUnicode(false);
+                entity.HasOne(d => d.InjectedPerson)
+                    .WithMany(p => p.InjectionSchedules)
+                    .HasForeignKey(d => d.InjectedPersonId)
+                    .HasConstraintName("FK_InjectionSchedule_InjectedPerson");
 
                 entity.HasOne(d => d.Mom)
                     .WithMany(p => p.InjectionSchedules)
                     .HasForeignKey(d => d.MomId)
                     .HasConstraintName("FK_InjectionSchedule_MomInfo");
-
-                entity.HasOne(d => d.Vaccine)
-                    .WithMany(p => p.InjectionSchedules)
-                    .HasForeignKey(d => d.VaccineId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_InjectionSchedule_Vaccine");
             });
 
             modelBuilder.Entity<MomInfo>(entity =>
@@ -249,29 +276,6 @@ namespace Mumbi.Infrastucture.Context
                     .HasForeignKey(d => d.NewsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NewsMom_News");
-            });
-
-            modelBuilder.Entity<PregnancyActivity>(entity =>
-            {
-                entity.Property(e => e.ChildId).IsUnicode(false);
-
-                entity.Property(e => e.MediaFileUrl).IsUnicode(false);
-
-                entity.HasOne(d => d.Child)
-                    .WithMany(p => p.PregnancyActivities)
-                    .HasForeignKey(d => d.ChildId)
-                    .HasConstraintName("FK_PregnancyActivity_ChildInfo");
-
-                entity.HasOne(d => d.Type)
-                    .WithMany(p => p.PregnancyActivities)
-                    .HasForeignKey(d => d.TypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PregnancyActivity_PregnancyActivityType");
-            });
-
-            modelBuilder.Entity<PregnancyActivityType>(entity =>
-            {
-                entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<PregnancyHistory>(entity =>
@@ -346,6 +350,7 @@ namespace Mumbi.Infrastucture.Context
                 entity.HasOne(d => d.ToothNavigation)
                     .WithMany(p => p.Teeth)
                     .HasForeignKey(d => d.ToothId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tooth_ToothInfo");
             });
 
@@ -353,7 +358,7 @@ namespace Mumbi.Infrastucture.Context
             {
                 entity.Property(e => e.Id).IsUnicode(false);
 
-                entity.Property(e => e.GrowTime).IsUnicode(false);
+                entity.Property(e => e.Position).HasDefaultValueSql("(CONVERT([tinyint],(0)))");
             });
 
             modelBuilder.Entity<User>(entity =>

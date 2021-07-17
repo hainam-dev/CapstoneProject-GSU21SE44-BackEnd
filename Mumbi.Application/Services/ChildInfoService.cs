@@ -122,11 +122,11 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.Id);
             if (child != null)
             {
-                    child.Weight = request.Weight;
-                    child.Height = request.Height;
-                    child.HeadCircumference = request.HeadCircumference;
-                    child.HourSleep = request.HourSleep;
-                    child.AvgMilk = request.AvgMilk;
+                    //child.Weight = request.Weight;
+                    //child.Height = request.Height;
+                    //child.HeadCircumference = request.HeadCircumference;
+                    //child.HourSleep = request.HourSleep;
+                    //child.AvgMilk = request.AvgMilk;
 
                     var childHistory = new ChildHistory
                     {

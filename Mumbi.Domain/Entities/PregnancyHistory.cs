@@ -23,6 +23,7 @@ namespace Mumbi.Domain.Entities
         public string PregnancyWeek { get; set; }
         public double? Weight { get; set; }
         public double? BiparietalDiameter { get; set; }
+        public double? HeadCircumference { get; set; }
         public double? FemurLength { get; set; }
         public double? FetalHeartRate { get; set; }
         public double? MotherWeight { get; set; }

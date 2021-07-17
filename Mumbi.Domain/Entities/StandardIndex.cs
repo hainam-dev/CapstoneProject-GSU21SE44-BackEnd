@@ -17,9 +17,7 @@ namespace Mumbi.Domain.Entities
         [Required]
         [StringLength(20)]
         public string Type { get; set; }
-        [Required]
-        [StringLength(20)]
-        public string Gender { get; set; }
+        public byte Gender { get; set; }
         [Required]
         [StringLength(10)]
         public string Unit { get; set; }

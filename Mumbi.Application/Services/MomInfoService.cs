@@ -59,8 +59,8 @@ namespace Mumbi.Application.Services
             user.UserInfo.Phonenumber = request.Phonenumber;
             user.MomInfo.BloodGroup = request.BloodGroup;
             user.MomInfo.RhBloodGroup = request.RhBloodGroup;
-            user.MomInfo.Weight = request.Weight;
-            user.MomInfo.Height = request.Height;
+            //user.MomInfo.Weight = request.Weight;
+            //user.MomInfo.Height = request.Height;
             _unitOfWork.UserRepository.UpdateAsync(user);
             await _unitOfWork.SaveAsync();
             return new Response<string>("Cập nhật thông tin thành công", user.Id);  

@@ -22,6 +22,8 @@ namespace Mumbi.Domain.Entities
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public double? HeadCircumference { get; set; }
+        public double? HourSleep { get; set; }
+        public double? AvgMilk { get; set; }
         public short? WeekOlds { get; set; }
 
         [ForeignKey(nameof(ChildId))]

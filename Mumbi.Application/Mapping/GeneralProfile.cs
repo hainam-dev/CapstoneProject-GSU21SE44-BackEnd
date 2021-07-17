@@ -87,12 +87,6 @@ namespace Mumbi.Application.Mapping
                 dest => dest.RhBloodGroup,
                 opt => opt.MapFrom(src => src.MomInfo.RhBloodGroup)
             ).ForMember(
-                dest => dest.Weight,
-                opt => opt.MapFrom(src => src.MomInfo.Weight)
-            ).ForMember(
-                dest => dest.Height,
-                opt => opt.MapFrom(src => src.MomInfo.Height)
-            ).ForMember(
                 dest => dest.Dad_Id,
                 opt => opt.MapFrom(src => src.MomInfo.DadId)
             );
