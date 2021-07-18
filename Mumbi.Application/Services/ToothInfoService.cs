@@ -28,6 +28,7 @@ namespace Mumbi.Application.Services
             {
                 Id = Guid.NewGuid().ToString(),
                 Position = request.Position,
+                Number = request.Number,
                 Name = request.Name,
                 GrowTime = request.GrowTime
             };
@@ -36,13 +37,13 @@ namespace Mumbi.Application.Services
             return new Response<string>("Thêm thông tin răng thành công, id: " + toothInfo.Id);
         }
 
-        public async Task<Response<ToothInfoResponse>> GetToothInfoByIndex(byte index)
+        public async Task<Response<ToothInfoResponse>> GetToothInfoByPosition(byte position)
         {
             var response = new ToothInfoResponse();
-            var toothInfo = await _unitOfWork.ToothInfoRepository.FirstAsync(x => x.Position == index);
+            var toothInfo = await _unitOfWork.ToothInfoRepository.FirstAsync(x => x.Position == position);
             if (toothInfo == null)
             {
-                return new Response<ToothInfoResponse>($"Không tìm thấy thông tin răng tại vị trí \'{index}\'");
+                return new Response<ToothInfoResponse>($"Không tìm thấy thông tin răng tại vị trí \'{position}\'");
             }
             response = _mapper.Map<ToothInfoResponse>(toothInfo);
             return new Response<ToothInfoResponse>(response);

@@ -1,4 +1,5 @@
-﻿using Mumbi.Application.Dtos.NewsMom;
+﻿using Mumbi.Application.Dtos.News;
+using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Wrappers;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Mumbi.Application.Interfaces
     public interface INewsMomService
     {
         Task<Response<string>> AddNewsMom(CreateNewsMomRequest request);
-        Task<Response<List<NewsMomResponse>>> GetNewsMomByMomId(string momId);
+        Task<Response<List<NewsResponse>>> GetNewsMomByMomId(string momId);
         Task<Response<string>> DeleteNewsMom(int Id);
     }
 }

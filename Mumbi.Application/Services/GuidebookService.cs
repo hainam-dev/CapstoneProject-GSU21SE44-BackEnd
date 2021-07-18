@@ -29,7 +29,7 @@ namespace Mumbi.Application.Services
                 Title = request.Title,
                 GuidebookContent = request.GuidebookContent,
                 ImageUrl = request.ImageURL,
-                //EstimateFinishTime = request.EstimateFinishTime,
+                EstimatedFinishTime = request.EstimatedFinishTime,
                 CreatedBy = request.CreatedBy,
                 CreatedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
                 LastModifiedBy = request.LastModifiedBy,
@@ -87,7 +87,7 @@ namespace Mumbi.Application.Services
             guidebook.Title = request.Title;
             guidebook.GuidebookContent = request.GuidebookContent;
             guidebook.ImageUrl = request.ImageURL;
-            //guidebook.EstimateFinishTime = request.EstimateFinishTime;
+            guidebook.EstimatedFinishTime = request.EstimatedFinishTime;
             guidebook.LastModifiedBy = request.LastModifiedBy;
             guidebook.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
             guidebook.TypeId = request.TypeId;

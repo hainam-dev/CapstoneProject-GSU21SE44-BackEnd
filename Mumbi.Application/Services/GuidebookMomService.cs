@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Mumbi.Application.Dtos.GuidebookMom;
+using Mumbi.Application.Dtos.Guidebooks;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
@@ -33,16 +34,20 @@ namespace Mumbi.Application.Services
             return new Response<string>("Thêm guidebook mom thành công, id: " + guidebookMom.Id);
         }
 
-        public async Task<Response<List<GuidebookMomResponse>>> GetGuidebookMomByMomId(string momId)
+        public async Task<Response<List<GuidebookResponse>>> GetGuidebookMomByMomId(string momId)
         {
-            var response = new List<GuidebookMomResponse>();
+            var response = new List<GuidebookResponse>();
             var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.MomId == momId);
             if (guidebookMom.Count == 0)
             {
-                return new Response<List<GuidebookMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
+                return new Response<List<GuidebookResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
             }
-            response = _mapper.Map<List<GuidebookMomResponse>>(guidebookMom);
-            return new Response<List<GuidebookMomResponse>>(response);
+            foreach(var guidebook in guidebookMom)
+            {
+                var guidebooks = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == guidebook.GuidebookId);
+                response = _mapper.Map<List<GuidebookResponse>>(guidebooks);
+            }
+            return new Response<List<GuidebookResponse>>(response);
         }
 
         public async Task<Response<string>> DeleteGuidebookMom(int Id)

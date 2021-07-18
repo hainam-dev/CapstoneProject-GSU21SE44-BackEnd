@@ -122,19 +122,16 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.Id);
             if (child != null)
             {
-                    //child.Weight = request.Weight;
-                    //child.Height = request.Height;
-                    //child.HeadCircumference = request.HeadCircumference;
-                    //child.HourSleep = request.HourSleep;
-                    //child.AvgMilk = request.AvgMilk;
-
-                    var childHistory = new ChildHistory
-                    {
-                        ChildId = request.Id,
-                        Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
-                        Height = request.Height,
-                        Weight = request.Weight,
-                        HeadCircumference = request.HeadCircumference
+                var childHistory = new ChildHistory
+                {
+                    ChildId = request.Id,
+                    Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
+                    Height = request.Height,
+                    Weight = request.Weight,
+                    HeadCircumference = request.HeadCircumference,
+                    AvgMilk = request.AvgMilk,
+                    HourSleep = request.HourSleep,
+                    WeekOlds = request.WeekOlds
                     };
                     await _unitOfWork.ChildHistoryRepository.AddAsync(childHistory);
                     _unitOfWork.ChildInfoRepository.UpdateAsync(child);
@@ -152,6 +149,7 @@ namespace Mumbi.Application.Services
                 PregnancyWeek = request.PregnancyWeek,
                 Weight = request.Weight,
                 BiparietalDiameter = request.BiparietalDiameter,
+                HeadCircumference = request.HeadCircumference,
                 FemurLength = request.FemurLength,
                 FetalHeartRate = request.FetalHeartRate,
                 MotherWeight = request.MotherWeight

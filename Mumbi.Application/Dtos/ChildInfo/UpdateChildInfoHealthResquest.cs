@@ -15,6 +15,7 @@ namespace Mumbi.Application.Dtos.Childrens
         public float HourSleep { get; set; }
         public float AvgMilk { get; set; }
         public string PregnancyWeek { get; set; }
+        public short WeekOlds { get; set; }
         public float BiparietalDiameter { get; set; }
         public float FemurLength { get; set; }
         public float FetalHeartRate { get; set; }

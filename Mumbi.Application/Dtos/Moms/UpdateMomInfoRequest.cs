@@ -15,7 +15,6 @@ namespace Mumbi.Application.Dtos.Moms
         public string Phonenumber { get; set; }
         public string BloodGroup { get; set; }
         public string RhBloodGroup { get; set; }
-        public float Weight { get; set; }
-        public float Height { get; set; }
+
     }
 }

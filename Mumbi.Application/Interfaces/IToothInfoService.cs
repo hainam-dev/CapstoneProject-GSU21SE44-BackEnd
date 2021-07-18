@@ -11,6 +11,6 @@ namespace Mumbi.Application.Interfaces
     public interface IToothInfoService
     {
         Task<Response<string>> AddToothInfo(CreateToothInfoRequest request);
-        Task<Response<ToothInfoResponse>> GetToothInfoByIndex(byte index);
+        Task<Response<ToothInfoResponse>> GetToothInfoByPosition(byte position);
     }
 }

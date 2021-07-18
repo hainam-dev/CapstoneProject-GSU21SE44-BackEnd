@@ -46,8 +46,6 @@ namespace Mumbi.Application.Mapping
                 opt => opt.MapFrom(src => src.Type.Type)
                 );
             CreateMap<News, NewsByTypeIdResponse>();
-            // NewsMom
-            CreateMap<NewsMom, NewsMomResponse>();
             // GuidebookType
             CreateMap<GuidebookType, GuidebookTypeResponse>();
             // Guidebook
@@ -56,8 +54,6 @@ namespace Mumbi.Application.Mapping
                 opt => opt.MapFrom(src => src.Type.Type)
                 );
             CreateMap<Guidebook, GuidebookByTypeIdResponse>();
-            // GuidebookMom
-            CreateMap<GuidebookMom, GuidebookMomResponse>();
             //Token
             CreateMap<Token, FcmTokenResponse>();
             //Tooth

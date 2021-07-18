@@ -12,7 +12,7 @@ namespace Mumbi.Application.Dtos.ToothInfo
         public byte Position { get; set; }
         public string Name { get; set; }
         public string GrowTime { get; set; }
-        public byte Index { get; set; }
+        public byte Number { get; set; }
 
     }
 }

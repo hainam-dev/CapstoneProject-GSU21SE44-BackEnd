@@ -27,7 +27,7 @@ namespace Mumbi.Application.Services
                 Title = request.Title,
                 NewsContent = request.NewsContent,
                 ImageUrl = request.ImageURL,
-                EstimatedFinishTime = request.EstimateFinishTime,
+                EstimatedFinishTime = request.EstimatedFinishTime,
                 CreatedBy = request.CreatedBy,
                 CreatedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
                 LastModifiedBy = request.LastModifiedBy,
@@ -85,7 +85,7 @@ namespace Mumbi.Application.Services
             news.Title = request.Title;
             news.NewsContent = request.NewsContent;
             news.ImageUrl = request.ImageURL;
-            news.EstimatedFinishTime = request.EstimateFinishTime;
+            news.EstimatedFinishTime = request.EstimatedFinishTime;
             news.LastModifiedBy = request.LastModifiedBy;
             news.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
             news.TypeId = request.TypeId;

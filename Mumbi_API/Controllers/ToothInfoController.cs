@@ -23,10 +23,10 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _toothInfoService.AddToothInfo(request));
         }
-        [HttpGet("GetToothInfoBy/{Index}")]
-        public async Task<IActionResult> GetToothInfoByIndex(byte Index)
+        [HttpGet("GetToothInfoBy/{Position}")]
+        public async Task<IActionResult> GetToothInfoByPosition(byte Position)
         {
-            return Ok(await _toothInfoService.GetToothInfoByIndex(Index));
+            return Ok(await _toothInfoService.GetToothInfoByPosition(Position));
 
         }
     }
