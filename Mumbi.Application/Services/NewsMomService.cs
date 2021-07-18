@@ -36,20 +36,26 @@ namespace Mumbi.Application.Services
             return new Response<string>("Thêm news mom thành công, id: " + newsMom.Id);
         }
 
-        public async Task<Response<List<NewsResponse>>> GetNewsMomByMomId(string momId)
+        public async Task<Response<List<NewsMomResponse>>> GetNewsMomByMomId(string momId)
         {
-            var response = new List<NewsResponse>();
-            var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.MomId == momId, includeProperties: "NewsMoms");
+            var response = new List<NewsMomResponse>();
+            var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.MomId == momId);
             if (newsMom.Count == 0)
             {
-                return new Response<List<NewsResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
+                return new Response<List<NewsMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
             }
+
             foreach (var news in newsMom)
             {
                 var newsSaved = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == news.NewsId);
-                response = _mapper.Map<List<NewsResponse>>(newsSaved);
+                response.Add(new NewsMomResponse
+                {
+                    Id = news.Id,
+                    NewsData = _mapper.Map<NewsResponse>(newsSaved)
+                });
             }
-            return new Response<List<NewsResponse>>(response);
+
+            return new Response<List<NewsMomResponse>>(response);
         }
 
         public async Task<Response<string>> DeleteNewsMom(int Id)

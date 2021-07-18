@@ -12,7 +12,7 @@ namespace Mumbi.Application.Interfaces
     public interface IGuidebookMomService
     {
         Task<Response<string>> AddGuidebookMom(CreateGuidebookMomRequest request);
-        Task<Response<List<GuidebookResponse>>> GetGuidebookMomByMomId(string momId);
+        Task<Response<List<GuidebookMomResponse>>> GetGuidebookMomByMomId(string momId);
         Task<Response<string>> DeleteGuidebookMom(int Id);
     }
 }
