@@ -10,7 +10,7 @@ namespace Mumbi.Application.Dtos.InjectionSchedule
     {
         public int Id { get; set; }
         public string MomId { get; set; }
-        public string InjectedPersonId { get; set; }
+        public double InjectedPersonId { get; set; }
         public string VaccineName { get; set; }
         public string Antigen { get; set; }
         public string InjectionDate { get; set; }

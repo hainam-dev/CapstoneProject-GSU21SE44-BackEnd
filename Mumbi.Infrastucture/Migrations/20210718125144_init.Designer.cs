@@ -10,7 +10,7 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210717041334_init")]
+    [Migration("20210718125144_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -449,10 +449,8 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectedPerson", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.Property<double>("Id")
+                        .HasColumnType("float");
 
                     b.Property<string>("Birthday")
                         .HasMaxLength(50)
@@ -491,17 +489,15 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectionSchedule", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<double>("Id")
+                        .HasColumnType("float");
 
                     b.Property<string>("Antigen")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("InjectedPersonId")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                    b.Property<double?>("InjectedPersonId")
+                        .HasColumnType("float");
 
                     b.Property<string>("InjectionDate")
                         .HasMaxLength(50)
@@ -1152,7 +1148,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasOne("Mumbi.Domain.Entities.InjectedPerson", "InjectedPerson")
                         .WithMany("InjectionSchedules")
                         .HasForeignKey("InjectedPersonId")
-                        .HasConstraintName("FK_InjectionSchedule_InjectedPerson");
+                        .HasConstraintName("FK_InjectionSchedule_InjectedPerson1");
 
                     b.HasOne("Mumbi.Domain.Entities.MomInfo", "Mom")
                         .WithMany("InjectionSchedules")

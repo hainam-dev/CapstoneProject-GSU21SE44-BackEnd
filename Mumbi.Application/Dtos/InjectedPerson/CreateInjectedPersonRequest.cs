@@ -8,7 +8,7 @@ namespace Mumbi.Application.Dtos.InjectedPerson
 {
     public class CreateInjectedPersonRequest
     {
-        public string Id { get; set; }
+        public double Id { get; set; }
         public string FullName { get; set; }
         public string Birthday { get; set; }
         public byte Gender { get; set; }
