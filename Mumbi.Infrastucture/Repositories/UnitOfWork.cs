@@ -37,6 +37,8 @@ namespace Mumbi.Infrastucture.Repositories
         public IUserInfoRepository UserInfoRepository { get; set; }
         public IToothRepository ToothRepository { get; set; }
         public IToothInfoRepository ToothInfoRepository { get; set; }
+        public IInjectionScheduleRepository InjectionScheduleRepository { get; set; }
+        public IInjectedPersonRepository InjectedPersonRepository { get; set; }
 
 
         private void InitRepository()
@@ -59,6 +61,9 @@ namespace Mumbi.Infrastucture.Repositories
             TokenRepository = new TokenRepository(_context);
             ToothRepository = new ToothRepository(_context);
             ToothInfoRepository = new ToothInfoRepository(_context);
+            InjectionScheduleRepository = new InjectionScheduleRepository(_context);
+            InjectedPersonRepository = new InjectedPersonRepository(_context);
+
         }
 
         public async Task<int> SaveAsync()

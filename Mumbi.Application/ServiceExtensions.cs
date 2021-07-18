@@ -27,6 +27,8 @@ namespace Mumbi.Application
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IToothService, ToothService>();
             services.AddTransient<IToothInfoService, ToothInfoService>();
+            services.AddTransient<IInjectionScheduleService, InjectionScheduleService>();
+            services.AddTransient<IInjectedPersonService, InjectedPersonService>();
         }
     }
 }

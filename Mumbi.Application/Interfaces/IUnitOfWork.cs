@@ -23,6 +23,9 @@ namespace Mumbi.Application.Interfaces
         IToothRepository ToothRepository { get; }
         IToothInfoRepository ToothInfoRepository { get; }
         ITokenRepository TokenRepository { get; }
+        IInjectedPersonRepository InjectedPersonRepository { get; }
+        IInjectionScheduleRepository InjectionScheduleRepository { get; }
+
 
         Task<int> SaveAsync();
     }
