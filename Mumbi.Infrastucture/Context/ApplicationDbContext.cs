@@ -200,8 +200,6 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<InjectedPerson>(entity =>
             {
-                entity.Property(e => e.Id).IsUnicode(false);
-
                 entity.Property(e => e.Birthday).IsUnicode(false);
 
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
@@ -209,10 +207,6 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<InjectionSchedule>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.InjectedPersonId).IsUnicode(false);
-
                 entity.Property(e => e.InjectionDate).IsUnicode(false);
 
                 entity.Property(e => e.MomId).IsUnicode(false);
@@ -222,7 +216,7 @@ namespace Mumbi.Infrastucture.Context
                 entity.HasOne(d => d.InjectedPerson)
                     .WithMany(p => p.InjectionSchedules)
                     .HasForeignKey(d => d.InjectedPersonId)
-                    .HasConstraintName("FK_InjectionSchedule_InjectedPerson");
+                    .HasConstraintName("FK_InjectionSchedule_InjectedPerson1");
 
                 entity.HasOne(d => d.Mom)
                     .WithMany(p => p.InjectionSchedules)

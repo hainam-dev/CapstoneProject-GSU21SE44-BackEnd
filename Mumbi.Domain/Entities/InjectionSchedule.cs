@@ -12,11 +12,10 @@ namespace Mumbi.Domain.Entities
     public partial class InjectionSchedule
     {
         [Key]
-        public int Id { get; set; }
+        public double Id { get; set; }
         [StringLength(100)]
         public string MomId { get; set; }
-        [StringLength(50)]
-        public string InjectedPersonId { get; set; }
+        public double? InjectedPersonId { get; set; }
         [StringLength(100)]
         public string VaccineName { get; set; }
         [StringLength(50)]

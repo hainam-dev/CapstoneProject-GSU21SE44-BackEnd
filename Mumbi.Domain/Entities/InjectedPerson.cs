@@ -17,8 +17,7 @@ namespace Mumbi.Domain.Entities
         }
 
         [Key]
-        [StringLength(50)]
-        public string Id { get; set; }
+        public double Id { get; set; }
         [Required]
         [StringLength(200)]
         public string FullName { get; set; }
