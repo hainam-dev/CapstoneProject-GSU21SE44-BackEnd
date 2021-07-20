@@ -25,6 +25,11 @@ namespace Mumbi.Application.Interfaces
         ITokenRepository TokenRepository { get; }
         IInjectedPersonRepository InjectedPersonRepository { get; }
         IInjectionScheduleRepository InjectionScheduleRepository { get; }
+        IActionChildRepository ActionChildRepository { get; }
+        IActionRepository ActionRepository { get; }
+        IActivityRepository ActivityRepository { get; }
+        IStandardIndexRepository StandardIndexRepository { get; }
+        IVaccineRepository VaccineRepository { get; }
 
 
         Task<int> SaveAsync();

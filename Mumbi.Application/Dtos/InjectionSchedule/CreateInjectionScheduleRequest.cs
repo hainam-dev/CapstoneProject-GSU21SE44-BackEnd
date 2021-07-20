@@ -8,7 +8,7 @@ namespace Mumbi.Application.Dtos.InjectionSchedule
 {
     public class CreateInjectionScheduleRequest
     {
-        public int Id { get; set; }
+        public double Id { get; set; }
         public string MomId { get; set; }
         public double InjectedPersonId { get; set; }
         public string VaccineName { get; set; }

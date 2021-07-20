@@ -17,7 +17,7 @@ namespace Mumbi.Domain.Entities
         }
 
         [Key]
-        public byte Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(50)]
         public string Type { get; set; }

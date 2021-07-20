@@ -39,6 +39,11 @@ namespace Mumbi.Infrastucture.Repositories
         public IToothInfoRepository ToothInfoRepository { get; set; }
         public IInjectionScheduleRepository InjectionScheduleRepository { get; set; }
         public IInjectedPersonRepository InjectedPersonRepository { get; set; }
+        public IActivityRepository ActivityRepository { get; set; }
+        public IActionChildRepository ActionChildRepository { get; set; }
+        public IActionRepository ActionRepository { get; set; }
+        public IStandardIndexRepository StandardIndexRepository { get; set; }
+        public IVaccineRepository VaccineRepository { get; set; }
 
 
         private void InitRepository()
@@ -63,6 +68,11 @@ namespace Mumbi.Infrastucture.Repositories
             ToothInfoRepository = new ToothInfoRepository(_context);
             InjectionScheduleRepository = new InjectionScheduleRepository(_context);
             InjectedPersonRepository = new InjectedPersonRepository(_context);
+            ActivityRepository = new ActivityRepository(_context);
+            ActionChildRepository = new ActionChildRepository(_context);
+            ActionRepository = new ActionRepository(_context);
+            StandardIndexRepository = new StandardIndexRepository(_context);
+            VaccineRepository = new VaccineRepository(_context);
 
         }
 

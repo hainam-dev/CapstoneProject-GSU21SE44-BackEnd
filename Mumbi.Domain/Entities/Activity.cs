@@ -17,7 +17,7 @@ namespace Mumbi.Domain.Entities
         public string ActivityName { get; set; }
         [Column("MediaFileURL")]
         public string MediaFileUrl { get; set; }
-        public byte TypeId { get; set; }
+        public int TypeId { get; set; }
         public byte? SuitableAge { get; set; }
         public bool DelFlag { get; set; }
 
