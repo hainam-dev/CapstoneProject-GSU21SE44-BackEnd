@@ -20,6 +20,7 @@ namespace Mumbi.Application.Interfaces
         Task<T> FirstAsync(Expression<Func<T, bool>> filter, string includeProperties = "");
         Task<T> GetByIdAsync(object id);
         Task<T> AddAsync(T entity);
+        Task AddRangeAsync(List<T> entities);
         void UpdateAsync(T entity);
         void DeleteAsync(T entity);
         void DeleteAllAsync(IList<T> entities);

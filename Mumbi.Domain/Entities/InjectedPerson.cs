@@ -28,6 +28,8 @@ namespace Mumbi.Domain.Entities
         public string EthnicGroup { get; set; }
         [StringLength(10)]
         public string Phonenumber { get; set; }
+        [StringLength(12)]
+        public string IdentityCardNumber { get; set; }
         [StringLength(250)]
         public string HomeAddress { get; set; }
         [StringLength(250)]

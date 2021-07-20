@@ -85,8 +85,6 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<ActivityType>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.DelFlag).HasDefaultValueSql("((0))");
             });
 
@@ -201,6 +199,8 @@ namespace Mumbi.Infrastucture.Context
             modelBuilder.Entity<InjectedPerson>(entity =>
             {
                 entity.Property(e => e.Birthday).IsUnicode(false);
+
+                entity.Property(e => e.IdentityCardNumber).IsUnicode(false);
 
                 entity.Property(e => e.Phonenumber).IsUnicode(false);
             });
@@ -402,6 +402,11 @@ namespace Mumbi.Infrastucture.Context
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserNotification_User");
+            });
+
+            modelBuilder.Entity<Vaccine>(entity =>
+            {
+                entity.Property(e => e.RequiredFlag).HasDefaultValueSql("((0))");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -17,8 +17,12 @@ namespace Mumbi.Domain.Entities
         public string Name { get; set; }
         [StringLength(50)]
         public string Antigen { get; set; }
+        public byte? Month { get; set; }
         [StringLength(100)]
         public string ProducingCountry { get; set; }
         public int? Price { get; set; }
+        public byte? OrderOfInjection { get; set; }
+        public byte? TotalNumberOfInjections { get; set; }
+        public bool? RequiredFlag { get; set; }
     }
 }

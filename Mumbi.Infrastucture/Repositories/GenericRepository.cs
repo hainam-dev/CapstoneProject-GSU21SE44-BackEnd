@@ -24,6 +24,11 @@ namespace Mumbi.Infrastucture.Repositories
             return entity;
         }
 
+        public async Task AddRangeAsync(List<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+        }
+
         public void DeleteAllAsync(IList<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);

@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using Mumbi.Application.Dtos.InjectionSchedule;
+﻿using Mumbi.Application.Dtos.InjectionSchedule;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -14,32 +11,34 @@ namespace Mumbi.Application.Services
     public class InjectionScheduleService : IInjectionScheduleService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public InjectionScheduleService(IUnitOfWork unitOfWork, IMapper mapper)
+        public InjectionScheduleService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
-        public async Task<Response<string>> AddInjectionSchedule(CreateInjectionScheduleRequest request)
+        public async Task<Response<List<string>>> AddInjectionSchedule(List<CreateInjectionScheduleRequest> request)
         {
-            var injectionSchedule = new InjectionSchedule
+            var injectionSchedules = request.Select(x => new InjectionSchedule
             {
-                Id = request.Id,
-                MomId = request.MomId,
-                InjectedPersonId = request.InjectedPersonId,
-                VaccineName = request.VaccineName,
-                Antigen = request.Antigen,
-                InjectionDate = request.InjectionDate,
-                OrderOfInjection = request.OrderOfInjection,
-                VaccinationFacility = request.VaccinationFacility,
-                VaccineBatch = request.VaccineBatch,
-                Status = request.Status
-            };
-            await _unitOfWork.InjectionScheduleRepository.AddAsync(injectionSchedule);
+                Id = x.Id,
+                MomId = x.MomId,
+                InjectedPersonId = x.InjectedPersonId,
+                VaccineName = x.VaccineName,
+                Antigen = x.Antigen,
+                InjectionDate = x.InjectionDate,
+                OrderOfInjection = x.OrderOfInjection,
+                VaccinationFacility = x.VaccinationFacility,
+                VaccineBatch = x.VaccineBatch,
+                Status = x.Status
+            }).ToList();
+
+            await _unitOfWork.InjectionScheduleRepository.AddRangeAsync(injectionSchedules);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm lịch tiêm thành công, id: " + injectionSchedule.Id);
+
+            var response = injectionSchedules.Select(x => x.Id.ToString()).ToList();
+
+            return new Response<List<string>>(response, "Thêm lịch tiêm thành công");
         }
     }
 }

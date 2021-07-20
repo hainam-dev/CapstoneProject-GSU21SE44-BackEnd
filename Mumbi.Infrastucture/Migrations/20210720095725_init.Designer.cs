@@ -10,7 +10,7 @@ using Mumbi.Infrastucture.Context;
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210718125144_init")]
+    [Migration("20210720095725_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,8 +97,8 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<byte?>("SuitableAge")
                         .HasColumnType("tinyint");
 
-                    b.Property<byte>("TypeId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -109,9 +109,9 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ActivityType", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool?>("DelFlag")
@@ -472,6 +472,11 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<string>("HomeAddress")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("IdentityCardNumber")
+                        .HasMaxLength(12)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(12)");
 
                     b.Property<string>("Phonenumber")
                         .HasMaxLength(10)
@@ -1024,9 +1029,15 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<byte?>("Month")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Name")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte?>("OrderOfInjection")
+                        .HasColumnType("tinyint");
 
                     b.Property<int?>("Price")
                         .HasColumnType("int");
@@ -1034,6 +1045,14 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<string>("ProducingCountry")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool?>("RequiredFlag")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("((0))");
+
+                    b.Property<byte?>("TotalNumberOfInjections")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
