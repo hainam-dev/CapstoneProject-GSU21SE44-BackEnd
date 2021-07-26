@@ -10,7 +10,8 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IToothService
     {
-        Task<Response<ToothResponse>> GetToothByChildId(string childId,string toothId);
+        Task<Response<ToothResponse>> GetToothByToothId(string childId,string toothId);
+        Task<Response<List<ToothResponse>>> GetToothByChildId(string childId);
         Task<Response<string>> UpsertToothRequest(UpsertToothRequest request);
     }
 }

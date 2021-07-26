@@ -44,6 +44,7 @@ namespace Mumbi_API
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddSwaggerExtension();
+            services.AddHealthChecks();
 
         }
 
@@ -68,6 +69,7 @@ namespace Mumbi_API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/healthCheck");
             });
         }
     }

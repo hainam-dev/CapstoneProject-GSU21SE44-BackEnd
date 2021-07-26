@@ -54,7 +54,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<NewsResponse>> GetNewsById(string Id)
         {
             var response = new NewsResponse();
-            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
+            var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false, includeProperties: "Type");
             if(news == null)
             {
                 return new Response<NewsResponse>($"Không tìm thấy news id \'{Id}\'");

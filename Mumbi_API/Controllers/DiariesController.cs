@@ -55,7 +55,21 @@ namespace Mumbi_API.Controllers
 
             return Ok(await _diaryService.UpdateDiaryRequest(request));
        }
+        [HttpPut("UpdateDiaryPublic/{Id}")]
+        public async Task<IActionResult> UpdateDiaryPublic(string childID, int Id, UpdateDiaryPublicRequest request)
+        {
+            if (childID != request.ChildId)
+            {
+                return BadRequest();
+            }
+            if (Id != request.Id)
+            {
+                return BadRequest();
+            }
 
+            return Ok(await _diaryService.UpdateDiaryPublicRequest(request));
+        }
+        
         [HttpPut("DeleteDiary/{Id}")]
         public async Task<IActionResult> DeleteDiary(int Id)
         {

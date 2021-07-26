@@ -36,6 +36,7 @@ namespace Mumbi.Domain.Entities
         [Column(TypeName = "datetime")]
         public DateTime? LastModifiedTime { get; set; }
         public int? TypeId { get; set; }
+        public byte? SuitableAge { get; set; }
         public bool DelFlag { get; set; }
 
         [ForeignKey(nameof(TypeId))]

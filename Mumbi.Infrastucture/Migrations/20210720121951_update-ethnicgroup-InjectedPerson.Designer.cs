@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mumbi.Infrastucture.Context;
 
 namespace Mumbi.Infrastucture.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210720121951_update-ethnicgroup-InjectedPerson")]
+    partial class updateethnicgroupInjectedPerson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,9 +384,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Property<DateTime?>("LastModifiedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<byte?>("SuitableAge")
-                        .HasColumnType("tinyint");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -458,9 +457,8 @@ namespace Mumbi.Infrastucture.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("EthnicGroup")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("EthnicGroup")
+                        .HasColumnType("int");
 
                     b.Property<string>("FullName")
                         .IsRequired()

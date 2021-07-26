@@ -22,22 +22,24 @@ namespace Mumbi.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<Response<string>> AddInjectedPerson(CreateInjectedPersonRequest request)
+        public async Task<Response<List<string>>> AddInjectedPerson(List<CreateInjectedPersonRequest> request)
         {
-            var injectedPerson = new InjectedPerson
+            var injectedPerson = request.Select(x => new InjectedPerson
             {
-                Id = request.Id,
-                FullName = request.FullName,
-                Birthday = request.Birthday,
-                Gender = request.Gender,
-                EthnicGroup = request.EthnicGroup,
-                Phonenumber = request.Phonenumber,
-                HomeAddress = request.HomeAddress,
-                TemporaryAddress = request.TemporaryAddress
-            };
-            await _unitOfWork.InjectedPersonRepository.AddAsync(injectedPerson);
+                Id = x.Id,
+                FullName = x.FullName,
+                Birthday = x.Birthday,
+                Gender = x.Gender,
+                EthnicGroup = x.EthnicGroup,
+                IdentityCardNumber = x.IdentityCardNumber,
+                Phonenumber = x.Phonenumber,
+                HomeAddress = x.HomeAddress,
+                TemporaryAddress = x.TemporaryAddress
+            }).ToList();
+            await _unitOfWork.InjectedPersonRepository.AddRangeAsync(injectedPerson);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm thông tin người tiêm thành công, id: " + injectedPerson.Id);
+            var response = injectedPerson.Select(x => x.Id.ToString()).ToList();
+            return new Response<List<string>>(response, "Thêm thông tin người tiêm thành công");
         }
     }
 }

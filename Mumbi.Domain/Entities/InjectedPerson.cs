@@ -24,7 +24,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(50)]
         public string Birthday { get; set; }
         public byte? Gender { get; set; }
-        [StringLength(30)]
+        [StringLength(20)]
         public string EthnicGroup { get; set; }
         [StringLength(10)]
         public string Phonenumber { get; set; }

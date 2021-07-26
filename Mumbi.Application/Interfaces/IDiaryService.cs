@@ -14,6 +14,7 @@ namespace Mumbi.Application.Interfaces
         Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic();
         Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(string childId);
         Task<Response<string>> UpdateDiaryRequest(UpdateDiaryRequest request);
+        Task<Response<string>> UpdateDiaryPublicRequest(UpdateDiaryPublicRequest request);
         Task<Response<string>> DeleteDiary(int Id);
     }
 }

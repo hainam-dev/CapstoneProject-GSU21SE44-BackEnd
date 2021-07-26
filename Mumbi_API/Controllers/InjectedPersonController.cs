@@ -21,7 +21,7 @@ namespace Mumbi_API.Controllers
             _injectedPersonService = injectedPersonService;
         }
         [HttpPost("AddInjectedPerson")]
-        public async Task<IActionResult> AddInjectedPerson(CreateInjectedPersonRequest request)
+        public async Task<IActionResult> AddInjectedPerson(List<CreateInjectedPersonRequest> request)
         {
             return Ok(await _injectedPersonService.AddInjectedPerson(request));
         }

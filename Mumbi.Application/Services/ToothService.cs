@@ -22,23 +22,28 @@ namespace Mumbi.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<Response<ToothResponse>> GetToothByChildId(string childId, string toothId)
+        public async Task<Response<List<ToothResponse>>> GetToothByChildId(string childId)
+        {
+            var response = new List<ToothResponse>();
+            var tooth = await _unitOfWork.ToothRepository.GetAsync(x => x.ChildId == childId && x.GrownFlag == true, includeProperties: "ToothNavigation");
+            if (tooth == null)
+            {
+                return new Response<List<ToothResponse>>($"Không có dữ liệu mọc răng của bé \'{childId}\'.");
+            }
+            response = _mapper.Map< List<ToothResponse>>(tooth);
+            return new Response<List<ToothResponse>>(response);
+        }
+
+        public async Task<Response<ToothResponse>> GetToothByToothId(string childId, string toothId)
         {
             var response = new ToothResponse();
-            var child = await _unitOfWork.ToothRepository.GetAsync(x => x.ChildId == childId && x.GrownFlag == true);
-            if (child.Count == 0)
+            var tooth = await _unitOfWork.ToothRepository.FirstAsync(x => x.ChildId == childId && x.ToothId == toothId && x.GrownFlag == true );
+            if (tooth == null)
             {
-                return new Response<ToothResponse>($"Không có dữ liệu mọc răng của bé \'{childId}\'.");
+                return new Response<ToothResponse>($"Không có dữ liệu mọc răng của răng \'{toothId}\'.");
             }
-            foreach(var tooth in child)
-            {
-                if(toothId == tooth.ToothId)
-                {
-                    response = _mapper.Map<ToothResponse>(tooth);
-                    return new Response<ToothResponse>(response);
-                }
-            }
-            return new Response<ToothResponse>($"Không có dữ liệu mọc răng của răng \'{toothId}\'.");
+            response = _mapper.Map<ToothResponse>(tooth);
+            return new Response<ToothResponse>(response);
         }
 
         public async Task<Response<string>> UpsertToothRequest(UpsertToothRequest request)

@@ -32,29 +32,73 @@ namespace Mumbi.Application.Services
                 SuitableAge = request.SuitableAge,
                 DelFlag = false,
             };
-            //await _unitOfWork.ActivityRepository.AddAsync(activity);
+            await _unitOfWork.ActivityRepository.AddAsync(activity);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm activity thành công, id: " + activity.Id);
+            return new Response<string>($"Thêm activity thành công, id: {activity.Id}");
+        }
+        public async Task<Response<ActivityResponse>> GetActivityById(int Id)
+        {
+            var response = new ActivityResponse();
+            var activity = await _unitOfWork.ActivityRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false, includeProperties: "Type");
+            if (activity == null)
+            {
+                return new Response<ActivityResponse>($"Không tìm thấy activity id \'{Id}\'");
+            }
+            response = _mapper.Map<ActivityResponse>(activity);
+            return new Response<ActivityResponse>(response);
+        }
+        public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(int typeId)
+        {
+            var response = new List<ActivityByTypeIdResponse>();
+            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
+            if (activity.Count == 0)
+            {
+                return new Response<List<ActivityByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
+            }
+            response = _mapper.Map<List<ActivityByTypeIdResponse>>(activity);
+            return new Response<List<ActivityByTypeIdResponse>>(response);
         }
 
-        public Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(int typeId)
+        public async Task<Response<List<ActivityResponse>>> GetAllActivity()
         {
-            throw new NotImplementedException();
+            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.DelFlag == false, includeProperties: "Type");
+            if (activity.Count == 0)
+            {
+                return new Response<List<ActivityResponse>>("Chưa có dữ liệu");
+            }
+            var response = _mapper.Map<List<ActivityResponse>>(activity);
+            return new Response<List<ActivityResponse>>(response);
         }
 
-        public Task<Response<List<ActivityResponse>>> GetAllActivity()
+        public async Task<Response<string>> UpdateActivityRequest(UpdateActivityRequest request)
         {
-            throw new NotImplementedException();
+            var activity = await _unitOfWork.ActivityRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
+            if (activity == null)
+            {
+                return new Response<string>($"Không tìm thấy activity id \'{request.Id}\'");
+            }
+            activity.ActivityName = request.ActivityName;
+            activity.MediaFileUrl = request.MediaFileURL;
+            activity.TypeId = request.TypeId;
+            activity.SuitableAge = request.SuitableAge;
+            _unitOfWork.ActivityRepository.UpdateAsync(activity);
+            await _unitOfWork.SaveAsync();
+            return new Response<string>("Cập nhật activity thành công");
         }
 
-        public Task<Response<string>> UpdateActivityRequest(UpdateActivityRequest request)
+        public async Task<Response<string>> DeleteActivity(int Id)
         {
-            throw new NotImplementedException();
+            var activity = await _unitOfWork.ActivityRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
+            if (activity == null)
+            {
+                return new Response<string>($"Không tìm thấy activity id \'{Id}\'.");
+            }
+            activity.DelFlag = true;
+            _unitOfWork.ActivityRepository.UpdateAsync(activity);
+            await _unitOfWork.SaveAsync();
+            return new Response<string>($"Xóa activity id \'{Id}\' thành công!");
         }
 
-        public Task<Response<string>> DeleteActivity(string Id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

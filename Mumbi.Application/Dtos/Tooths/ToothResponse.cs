@@ -9,6 +9,7 @@ namespace Mumbi.Application.Dtos.Tooths
     public class ToothResponse
     {
         public string ToothId { get; set; }
+        public string ToothName { get; set; }
         public string ChildId { get; set; }
         public DateTime GrownDate { get; set; }
         public string Note { get; set; }

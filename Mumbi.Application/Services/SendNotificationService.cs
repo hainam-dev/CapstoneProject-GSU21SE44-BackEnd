@@ -34,7 +34,8 @@ namespace Mumbi.Application.Services
                     notification = new Notification()
                     {
                         Title = title,
-                        Text = body
+                        Text = body,
+                        click_action = "FLUTTER_NOTIFICATION_CLICK"
                     },
                     registration_ids = deviceTokens
                 };
@@ -68,7 +69,7 @@ namespace Mumbi.Application.Services
                 using (var client = new HttpClient())
                 {
                     result = await client.SendAsync(request);
-                    sent = sent && result.IsSuccessStatusCode;
+                    sent = result.IsSuccessStatusCode;
                 }
             }
 

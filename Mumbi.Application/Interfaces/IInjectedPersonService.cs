@@ -10,6 +10,6 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IInjectedPersonService
     {
-        Task<Response<string>> AddInjectedPerson(CreateInjectedPersonRequest request);
+        Task<Response<List<string>>> AddInjectedPerson(List<CreateInjectedPersonRequest> request);
     }
 }

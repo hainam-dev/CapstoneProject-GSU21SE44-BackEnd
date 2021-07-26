@@ -25,6 +25,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> AddDiary(CreateDiaryRequest request)
         {
+            var getMom = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.ChildId);
             var diary = new Diary
             {
                 ChildId = request.ChildId,
@@ -41,7 +42,7 @@ namespace Mumbi.Application.Services
                 var staffs = await _unitOfWork.UserRepository.GetAsync(x => x.RoleId == RoleConstant.STAFF_ROLE && x.DelFlag == false);
                 foreach (var staff in staffs)
                 {
-                    await sendNotification(staff.Id, "Request public diary", "Mom id request public diary id");
+                    await sendNotification(staff.Id, "New request diary public", $"Mom \'{getMom.MomId}\' request public diary \'{diary.Id}\'");
                 }
             }
             await _unitOfWork.SaveAsync();
@@ -105,11 +106,38 @@ namespace Mumbi.Application.Services
             diary.PublicDate = request.PublicDate;
             diary.PublicFlag = request.PublicFlag;
             diary.ApprovedFlag = request.ApprovedFlag;
-
             _unitOfWork.DiaryRepository.UpdateAsync(diary);
             await _unitOfWork.SaveAsync();
 
             return new Response<string>("Cập nhật thông tin nhật ký thành công");
+        }
+        public async Task<Response<string>> UpdateDiaryPublicRequest(UpdateDiaryPublicRequest request)
+        {
+            var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.ChildId && x.DelFlag == false);
+            if (child == null)
+            {
+                return new Response<String>($"Không tìm thấy bé \'{request.ChildId}\'.");
+            }
+            var diary = await _unitOfWork.DiaryRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
+            if (diary == null)
+            {
+                return new Response<string>($"Không tìm thấy thông tin nhật ký có id \'{request.Id}\'.");
+            }
+            diary.PublicDate = request.PublicDate;
+            diary.PublicFlag = request.PublicFlag;
+            diary.ApprovedFlag = request.ApprovedFlag;
+            if (request.ApprovedFlag)
+            {
+                await sendNotification(child.MomId, "Request diary public is approved!", $"Your request diary \'{diary.Id}\' has been approved to public!");
+            }
+            else
+            {
+                await sendNotification(child.MomId, "Request diary public is unapproved!", $"Your request diary \'{diary.Id}\' has been unapproved to public!");
+            }
+            _unitOfWork.DiaryRepository.UpdateAsync(diary);
+            await _unitOfWork.SaveAsync();
+
+            return new Response<string>("Duyệt nhật ký thành công!");
         }
 
         public async Task<Response<string>> DeleteDiary(int Id)
@@ -138,8 +166,6 @@ namespace Mumbi.Application.Services
                 return false;
             }
         }
-
-     
     }
 
 

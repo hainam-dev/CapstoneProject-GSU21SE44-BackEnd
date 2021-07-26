@@ -19,7 +19,7 @@ namespace Mumbi_API.Controllers
             _newsService = newsService;
         }
         [HttpPost("AddNews")]
-        public async Task<IActionResult> AddNewsType(CreateNewsRequest request)
+        public async Task<IActionResult> AddNews(CreateNewsRequest request)
         {
             return Ok(await _newsService.AddNews(request));
         }

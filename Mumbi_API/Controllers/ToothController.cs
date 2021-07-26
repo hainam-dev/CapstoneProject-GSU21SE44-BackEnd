@@ -18,10 +18,16 @@ namespace Mumbi_API.Controllers
         {
             _toothService = toothService;
         }
-        [HttpGet("GetToothByChildId/{childId}/{toothId}")]
-        public async Task<IActionResult> GetToothByChildId(string childId, string toothId)
+        [HttpGet("GetToothByToothId/{childId}/{toothId}")]
+        public async Task<IActionResult> GetToothByToothId(string childId, string toothId)
         {
-            return Ok(await _toothService.GetToothByChildId(childId, toothId));
+            return Ok(await _toothService.GetToothByToothId(childId, toothId));
+
+        }
+        [HttpGet("GetToothByChildId/{childId}")]
+        public async Task<IActionResult> GetToothByChildId(string childId)
+        {
+            return Ok(await _toothService.GetToothByChildId(childId));
 
         }
         [HttpPost("UpsertTooth/{toothId}")]

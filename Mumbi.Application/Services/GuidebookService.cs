@@ -34,6 +34,7 @@ namespace Mumbi.Application.Services
                 CreatedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
                 LastModifiedBy = request.LastModifiedBy,
                 LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime,
+                SuitableAge = request.SuitableAge,
                 TypeId = request.TypeId,
                 DelFlag = false,
             };
@@ -90,6 +91,7 @@ namespace Mumbi.Application.Services
             guidebook.EstimatedFinishTime = request.EstimatedFinishTime;
             guidebook.LastModifiedBy = request.LastModifiedBy;
             guidebook.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
+            guidebook.SuitableAge = request.SuitableAge;
             guidebook.TypeId = request.TypeId;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();

@@ -43,6 +43,7 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
                 );
+            CreateMap<Activity, ActivityByTypeIdResponse>();
             // Diary
             CreateMap<Diary, DiaryResponse>();
             // DiaryPublic
@@ -72,7 +73,10 @@ namespace Mumbi.Application.Mapping
             //Token
             CreateMap<Token, FcmTokenResponse>();
             //Tooth
-            CreateMap<Tooth, ToothResponse>();
+            CreateMap<Tooth, ToothResponse>().ForMember(
+                dest => dest.ToothName,
+                opt => opt.MapFrom(src => src.ToothNavigation.Name)
+            );
             //ToothInfo
             CreateMap<ToothInfo, ToothInfoResponse>();
             // User
