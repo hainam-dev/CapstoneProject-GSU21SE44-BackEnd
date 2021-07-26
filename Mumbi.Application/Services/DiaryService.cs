@@ -153,17 +153,17 @@ namespace Mumbi.Application.Services
             return new Response<string>($"Xóa nhật ký id \'{Id}\' thành công!");
         }
 
-        private async Task<bool> sendNotification(string receiverId, string title, string body)
+        private async Task<int> sendNotification(string receiverId, string title, string body)
         {
             try
             {
                 var fcmTokens = await _unitOfWork.TokenRepository.GetAsync(x => x.UserId == receiverId);
-                var deviceTokens = fcmTokens.Select(x => x.FcmToken).ToArray();
+                var deviceTokens = fcmTokens.Select(x => x.FcmToken).ToList();
                 return await SendNotificationService.SendNotificationAsync(deviceTokens, title, body);
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
         }
     }
