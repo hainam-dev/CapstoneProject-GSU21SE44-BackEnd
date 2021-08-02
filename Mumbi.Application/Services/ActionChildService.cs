@@ -46,7 +46,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<ActionChildResponse>> GetActionChildByChildId(string childId)
         {
             var response = new ActionChildResponse();
-            var actionChild = await _unitOfWork.ActionChildRepository.FirstAsync(x => x.ChildId == childId;
+            var actionChild = await _unitOfWork.ActionChildRepository.FirstAsync(x => x.ChildId == childId);
             if (actionChild == null)
             {
                 return new Response<ActionChildResponse>(null, $"Không có dữ liệu");
