@@ -22,7 +22,7 @@ namespace Mumbi.Application.Interfaces
         Task<T> AddAsync(T entity);
         Task AddRangeAsync(List<T> entities);
         void UpdateAsync(T entity);
-        void DeleteAsync(T entity);
+        void Delete(T entity);
         void DeleteAllAsync(IList<T> entities);
     }
 }

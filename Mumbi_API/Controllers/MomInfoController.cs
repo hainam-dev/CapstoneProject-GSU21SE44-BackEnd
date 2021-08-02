@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
@@ -45,6 +44,5 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _momInfoService.DeleteMomInfo(Id));
         }
-
     }
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -17,11 +14,11 @@ namespace Mumbi_API.Controllers
         {
             _standardIndexService = standardIndexService;
         }
+
         [HttpGet("GetStandardIndexBy/{gender}")]
         public async Task<IActionResult> GetStandardIndexByGender(byte gender)
         {
             return Ok(await _standardIndexService.GetStandardIndexByGender(gender));
-
         }
     }
 }

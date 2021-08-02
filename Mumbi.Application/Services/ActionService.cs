@@ -2,10 +2,7 @@
 using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -27,9 +24,11 @@ namespace Mumbi.Application.Services
             var action = await _unitOfWork.ActionRepository.GetAsync(x => x.Type == type);
             if (action.Count == 0)
             {
-                return new Response<List<ActionResponse>>($"Không có action type \'{type}\'");
+                return new Response<List<ActionResponse>>(null, $"Không có action type \'{type}\'");
             }
+
             response = _mapper.Map<List<ActionResponse>>(action);
+
             return new Response<List<ActionResponse>>(response);
         }
     }

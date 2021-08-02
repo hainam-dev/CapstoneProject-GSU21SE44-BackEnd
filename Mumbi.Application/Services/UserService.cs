@@ -18,7 +18,7 @@ namespace Mumbi.Application.Services
 {
     public class UserService : IUserService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly JWTSettings _jwtSettings;
         public UserService(IUnitOfWork unitOfWork, IOptions<JWTSettings> jwtSettings)
         {
@@ -43,7 +43,7 @@ namespace Mumbi.Application.Services
 
                 if (currentUser != null && currentUser.DelFlag == true)
                 {
-                    return new Response<AuthenticationResponse>($"Xác thực đã bị lỗi. Tài khoản \'{user_firebase.Email}\' không khả dụng");
+                    return new Response<AuthenticationResponse>(null, $"Xác thực đã bị lỗi. Tài khoản \'{user_firebase.Email}\' không khả dụng");
                 }
                 else if (currentUser == null)
                 {
@@ -79,7 +79,7 @@ namespace Mumbi.Application.Services
                         FullName = user_firebase.DisplayName,
                         ImageUrl = user_firebase.PhotoUrl,
                         Phonenumber = user_firebase.PhoneNumber
-                        
+
                     };
                     await _unitOfWork.UserInfoRepository.AddAsync(userInfo);
 

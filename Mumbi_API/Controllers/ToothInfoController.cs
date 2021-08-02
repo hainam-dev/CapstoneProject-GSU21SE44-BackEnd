@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.ToothInfo;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,16 +15,17 @@ namespace Mumbi_API.Controllers
         {
             _toothInfoService = toothInfoService;
         }
+
         [HttpPost("AddToothInfo")]
         public async Task<IActionResult> AddToothInfo(CreateToothInfoRequest request)
         {
             return Ok(await _toothInfoService.AddToothInfo(request));
         }
+
         [HttpGet("GetToothInfoBy/{Position}")]
         public async Task<IActionResult> GetToothInfoByPosition(byte Position)
         {
             return Ok(await _toothInfoService.GetToothInfoByPosition(Position));
-
         }
     }
 }

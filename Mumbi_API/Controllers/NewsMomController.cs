@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,16 +15,19 @@ namespace Mumbi_API.Controllers
         {
             _newsMomService = newsMomService;
         }
+
         [HttpPost("AddNewsMom")]
         public async Task<IActionResult> AddNewsType(CreateNewsMomRequest request)
         {
             return Ok(await _newsMomService.AddNewsMom(request));
         }
+
         [HttpGet("GetNewsMomBy/{momId}")]
         public async Task<IActionResult> GetNewsByTypeId(string momId)
         {
             return Ok(await _newsMomService.GetNewsMomByMomId(momId));
         }
+
         [HttpDelete("DeleteNewsMom/{Id}")]
         public async Task<IActionResult> DeleteNewsType(int Id)
         {

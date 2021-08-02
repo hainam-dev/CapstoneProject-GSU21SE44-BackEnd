@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -19,7 +16,7 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpDelete("DeleteToken/{UserId}/{FcmToken}")]
-        public async Task<IActionResult> DeleteToken(string UserId,string FcmToken)
+        public async Task<IActionResult> DeleteToken(string UserId, string FcmToken)
         {
             return Ok(await _tokenService.DeleteToken(UserId, FcmToken));
         }

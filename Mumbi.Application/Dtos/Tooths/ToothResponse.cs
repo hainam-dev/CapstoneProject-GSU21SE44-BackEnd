@@ -15,5 +15,6 @@ namespace Mumbi.Application.Dtos.Tooths
         public string Note { get; set; }
         public string ImageURL { get; set; }
         public bool GrownFlag { get; set; }
+        public byte Position { get; set; }
     }
 }

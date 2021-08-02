@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Activity;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,6 +15,7 @@ namespace Mumbi_API.Controllers
         {
             _activityService = activityService;
         }
+
         [HttpPost("AddActivity")]
         public async Task<IActionResult> AddActivity(CreateActivityRequest request)
         {
@@ -28,21 +26,20 @@ namespace Mumbi_API.Controllers
         public async Task<IActionResult> GetAllActivity()
         {
             return Ok(await _activityService.GetAllActivity());
-
         }
+
         [HttpGet("GetActivityBy/{Id}")]
         public async Task<IActionResult> GetActivityById(int Id)
         {
             return Ok(await _activityService.GetActivityById(Id));
-
         }
 
         [HttpGet("GetActivityByType/{typeId}")]
         public async Task<IActionResult> GetActivityByTypeId(int typeId)
         {
             return Ok(await _activityService.GetActivityByTypeId(typeId));
-
         }
+
         [HttpPut("UpdateActivity/{Id}")]
         public async Task<IActionResult> UpdateActivity(int Id, UpdateActivityRequest request)
         {
@@ -50,6 +47,7 @@ namespace Mumbi_API.Controllers
             {
                 return BadRequest();
             }
+
             return Ok(await _activityService.UpdateActivityRequest(request));
         }
 

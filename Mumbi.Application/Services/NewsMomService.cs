@@ -1,22 +1,17 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Options;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsMom;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
-using Mumbi.Domain.Settings;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
 {
     public class NewsMomService : INewsMomService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public NewsMomService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -31,9 +26,11 @@ namespace Mumbi.Application.Services
                 MomId = request.MomId,
                 NewsId = request.NewsId,
             };
+
             await _unitOfWork.NewsMomRepository.AddAsync(newsMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm news mom thành công, id: " + newsMom.Id);
+
+            return new Response<string>(newsMom.Id.ToString(), $"Thêm news mom thành công, id: " + newsMom.Id);
         }
 
         public async Task<Response<List<NewsMomResponse>>> GetNewsMomByMomId(string momId)
@@ -42,7 +39,7 @@ namespace Mumbi.Application.Services
             var newsMom = await _unitOfWork.NewsMomRepository.GetAsync(x => x.MomId == momId);
             if (newsMom.Count == 0)
             {
-                return new Response<List<NewsMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
+                return new Response<List<NewsMomResponse>>(null, $"MomId \'{momId}\' chưa có dữ liệu");
             }
 
             foreach (var news in newsMom)
@@ -63,11 +60,13 @@ namespace Mumbi.Application.Services
             var newsMom = await _unitOfWork.NewsMomRepository.FirstAsync(x => x.Id == Id);
             if (newsMom == null)
             {
-                return new Response<string>($"Không tìm thấy news mom có Id \'{Id}\'.");
+                return new Response<string>(null, $"Không tìm thấy news mom có Id \'{Id}\'.");
             }
-            _unitOfWork.NewsMomRepository.DeleteAsync(newsMom);
+
+            _unitOfWork.NewsMomRepository.Delete(newsMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa news type id \'{Id}\' thành công!");
+
+            return new Response<string>(Id.ToString(), $"Xóa news type id \'{Id}\' thành công!");
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Staffs;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,6 +15,7 @@ namespace Mumbi_API.Controllers
         {
             _userInfoService = userInfoService;
         }
+
         [HttpGet("GetStaffInfoBy/{Id}")]
         public async Task<IActionResult> GetStaffInfoById(string Id)
         {

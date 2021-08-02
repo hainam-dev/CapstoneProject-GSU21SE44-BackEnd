@@ -2,10 +2,7 @@
 using Mumbi.Application.Dtos.Vaccine;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -27,9 +24,11 @@ namespace Mumbi.Application.Services
             var vaccine = await _unitOfWork.VaccineRepository.GetAllAsync();
             if (vaccine.Count == 0)
             {
-                return new Response<List<VaccineResponse>>($"Chưa có dữ liệu");
+                return new Response<List<VaccineResponse>>(null, $"Chưa có dữ liệu");
             }
+
             response = _mapper.Map<List<VaccineResponse>>(vaccine);
+
             return new Response<List<VaccineResponse>>(response);
         }
 
@@ -39,9 +38,11 @@ namespace Mumbi.Application.Services
             var vaccine = await _unitOfWork.VaccineRepository.GetAsync(x => x.Antigen == antigen);
             if (vaccine.Count == 0)
             {
-                return new Response<List<VaccineResponse>>($"Không tìm thấy antigen \'{antigen}\'");
+                return new Response<List<VaccineResponse>>(null, $"Không tìm thấy antigen \'{antigen}\'");
             }
+
             response = _mapper.Map<List<VaccineResponse>>(vaccine);
+
             return new Response<List<VaccineResponse>>(response);
         }
     }

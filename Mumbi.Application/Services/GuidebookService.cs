@@ -5,15 +5,13 @@ using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
 {
     public class GuidebookService : IGuidebookService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public GuidebookService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -38,9 +36,11 @@ namespace Mumbi.Application.Services
                 TypeId = request.TypeId,
                 DelFlag = false,
             };
+
             await _unitOfWork.GuidebookRepository.AddAsync(guidebook);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm guidebook thành công, id: " + guidebook.Id);
+
+            return new Response<string>(guidebook.Id, $"Thêm guidebook thành công, id: {guidebook.Id}");
         }
 
         public async Task<Response<List<GuidebookResponse>>> GetAllGuidebook()
@@ -48,9 +48,11 @@ namespace Mumbi.Application.Services
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.DelFlag == false, includeProperties: "Type");
             if (guidebook.Count == 0)
             {
-                return new Response<List<GuidebookResponse>>("Chưa có dữ liệu");
+                return new Response<List<GuidebookResponse>>(null, "Chưa có dữ liệu");
             }
+
             var response = _mapper.Map<List<GuidebookResponse>>(guidebook);
+
             return new Response<List<GuidebookResponse>>(response);
         }
 
@@ -60,9 +62,11 @@ namespace Mumbi.Application.Services
             var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebook == null)
             {
-                return new Response<GuidebookResponse>($"Không tìm thấy guidebook id \'{Id}\'");
+                return new Response<GuidebookResponse>(null, $"Không tìm thấy guidebook id \'{Id}\'");
             }
+
             response = _mapper.Map<GuidebookResponse>(guidebook);
+
             return new Response<GuidebookResponse>(response);
         }
 
@@ -72,9 +76,11 @@ namespace Mumbi.Application.Services
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
             if (guidebook.Count == 0)
             {
-                return new Response<List<GuidebookByTypeIdResponse>>($"TypeId \'{typeId}\' chưa có dữ liệu");
+                return new Response<List<GuidebookByTypeIdResponse>>(null, $"TypeId \'{typeId}\' chưa có dữ liệu");
             }
+
             response = _mapper.Map<List<GuidebookByTypeIdResponse>>(guidebook);
+
             return new Response<List<GuidebookByTypeIdResponse>>(response);
         }
 
@@ -83,8 +89,9 @@ namespace Mumbi.Application.Services
             var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == request.Id && x.DelFlag == false);
             if (guidebook == null)
             {
-                return new Response<string>($"Không tìm thấy guidebook id \'{request.Id}\'");
+                return new Response<string>(null, $"Không tìm thấy guidebook id \'{request.Id}\'");
             }
+
             guidebook.Title = request.Title;
             guidebook.GuidebookContent = request.GuidebookContent;
             guidebook.ImageUrl = request.ImageURL;
@@ -93,9 +100,11 @@ namespace Mumbi.Application.Services
             guidebook.LastModifiedTime = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
             guidebook.SuitableAge = request.SuitableAge;
             guidebook.TypeId = request.TypeId;
+
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Cập nhật guidebook thành công");
+
+            return new Response<string>(guidebook.Id, "Cập nhật guidebook thành công");
         }
 
         public async Task<Response<string>> DeleteGuidebook(string Id)
@@ -103,8 +112,9 @@ namespace Mumbi.Application.Services
             var guidebook = await _unitOfWork.GuidebookRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false);
             if (guidebook == null)
             {
-                return new Response<string>($"Không tìm thấy guidebook có id \'{Id}\'.");
+                return new Response<string>(null, $"Không tìm thấy guidebook có id \'{Id}\'.");
             }
+
             var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.GuidebookId == Id);
             if (guidebookMom.Count > 0)
             {
@@ -112,12 +122,15 @@ namespace Mumbi.Application.Services
                 _unitOfWork.GuidebookMomRepository.DeleteAllAsync(guidebookMom);
                 _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>($"Xóa guidebook id \'{Id}\' thành công!");
+
+                return new Response<string>(Id, $"Xóa guidebook id \'{Id}\' thành công!");
             }
+
             guidebook.DelFlag = true;
             _unitOfWork.GuidebookRepository.UpdateAsync(guidebook);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa guidebook id \'{Id}\' thành công!");
+
+            return new Response<string>(Id, $"Xóa guidebook id \'{Id}\' thành công!");
         }
     }
 }

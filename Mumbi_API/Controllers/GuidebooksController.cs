@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Guidebooks;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,6 +15,7 @@ namespace Mumbi_API.Controllers
         {
             _guidebookService = guidebookService;
         }
+
         [HttpPost("AddGuidebook")]
         public async Task<IActionResult> AddGuidebookType(CreateGuidebookRequest request)
         {
@@ -28,21 +26,20 @@ namespace Mumbi_API.Controllers
         public async Task<IActionResult> GetAllGuidebook()
         {
             return Ok(await _guidebookService.GetAllGuidebook());
-
         }
 
         [HttpGet("GetGuidebookBy/{Id}")]
         public async Task<IActionResult> GetGuidebookById(string Id)
         {
             return Ok(await _guidebookService.GetGuidebookById(Id));
-
         }
+
         [HttpGet("GetGuidebookByType/{typeId}")]
         public async Task<IActionResult> GetGuidebookByTypeId(int typeId)
         {
             return Ok(await _guidebookService.GetGuidebookByTypeId(typeId));
-
         }
+
         [HttpPut("UpdateGuidebook/{Id}")]
         public async Task<IActionResult> UpdateGuidebook(string Id, UpdateGuidebookRequest request)
         {
@@ -50,6 +47,7 @@ namespace Mumbi_API.Controllers
             {
                 return BadRequest();
             }
+
             return Ok(await _guidebookService.UpdateGuidebookRequest(request));
         }
 

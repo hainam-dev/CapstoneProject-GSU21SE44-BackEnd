@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using Mumbi.Application.Dtos.InjectedPerson;
+﻿using Mumbi.Application.Dtos.InjectedPerson;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -14,17 +11,25 @@ namespace Mumbi.Application.Services
     public class InjectedPersonService : IInjectedPersonService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public InjectedPersonService(IUnitOfWork unitOfWork, IMapper mapper)
+        public InjectedPersonService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
 
         public async Task<Response<List<string>>> AddInjectedPerson(List<CreateInjectedPersonRequest> request)
         {
-            var injectedPerson = request.Select(x => new InjectedPerson
+            var injectPersonRequest = new List<CreateInjectedPersonRequest>();
+            foreach (var item in request)
+            {
+                var childs = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == item.MomId);
+                if (childs.Any(x => x.Birthday == item.Birthday))
+                {
+                    injectPersonRequest.Add(item);
+                }
+            }
+
+            var injectedPerson = injectPersonRequest.Select(x => new InjectedPerson
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -36,9 +41,12 @@ namespace Mumbi.Application.Services
                 HomeAddress = x.HomeAddress,
                 TemporaryAddress = x.TemporaryAddress
             }).ToList();
+
             await _unitOfWork.InjectedPersonRepository.AddRangeAsync(injectedPerson);
             await _unitOfWork.SaveAsync();
+
             var response = injectedPerson.Select(x => x.Id.ToString()).ToList();
+
             return new Response<List<string>>(response, "Thêm thông tin người tiêm thành công");
         }
     }

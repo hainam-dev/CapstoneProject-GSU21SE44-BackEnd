@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -17,11 +14,11 @@ namespace Mumbi_API.Controllers
         {
             _actionService = actionService;
         }
+
         [HttpGet("GetActionBy/{type}")]
         public async Task<IActionResult> GetActionByType(string type)
         {
             return Ok(await _actionService.GetActionByType(type));
-
         }
     }
 }

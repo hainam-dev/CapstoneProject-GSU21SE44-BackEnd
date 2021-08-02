@@ -4,9 +4,6 @@ using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -32,9 +29,11 @@ namespace Mumbi.Application.Services
                 Name = request.Name,
                 GrowTime = request.GrowTime
             };
+
             await _unitOfWork.ToothInfoRepository.AddAsync(toothInfo);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm thông tin răng thành công, id: " + toothInfo.Id);
+
+            return new Response<string>(toothInfo.Id, $"Thêm thông tin răng thành công, id: {toothInfo.Id}");
         }
 
         public async Task<Response<ToothInfoResponse>> GetToothInfoByPosition(byte position)
@@ -43,9 +42,10 @@ namespace Mumbi.Application.Services
             var toothInfo = await _unitOfWork.ToothInfoRepository.FirstAsync(x => x.Position == position);
             if (toothInfo == null)
             {
-                return new Response<ToothInfoResponse>($"Không tìm thấy thông tin răng tại vị trí \'{position}\'");
+                return new Response<ToothInfoResponse>(null, $"Không tìm thấy thông tin răng tại vị trí \'{position}\'");
             }
             response = _mapper.Map<ToothInfoResponse>(toothInfo);
+
             return new Response<ToothInfoResponse>(response);
         }
     }

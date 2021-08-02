@@ -34,7 +34,7 @@ namespace Mumbi.Infrastucture.Repositories
             _context.Set<T>().RemoveRange(entities);
         }
 
-        public void DeleteAsync(T entity)
+        public void Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
         }

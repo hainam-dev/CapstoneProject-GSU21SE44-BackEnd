@@ -76,6 +76,9 @@ namespace Mumbi.Application.Mapping
             CreateMap<Tooth, ToothResponse>().ForMember(
                 dest => dest.ToothName,
                 opt => opt.MapFrom(src => src.ToothNavigation.Name)
+            ).ForMember(
+                dest => dest.Position,
+                opt => opt.MapFrom(src => src.ToothNavigation.Position)
             );
             //ToothInfo
             CreateMap<ToothInfo, ToothInfoResponse>();

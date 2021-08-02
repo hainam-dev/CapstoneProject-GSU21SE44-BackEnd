@@ -2,10 +2,7 @@
 using Mumbi.Application.Dtos.StandardIndex;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -27,9 +24,11 @@ namespace Mumbi.Application.Services
             var standardIndex = await _unitOfWork.StandardIndexRepository.GetAsync(x => x.Gender == gender);
             if (standardIndex.Count == 0)
             {
-                return new Response<List<StandardIndexResponse>>($"Không tìm thấy gender \'{gender}\'");
+                return new Response<List<StandardIndexResponse>>(null, $"Không tìm thấy gender \'{gender}\'");
             }
+
             response = _mapper.Map<List<StandardIndexResponse>>(standardIndex);
+
             return new Response<List<StandardIndexResponse>>(response);
         }
     }

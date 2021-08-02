@@ -41,9 +41,11 @@ namespace Mumbi.Application.Services
                     Fingertips = request.Fingertips,
                     BornFlag = true,
                 };
+
                 await _unitOfWork.ChildInfoRepository.AddAsync(child);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>("Thêm em bé thành công", child.Id);
+
+                return new Response<string>(child.Id, $"Thêm em bé thành công, id: {child.Id}");
             }
             else
             {
@@ -59,9 +61,11 @@ namespace Mumbi.Application.Services
                     Birthday = request.Birthday,
                     BornFlag = false,
                 };
+
                 await _unitOfWork.ChildInfoRepository.AddAsync(pregnancy);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>("Thêm thai kì thành công ", pregnancy.Id);
+
+                return new Response<string>(pregnancy.Id, $"Thêm thai kì thành công, id: {pregnancy.Id}");
             }
         }
         public async Task<Response<string>> UpdateChildInfo(UpdateChildInfoRequest request)
@@ -111,11 +115,14 @@ namespace Mumbi.Application.Services
                         child.EstimatedBornDate = request.EstimatedBornDate;
                     }
                 }
+
                 _unitOfWork.ChildInfoRepository.UpdateAsync(child);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>("Cập nhật thông tin em bé thành công", child.Id);
+
+                return new Response<string>(child.Id, $"Cập nhật thông tin em bé thành công, id: {child.Id}");
             }
-            return new Response<string>($"Không tìm thấy em bé \'{request.Id}\'");
+
+            return new Response<string>(null, $"Không tìm thấy em bé \'{request.Id}\'");
         }
         public async Task<Response<string>> UpdateChildInfoHealth(UpdateChildInfoHealthResquest request)
         {
@@ -132,13 +139,16 @@ namespace Mumbi.Application.Services
                     AvgMilk = request.AvgMilk,
                     HourSleep = request.HourSleep,
                     WeekOlds = request.WeekOlds
-                    };
-                    await _unitOfWork.ChildHistoryRepository.AddAsync(childHistory);
-                    _unitOfWork.ChildInfoRepository.UpdateAsync(child);
+                };
+
+                await _unitOfWork.ChildHistoryRepository.AddAsync(childHistory);
+                _unitOfWork.ChildInfoRepository.UpdateAsync(child);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>("Cập nhật thông tin em bé thành công", child.Id);
+
+                return new Response<string>(child.Id, $"Cập nhật thông tin em bé thành công, id: {child.Id}");
             }
-            return new Response<string>($"Không tìm thấy em bé \'{request.Id}\'");
+
+            return new Response<string>(null, $"Không tìm thấy em bé \'{request.Id}\'");
         }
         public async Task<Response<string>> UpdatePregnancyHistoryHealth(UpdatePregnancyHistoryRequest request)
         {
@@ -154,9 +164,11 @@ namespace Mumbi.Application.Services
                 FetalHeartRate = request.FetalHeartRate,
                 MotherWeight = request.MotherWeight
             };
+
             await _unitOfWork.PregnancyHistoryRepository.AddAsync(pregnancyHistory);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Cập nhật thông tin thai kì thành công", pregnancyHistory.ChildId);
+
+            return new Response<string>(pregnancyHistory.ChildId, $"Cập nhật thông tin em bé thành công, id: {pregnancyHistory.ChildId}");
         }
         public async Task<Response<string>> DeleteChildInfo(string id)
         {
@@ -166,10 +178,11 @@ namespace Mumbi.Application.Services
                 child.DelFlag = true;
                 _unitOfWork.ChildInfoRepository.UpdateAsync(child);
                 await _unitOfWork.SaveAsync();
-                return new Response<string>("Xóa em bé thành công ", child.Id);
+
+                return new Response<string>(child.Id, $"Xóa em bé thành công, id: {child.Id}");
             }
 
-            return new Response<string>($"Không tìm thấy em bé \'{id}\'");
+            return new Response<string>(null, $"Không tìm thấy em bé \'{id}\'");
         }
 
         public async Task<Response<ChildInfoResponse>> GetChildInfoById(string Id)
@@ -179,9 +192,11 @@ namespace Mumbi.Application.Services
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == Id);
             if (child == null)
             {
-                return new Response<ChildInfoResponse>($"Không tìm thấy em bé \'{Id}\'");
+                return new Response<ChildInfoResponse>(null, $"Không tìm thấy em bé \'{Id}\'");
             }
+
             response = _mapper.Map<ChildInfoResponse>(child);
+
             return new Response<ChildInfoResponse>(response);
         }
 
@@ -193,6 +208,7 @@ namespace Mumbi.Application.Services
             {
                 response = _mapper.Map<List<ChildInfoResponse>>(child);
             }
+
             return new Response<List<ChildInfoResponse>>(response);
         }
 
@@ -202,17 +218,18 @@ namespace Mumbi.Application.Services
             var mom_info = await _unitOfWork.MomInfoRepository.FirstAsync(x => x.Id == momId && x.IdNavigation.DelFlag == false);
             if (mom_info == null)
             {
-                return new Response<List<ChildInfoResponse>>($"Không tìm thấy mẹ \'{momId}\'");
+                return new Response<List<ChildInfoResponse>>(null, $"Không tìm thấy mẹ \'{momId}\'");
             }
+
             var child = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == momId && x.DelFlag == false);
             if (child.Count == 0)
             {
-                return new Response<List<ChildInfoResponse>>($"Id \'{momId}\' chưa có con");
+                return new Response<List<ChildInfoResponse>>(null, $"Id \'{momId}\' chưa có con");
             }
+
             response = _mapper.Map<List<ChildInfoResponse>>(child);
+
             return new Response<List<ChildInfoResponse>>(response, $"Có {child.Count} người con");
         }
-
-        
     }
 }

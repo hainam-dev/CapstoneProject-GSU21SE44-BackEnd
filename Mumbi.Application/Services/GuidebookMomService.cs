@@ -11,7 +11,7 @@ namespace Mumbi.Application.Services
 {
     public class GuidebookMomService : IGuidebookMomService
     {
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public GuidebookMomService(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -26,9 +26,11 @@ namespace Mumbi.Application.Services
                 MomId = request.MomId,
                 GuidebookId = request.GuidebookId,
             };
+
             await _unitOfWork.GuidebookMomRepository.AddAsync(guidebookMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>("Thêm guidebook mom thành công, id: " + guidebookMom.Id);
+
+            return new Response<string>(guidebookMom.Id.ToString(), $"Thêm guidebook mom thành công, id: {guidebookMom.Id}");
         }
 
         public async Task<Response<List<GuidebookMomResponse>>> GetGuidebookMomByMomId(string momId)
@@ -37,7 +39,7 @@ namespace Mumbi.Application.Services
             var guidebookMom = await _unitOfWork.GuidebookMomRepository.GetAsync(x => x.MomId == momId);
             if (guidebookMom.Count == 0)
             {
-                return new Response<List<GuidebookMomResponse>>($"MomId \'{momId}\' chưa có dữ liệu");
+                return new Response<List<GuidebookMomResponse>>(null, $"MomId \'{momId}\' chưa có dữ liệu");
             }
 
             foreach (var guidebook in guidebookMom)
@@ -58,11 +60,13 @@ namespace Mumbi.Application.Services
             var guidebookMom = await _unitOfWork.GuidebookMomRepository.FirstAsync(x => x.Id == Id);
             if (guidebookMom == null)
             {
-                return new Response<string>($"Không tìm thấy guidebook mom có Id \'{Id}\'.");
+                return new Response<string>(null, $"Không tìm thấy guidebook mom có Id \'{Id}\'.");
             }
-            _unitOfWork.GuidebookMomRepository.DeleteAsync(guidebookMom);
+
+            _unitOfWork.GuidebookMomRepository.Delete(guidebookMom);
             await _unitOfWork.SaveAsync();
-            return new Response<string>($"Xóa guidebook type Id \'{Id}\' thành công!");
+
+            return new Response<string>(Id.ToString(), $"Xóa guidebook type Id \'{Id}\' thành công!");
         }
     }
 }

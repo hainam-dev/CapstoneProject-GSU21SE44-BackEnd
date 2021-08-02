@@ -10,7 +10,6 @@ namespace Mumbi_API.Controllers
     [ApiController]
     public class InjectionScheduleController : ControllerBase
     {
-
         private readonly IInjectionScheduleService _injectionScheduleService;
 
         public InjectionScheduleController(IInjectionScheduleService injectionScheduleService)

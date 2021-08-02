@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -18,6 +15,7 @@ namespace Mumbi_API.Controllers
         {
             _newsService = newsService;
         }
+
         [HttpPost("AddNews")]
         public async Task<IActionResult> AddNews(CreateNewsRequest request)
         {
@@ -28,21 +26,21 @@ namespace Mumbi_API.Controllers
         public async Task<IActionResult> GetAllNews()
         {
             return Ok(await _newsService.GetAllNews());
-
         }
 
         [HttpGet("GetNewsBy/{Id}")]
         public async Task<IActionResult> GetNewsById(string Id)
         {
             return Ok(await _newsService.GetNewsById(Id));
-
         }
+
         [HttpGet("GetNewsByType/{typeId}")]
         public async Task<IActionResult> GetNewsByTypeId(int typeId)
         {
             return Ok(await _newsService.GetNewsByTypeId(typeId));
 
         }
+
         [HttpPut("UpdateNews/{Id}")]
         public async Task<IActionResult> UpdateNews(string Id, UpdateNewsRequest request)
         {
@@ -50,6 +48,7 @@ namespace Mumbi_API.Controllers
             {
                 return BadRequest();
             }
+
             return Ok(await _newsService.UpdateNewsRequest(request));
         }
 
