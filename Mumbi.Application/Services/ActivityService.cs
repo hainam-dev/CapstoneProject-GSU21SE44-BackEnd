@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.Activity;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
@@ -48,13 +49,15 @@ namespace Mumbi.Application.Services
 
             return new Response<ActivityResponse>(response);
         }
-        public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(int typeId)
+        public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(ActionRequest request)
         {
             var response = new List<ActivityByTypeIdResponse>();
-            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
+            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.TypeId == request.TypeId 
+                                                                              && (request.SuitableAge.HasValue || x.SuitableAge == request.SuitableAge.Value) 
+                                                                              && x.DelFlag == false);
             if (activity.Count == 0)
             {
-                return new Response<List<ActivityByTypeIdResponse>>(null, $"TypeId \'{typeId}\' chưa có dữ liệu");
+                return new Response<List<ActivityByTypeIdResponse>>(null, $"TypeId \'{request.TypeId}\' chưa có dữ liệu");
             }
 
             response = _mapper.Map<List<ActivityByTypeIdResponse>>(activity);

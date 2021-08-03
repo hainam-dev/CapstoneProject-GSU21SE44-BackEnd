@@ -34,11 +34,10 @@ namespace Mumbi_API.Controllers
             return Ok(await _newsService.GetNewsById(Id));
         }
 
-        [HttpGet("GetNewsByType/{typeId}")]
-        public async Task<IActionResult> GetNewsByTypeId(int typeId)
+        [HttpGet("GetNews")]
+        public async Task<IActionResult> GetNews([FromQuery] NewsRequest request)
         {
-            return Ok(await _newsService.GetNewsByTypeId(typeId));
-
+            return Ok(await _newsService.GetNews(request));
         }
 
         [HttpPut("UpdateNews/{Id}")]

@@ -60,7 +60,7 @@ namespace Mumbi.Application.Services
         {
             var response = new NewsResponse();
             var news = await _unitOfWork.NewsRepository.FirstAsync(x => x.Id == Id && x.DelFlag == false, includeProperties: "Type");
-            if(news == null)
+            if (news == null)
             {
                 return new Response<NewsResponse>(null, $"Không tìm thấy news id \'{Id}\'");
             }
@@ -70,18 +70,15 @@ namespace Mumbi.Application.Services
             return new Response<NewsResponse>(response);
         }
 
-        public async Task<Response<List<NewsByTypeIdResponse>>> GetNewsByTypeId(int typeId)
+        public async Task<PagedResponse<List<NewsByTypeIdResponse>>> GetNews(NewsRequest request)
         {
             var response = new List<NewsByTypeIdResponse>();
-            var news = await _unitOfWork.NewsRepository.GetAsync(x => x.TypeId == typeId && x.DelFlag == false);
-            if (news.Count == 0)
-            {
-                return new Response<List<NewsByTypeIdResponse>>(null, $"TypeId \'{typeId}\' chưa có dữ liệu");
-            }
+            var news = await _unitOfWork.NewsRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                             x => x.DelFlag == false && (request.TypeId == null || x.TypeId == request.TypeId.Value));
 
             response = _mapper.Map<List<NewsByTypeIdResponse>>(news);
 
-            return new Response<List<NewsByTypeIdResponse>>(response);
+            return new PagedResponse<List<NewsByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
         }
 
         public async Task<Response<string>> UpdateNewsRequest(UpdateNewsRequest request)

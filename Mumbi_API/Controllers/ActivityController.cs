@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.Activity;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
@@ -35,9 +36,9 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpGet("GetActivityByType/{typeId}")]
-        public async Task<IActionResult> GetActivityByTypeId(int typeId)
+        public async Task<IActionResult> GetActivityByTypeId([FromQuery] ActionRequest request)
         {
-            return Ok(await _activityService.GetActivityByTypeId(typeId));
+            return Ok(await _activityService.GetActivityByTypeId(request));
         }
 
         [HttpPut("UpdateActivity/{Id}")]
