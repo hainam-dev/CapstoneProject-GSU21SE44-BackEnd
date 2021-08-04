@@ -74,7 +74,9 @@ namespace Mumbi.Application.Services
         {
             var response = new List<NewsByTypeIdResponse>();
             var news = await _unitOfWork.NewsRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
-                                                                             x => x.DelFlag == false && (request.TypeId == null || x.TypeId == request.TypeId.Value));
+                                                                             x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                               && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                               && x.DelFlag == false);
 
             response = _mapper.Map<List<NewsByTypeIdResponse>>(news);
 

@@ -8,7 +8,7 @@ namespace Mumbi_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivityController : Controller
+    public class ActivityController : ControllerBase
     {
         private readonly IActivityService _activityService;
 

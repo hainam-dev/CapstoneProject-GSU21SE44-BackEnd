@@ -41,9 +41,9 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpPut("UpdateDiary/{Id}")]
-        public async Task<IActionResult> UpdateDiary(string childID, int Id, UpdateDiaryRequest request)
+        public async Task<IActionResult> UpdateDiary(int Id, UpdateDiaryRequest request)
         {
-            if (childID != request.ChildId || Id != request.Id)
+            if (Id != request.Id)
             {
                 return BadRequest();
             }

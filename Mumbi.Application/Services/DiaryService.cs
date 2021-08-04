@@ -42,7 +42,7 @@ namespace Mumbi.Application.Services
                 var staffs = await _unitOfWork.UserRepository.GetAsync(x => x.RoleId == RoleConstant.STAFF_ROLE && x.DelFlag == false);
                 foreach (var staff in staffs)
                 {
-                    await sendNotification(staff.Id, "New request diary public", $"Mom \'{getMom.MomId}\' request public diary \'{diary.Id}\'");
+                    await sendNotification(staff.Id, "Yêu cầu đăng nhật ký mới!", $"Id mẹ \'{getMom.MomId}\' gửi yêu cầu public nhật ký \'{diary.Id}\', vui lòng kiểm tra và phê duyệt!");
                 }
             }
 
@@ -142,11 +142,11 @@ namespace Mumbi.Application.Services
             diary.ApprovedFlag = request.ApprovedFlag;
             if (request.ApprovedFlag)
             {
-                await sendNotification(child.MomId, "Request diary public is approved!", $"Your request diary \'{diary.Id}\' has been approved to public!");
+                await sendNotification(child.MomId, "Đăng nhật ký lên cộng đồng đã được duyệt!", $"Nhật ký của bạn đã được duyệt để đăng lên cộng đồng!");
             }
             else
             {
-                await sendNotification(child.MomId, "Request diary public is unapproved!", $"Your request diary \'{diary.Id}\' has been unapproved to public!");
+                await sendNotification(child.MomId, "Đăng nhật ký lên cộng đồng không được chấp nhận!", $"Nhật ký của bạn đã vi phạm quy định tiêu chuẩn cộng đồng, vui lòng thử lại!");
             }
 
             _unitOfWork.DiaryRepository.UpdateAsync(diary);

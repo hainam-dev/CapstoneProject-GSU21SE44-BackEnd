@@ -53,23 +53,6 @@ namespace Mumbi_API.Controllers
             return Ok(await _childInfoService.UpdateChildInfo(request));
         }
 
-        [HttpPut("UpdateChildInfoHealth/{Id}")]
-        public async Task<IActionResult> UpdateChildInfoHealth(string Id, UpdateChildInfoHealthResquest request)
-        {
-            if(Id != request.Id)
-            {
-                return BadRequest();
-            }
-
-            return Ok(await _childInfoService.UpdateChildInfoHealth(request));
-        }
-
-        [HttpPut("UpdatePregnancyHistoryHealth")]
-        public async Task<IActionResult> UpdatePregnancyHistoryHealth(UpdatePregnancyHistoryRequest request)
-        {
-            return Ok(await _childInfoService.UpdatePregnancyHistoryHealth(request));
-        }
-
         [HttpPut("DeleteChildInfo/{Id}")]
         public async Task<IActionResult> Delete (string Id)
         {

@@ -124,52 +124,8 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(null, $"Không tìm thấy em bé \'{request.Id}\'");
         }
-        public async Task<Response<string>> UpdateChildInfoHealth(UpdateChildInfoHealthResquest request)
-        {
-            var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.Id);
-            if (child != null)
-            {
-                var childHistory = new ChildHistory
-                {
-                    ChildId = request.Id,
-                    Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
-                    Height = request.Height,
-                    Weight = request.Weight,
-                    HeadCircumference = request.HeadCircumference,
-                    AvgMilk = request.AvgMilk,
-                    HourSleep = request.HourSleep,
-                    WeekOlds = request.WeekOlds
-                };
-
-                await _unitOfWork.ChildHistoryRepository.AddAsync(childHistory);
-                _unitOfWork.ChildInfoRepository.UpdateAsync(child);
-                await _unitOfWork.SaveAsync();
-
-                return new Response<string>(child.Id, $"Cập nhật thông tin em bé thành công, id: {child.Id}");
-            }
-
-            return new Response<string>(null, $"Không tìm thấy em bé \'{request.Id}\'");
-        }
-        public async Task<Response<string>> UpdatePregnancyHistoryHealth(UpdatePregnancyHistoryRequest request)
-        {
-            var pregnancyHistory = new PregnancyHistory
-            {
-                ChildId = request.ChildId,
-                Date = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime.ToString(),
-                PregnancyWeek = request.PregnancyWeek,
-                Weight = request.Weight,
-                BiparietalDiameter = request.BiparietalDiameter,
-                HeadCircumference = request.HeadCircumference,
-                FemurLength = request.FemurLength,
-                FetalHeartRate = request.FetalHeartRate,
-                MotherWeight = request.MotherWeight
-            };
-
-            await _unitOfWork.PregnancyHistoryRepository.AddAsync(pregnancyHistory);
-            await _unitOfWork.SaveAsync();
-
-            return new Response<string>(pregnancyHistory.ChildId, $"Cập nhật thông tin em bé thành công, id: {pregnancyHistory.ChildId}");
-        }
+        
+        
         public async Task<Response<string>> DeleteChildInfo(string id)
         {
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == id);

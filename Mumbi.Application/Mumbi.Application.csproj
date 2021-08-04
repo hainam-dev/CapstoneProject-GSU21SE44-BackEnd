@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\ChildHistory\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Mumbi.Domain\Mumbi.Domain.csproj" />
   </ItemGroup>
 

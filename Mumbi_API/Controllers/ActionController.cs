@@ -6,7 +6,7 @@ namespace Mumbi_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActionController : Controller
+    public class ActionController : ControllerBase
     {
         private readonly IActionService _actionService;
 

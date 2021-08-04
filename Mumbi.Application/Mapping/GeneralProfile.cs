@@ -3,6 +3,7 @@ using Google.Apis.Auth.OAuth2.Responses;
 using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.ActionChild;
 using Mumbi.Application.Dtos.Activity;
+using Mumbi.Application.Dtos.ChildHistory;
 using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Dtos.Diaries;
@@ -11,6 +12,7 @@ using Mumbi.Application.Dtos.GuidebookTypes;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsType;
+using Mumbi.Application.Dtos.PregnancyHistory;
 using Mumbi.Application.Dtos.Staffs;
 using Mumbi.Application.Dtos.StandardIndex;
 using Mumbi.Application.Dtos.Tokens;
@@ -28,6 +30,10 @@ namespace Mumbi.Application.Mapping
             // Child
             CreateMap<ChildInfo, ChildInfoResponse>();
             CreateMap<PregnancyHistory, ChildInfoResponse>();
+            // ChildHistory
+            CreateMap<ChildHistory, ChildHistoryResponse>();
+            // PregnancyHistory
+            CreateMap<PregnancyHistory, PregnancyHistoryResponse>();
             // DadIndo
             CreateMap<DadInfo, DadInfoResponse>();
             //StandardIndex

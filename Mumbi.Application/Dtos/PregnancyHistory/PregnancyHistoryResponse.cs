@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mumbi.Application.Dtos.PregnancyHistory
 {
-    public class UpdatePregnancyHistoryRequest
+    public class PregnancyHistoryResponse
     {
+        public int Id { get; set; }
         public string ChildId { get; set; }
         public string Date { get; set; }
         public short PregnancyWeek { get; set; }
@@ -17,6 +18,5 @@ namespace Mumbi.Application.Dtos.PregnancyHistory
         public float FemurLength { get; set; }
         public float FetalHeartRate { get; set; }
         public float MotherWeight { get; set; }
-
     }
 }
