@@ -22,6 +22,11 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _activityService.AddActivity(request));
         }
+        [HttpGet("GetActivity")]
+        public async Task<IActionResult> GetActivity([FromQuery] ActivityRequest request)
+        {
+            return Ok(await _activityService.GetActivity(request));
+        }
 
         [HttpGet("GetAllActivity")]
         public async Task<IActionResult> GetAllActivity()
@@ -35,8 +40,8 @@ namespace Mumbi_API.Controllers
             return Ok(await _activityService.GetActivityById(Id));
         }
 
-        [HttpGet("GetActivityByType/{typeId}")]
-        public async Task<IActionResult> GetActivityByTypeId([FromQuery] ActionRequest request)
+        [HttpGet("GetActivityByType")]
+        public async Task<IActionResult> GetActivityByTypeId([FromQuery] ActivityRequest request)
         {
             return Ok(await _activityService.GetActivityByTypeId(request));
         }

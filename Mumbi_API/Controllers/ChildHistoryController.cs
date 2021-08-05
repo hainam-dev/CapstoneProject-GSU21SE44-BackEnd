@@ -20,8 +20,8 @@ namespace Mumbi_API.Controllers
             _childHistoryService = childHistoryService;
         }
 
-        [HttpPut("GetChildHistoryByChildId")]
-        public async Task<IActionResult> GetChildHistoryByChildId(ChildHistoryRequest request)
+        [HttpGet("GetChildHistoryByChildId")]
+        public async Task<IActionResult> GetChildHistoryByChildId([FromQuery] ChildHistoryRequest request)
         {
             return Ok(await _childHistoryService.GetChildHistoryByChildId(request));
         }

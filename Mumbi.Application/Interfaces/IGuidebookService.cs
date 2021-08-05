@@ -11,6 +11,7 @@ namespace Mumbi.Application.Interfaces
     public interface IGuidebookService
     {
         Task<Response<string>> AddGuidebook(CreateGuidebookRequest request);
+        Task<PagedResponse<List<GuidebookByTypeIdResponse>>> GetGuidebook(GuidebookRequest request);
         Task<Response<List<GuidebookResponse>>> GetAllGuidebook();
         Task<Response<GuidebookResponse>> GetGuidebookById(string Id);
         Task<Response<List<GuidebookByTypeIdResponse>>> GetGuidebookByTypeId(int typeId);

@@ -19,8 +19,8 @@ namespace Mumbi_API.Controllers
             _pregnancyHistoryService = pregnancyHistoryService;
         }
 
-        [HttpPut("GetPregnancyHistoryByChildId")]
-        public async Task<IActionResult> GetPregnancyHistoryByChildId(PregnancyHistoryRequest request)
+        [HttpGet("GetPregnancyHistoryByChildId")]
+        public async Task<IActionResult> GetPregnancyHistoryByChildId([FromQuery] PregnancyHistoryRequest request)
         {
             return Ok(await _pregnancyHistoryService.GetPregnancyHistoryByChildId(request));
         }

@@ -21,6 +21,11 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _guidebookService.AddGuidebook(request));
         }
+        [HttpGet("GetGuidebook")]
+        public async Task<IActionResult> GetGuidebook([FromQuery] GuidebookRequest request)
+        {
+            return Ok(await _guidebookService.GetGuidebook(request));
+        }
 
         [HttpGet("GetAllGuidebook")]
         public async Task<IActionResult> GetAllGuidebook()

@@ -42,7 +42,18 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(guidebook.Id, $"Thêm guidebook thành công, id: {guidebook.Id}");
         }
+        public async Task<PagedResponse<List<GuidebookByTypeIdResponse>>> GetGuidebook(GuidebookRequest request)
+        {
+            var response = new List<GuidebookByTypeIdResponse>();
+            var guidebook = await _unitOfWork.GuidebookRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                             x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                               && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                               && x.DelFlag == false);
 
+            response = _mapper.Map<List<GuidebookByTypeIdResponse>>(guidebook);
+
+            return new PagedResponse<List<GuidebookByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
+        }
         public async Task<Response<List<GuidebookResponse>>> GetAllGuidebook()
         {
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.DelFlag == false, includeProperties: "Type");

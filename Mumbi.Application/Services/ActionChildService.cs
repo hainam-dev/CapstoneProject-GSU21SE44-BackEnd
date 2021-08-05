@@ -3,6 +3,7 @@ using Mumbi.Application.Dtos.ActionChild;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -43,18 +44,18 @@ namespace Mumbi.Application.Services
             return new Response<string>(getActionChild.Id.ToString(), $"Update action child thành công, id: {getActionChild.Id}");
         }
 
-        public async Task<Response<ActionChildResponse>> GetActionChildByChildId(string childId)
+        public async Task<Response<List<ActionChildResponse>>> GetActionChildByChildId(string childId)
         {
-            var response = new ActionChildResponse();
+            var response = new List<ActionChildResponse>();
             var actionChild = await _unitOfWork.ActionChildRepository.FirstAsync(x => x.ChildId == childId);
             if (actionChild == null)
             {
-                return new Response<ActionChildResponse>(null, $"Không có dữ liệu");
+                return new Response<List<ActionChildResponse>>(null, $"Không có dữ liệu");
             }
 
-            response = _mapper.Map<ActionChildResponse>(actionChild);
+            response = _mapper.Map<List<ActionChildResponse>>(actionChild);
 
-            return new Response<ActionChildResponse>(response);
+            return new Response<List<ActionChildResponse>>(response);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.Activity;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
@@ -49,20 +48,33 @@ namespace Mumbi.Application.Services
 
             return new Response<ActivityResponse>(response);
         }
-        public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(ActionRequest request)
+        public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(ActivityRequest request)
         {
             var response = new List<ActivityByTypeIdResponse>();
-            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.TypeId == request.TypeId 
-                                                                              && (request.SuitableAge.HasValue || x.SuitableAge == request.SuitableAge.Value) 
+            var activity = await _unitOfWork.ActivityRepository.GetAsync(x => x.TypeId == request.TypeId
+                                                                              && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
                                                                               && x.DelFlag == false);
             if (activity.Count == 0)
             {
-                return new Response<List<ActivityByTypeIdResponse>>(null, $"TypeId \'{request.TypeId}\' chưa có dữ liệu");
+                return new Response<List<ActivityByTypeIdResponse>>(null, $"Không có dữ liệu");
             }
 
             response = _mapper.Map<List<ActivityByTypeIdResponse>>(activity);
 
             return new Response<List<ActivityByTypeIdResponse>>(response);
+        }
+        public async Task<PagedResponse<List<ActivityByTypeIdResponse>>> GetActivity(ActivityRequest request)
+        {
+            var response = new List<ActivityByTypeIdResponse>();
+            var activity = await _unitOfWork.ActivityRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                             x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                             && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
+                                                                               && (request.SearchValue == null || x.ActivityName.Contains(request.SearchValue))
+                                                                               && x.DelFlag == false);
+
+            response = _mapper.Map<List<ActivityByTypeIdResponse>>(activity);
+
+            return new PagedResponse<List<ActivityByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
         }
 
         public async Task<Response<List<ActivityResponse>>> GetAllActivity()
@@ -111,5 +123,6 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(activity.Id.ToString(), $"Xóa activity id \'{Id}\' thành công!");
         }
+
     }
 }
