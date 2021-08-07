@@ -2,9 +2,8 @@
 using Mumbi.Application.Dtos.ChildHistory;
 using Mumbi.Application.Dtos.Childrens;
 using Mumbi.Application.Interfaces;
+using Mumbi.Application.Wrappers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -23,12 +22,30 @@ namespace Mumbi_API.Controllers
         [HttpGet("GetChildHistoryByChildId")]
         public async Task<IActionResult> GetChildHistoryByChildId([FromQuery] ChildHistoryRequest request)
         {
+            if (!string.IsNullOrEmpty(request.Date) && !DateTimeOffset.TryParse(request.Date, out _))
+            {
+                return BadRequest(new Response<string>("Incorrect date format"));
+            }
+
             return Ok(await _childHistoryService.GetChildHistoryByChildId(request));
         }
+
         [HttpPut("UpdateChildHistory")]
-        public async Task<IActionResult> UpdateChildHistory(UpdateChildHistoryRequest request)
+        public async Task<IActionResult> UpdateChildHistory([FromQuery] ChildHistoryRequest request, [FromBody] UpdateChildHistoryRequest updateRequest)
         {
-            return Ok(await _childHistoryService.UpdateChildHistory(request));
+            if (string.IsNullOrEmpty(request.ChildId) || request.ChildId != updateRequest.ChildId)
+            {
+                return BadRequest(new Response<string>("ChildId not found"));
+            }
+            else
+            {
+                if (!DateTimeOffset.TryParse(request.Date, out _))
+                {
+                    return BadRequest(new Response<string>("Incorrect date format"));
+                }
+            }
+
+            return Ok(await _childHistoryService.UpdateChildHistory(request, updateRequest));
         }
     }
 }

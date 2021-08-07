@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mumbi.Application.Dtos.ChildHistory
+﻿namespace Mumbi.Application.Dtos.ChildHistory
 {
     public class ChildHistoryResponse
     {
@@ -16,5 +10,6 @@ namespace Mumbi.Application.Dtos.ChildHistory
         public float HourSleep { get; set; }
         public float AvgMilk { get; set; }
         public short WeekOlds { get; set; }
+        public string Date { get; set; }
     }
 }
