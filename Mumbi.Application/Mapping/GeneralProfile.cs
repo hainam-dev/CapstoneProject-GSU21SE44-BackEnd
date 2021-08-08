@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Google.Apis.Auth.OAuth2.Responses;
 using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.ActionChild;
 using Mumbi.Application.Dtos.Activity;
@@ -20,13 +19,13 @@ using Mumbi.Application.Dtos.ToothInfo;
 using Mumbi.Application.Dtos.Tooths;
 using Mumbi.Application.Dtos.Vaccine;
 using Mumbi.Domain.Entities;
+
 namespace Mumbi.Application.Mapping
 {
     public class GeneralProfile : Profile
     {
         public GeneralProfile()
         {
-
             // Child
             CreateMap<ChildInfo, ChildInfoResponse>();
             CreateMap<PregnancyHistory, ChildInfoResponse>();
@@ -66,8 +65,14 @@ namespace Mumbi.Application.Mapping
             CreateMap<News, NewsResponse>().ForMember(
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
-                );
-            CreateMap<News, NewsByTypeIdResponse>();
+            );
+            CreateMap<News, NewsByTypeIdResponse>().ForMember(
+                dest => dest.CreatedTime,
+                opt => opt.MapFrom(src => src.CreatedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.LastModifiedTime,
+                opt => opt.MapFrom(src => src.LastModifiedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            );
             // GuidebookType
             CreateMap<GuidebookType, GuidebookTypeResponse>();
             // Guidebook

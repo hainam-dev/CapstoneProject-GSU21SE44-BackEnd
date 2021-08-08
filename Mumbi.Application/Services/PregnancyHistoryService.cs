@@ -32,7 +32,7 @@ namespace Mumbi.Application.Services
             }
 
             var child = await _unitOfWork.PregnancyHistoryRepository.GetAsync(filter: x => x.ChildId == request.ChildId
-                                                                                  && (dataDate == null || x.Date == dataDate.Value.ToString("dd-MM-yyyy")),
+                                                                                  && (dataDate == null || x.Date == dataDate.Value.ToString("dd'/'MM'/'yyyy")),
                                                                               orderBy: o => o.OrderBy(x => x.Date));
             if (child.Count == 0)
             {
@@ -48,7 +48,7 @@ namespace Mumbi.Application.Services
         {
             DateTimeOffset dataDate = DateTimeOffset.Parse(request.Date).ToOffset(new TimeSpan(7, 0, 0));
 
-            var pregnancyHistory = await _unitOfWork.PregnancyHistoryRepository.FirstAsync(x => x.ChildId == request.ChildId && x.Date == dataDate.Date.ToString("dd-MM-yyyy"));
+            var pregnancyHistory = await _unitOfWork.PregnancyHistoryRepository.FirstAsync(x => x.ChildId == request.ChildId && x.Date == dataDate.Date.ToString("dd'/'MM'/'yyyy"));
             if (pregnancyHistory != null)
             {
                 pregnancyHistory.PregnancyWeek = updateRequest.PregnancyWeek;
@@ -68,7 +68,7 @@ namespace Mumbi.Application.Services
             pregnancyHistory = new PregnancyHistory
             {
                 ChildId = request.ChildId,
-                Date = dataDate.ToString("dd-MM-yyyy"),
+                Date = dataDate.ToString("dd'/'MM'/'yyyy"),
                 PregnancyWeek = updateRequest.PregnancyWeek,
                 Weight = updateRequest.Weight,
                 BiparietalDiameter = updateRequest.BiparietalDiameter,

@@ -5,6 +5,7 @@ using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -74,9 +75,10 @@ namespace Mumbi.Application.Services
         {
             var response = new List<NewsByTypeIdResponse>();
             var news = await _unitOfWork.NewsRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
-                                                                             x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                             filter: x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
                                                                                && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
-                                                                               && x.DelFlag == false);
+                                                                               && x.DelFlag == false,
+                                                                             orderBy: x => x.OrderByDescending(o => o.CreatedTime));
 
             response = _mapper.Map<List<NewsByTypeIdResponse>>(news);
 

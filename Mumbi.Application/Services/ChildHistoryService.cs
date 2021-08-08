@@ -33,7 +33,7 @@ namespace Mumbi.Application.Services
             }
 
             var child = await _unitOfWork.ChildHistoryRepository.GetAsync(filter: x => x.ChildId == request.ChildId
-                                                                                  && (dataDate == null || x.Date == dataDate.Value.ToString("dd-MM-yyyy")),
+                                                                                  && (dataDate == null || x.Date == dataDate.Value.ToString("dd'/'MM'/'yyyy")),
                                                                           orderBy: o => o.OrderBy(x => x.Date));
             if (child.Count == 0)
             {
@@ -49,7 +49,7 @@ namespace Mumbi.Application.Services
         {
             DateTimeOffset dataDate = DateTimeOffset.Parse(request.Date).ToOffset(new TimeSpan(7, 0, 0));
 
-            var childHistory = await _unitOfWork.ChildHistoryRepository.FirstAsync(x => x.ChildId == request.ChildId && x.Date == dataDate.Date.ToString("dd-MM-yyyy"));
+            var childHistory = await _unitOfWork.ChildHistoryRepository.FirstAsync(x => x.ChildId == request.ChildId && x.Date == dataDate.Date.ToString("dd'/'MM'/'yyyy"));
             if (childHistory != null)
             {
                 childHistory.Height = updateRequest.Height;
@@ -68,7 +68,7 @@ namespace Mumbi.Application.Services
             childHistory = new ChildHistory
             {
                 ChildId = request.ChildId,
-                Date = dataDate.ToString("dd-MM-yyyy"),
+                Date = dataDate.ToString("dd'/'MM'/'yyyy"),
                 Height = updateRequest.Height,
                 Weight = updateRequest.Weight,
                 HeadCircumference = updateRequest.HeadCircumference,

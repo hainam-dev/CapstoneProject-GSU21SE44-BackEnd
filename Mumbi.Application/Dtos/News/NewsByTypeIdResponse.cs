@@ -10,9 +10,9 @@ namespace Mumbi.Application.Dtos.News
         public string ImageURL { get; set; }
         public short EstimatedFinishTime { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public string CreatedTime { get; set; }
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedTime { get; set; }
+        public string LastModifiedTime { get; set; }
         public int TypeId { get; set; }
     }
 }
