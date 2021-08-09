@@ -5,6 +5,7 @@ using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace Mumbi.Application.Services
             DateTimeOffset? dataDate = null;
             if (!string.IsNullOrEmpty(request.Date))
             {
-                dataDate = DateTimeOffset.Parse(request.Date).ToOffset(new TimeSpan(7, 0, 0));
+                dataDate = DateTimeOffset.ParseExact(request.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToOffset(new TimeSpan(7, 0, 0));
             }
 
             var child = await _unitOfWork.PregnancyHistoryRepository.GetAsync(filter: x => x.ChildId == request.ChildId
@@ -46,7 +47,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> UpdatePregnancyHistory(PregnancyHistoryRequest request, UpdatePregnancyHistoryRequest updateRequest)
         {
-            DateTimeOffset dataDate = DateTimeOffset.Parse(request.Date).ToOffset(new TimeSpan(7, 0, 0));
+            DateTimeOffset dataDate = DateTimeOffset.ParseExact(request.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToOffset(new TimeSpan(7, 0, 0));
 
             var pregnancyHistory = await _unitOfWork.PregnancyHistoryRepository.FirstAsync(x => x.ChildId == request.ChildId && x.Date == dataDate.Date.ToString("dd'/'MM'/'yyyy"));
             if (pregnancyHistory != null)
