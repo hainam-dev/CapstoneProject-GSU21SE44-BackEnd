@@ -34,14 +34,14 @@ namespace Mumbi.Application.Services
             };
 
             var momInfo = await _unitOfWork.MomInfoRepository.FirstAsync(x => x.Id == request.MomId && x.IdNavigation.DelFlag == false);
-            if(momInfo == null)
+            if (momInfo == null)
             {
                 return new Response<string>(null, "Không tìm thấy MomId: " + request.MomId);
             }
 
-            if(momInfo.DadId != null)
+            if (momInfo.DadId != null)
             {
-                return new Response<string>("MomId: " + request.MomId +" đã thêm cha");
+                return new Response<string>("MomId: " + request.MomId + " đã thêm cha");
             }
 
             momInfo.DadId = dadInfo.Id;
@@ -50,6 +50,7 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(dadInfo.Id, $"Thêm thông tin ba thành công: {dadInfo.Id}");
         }
+
         public async Task<Response<DadInfoResponse>> GetDadInfoByMomId(String momId)
         {
             var response = new DadInfoResponse();
@@ -69,6 +70,7 @@ namespace Mumbi.Application.Services
 
             return new Response<DadInfoResponse>(null, $"Không tìm thấy MomId, id: {momId}");
         }
+
         public async Task<Response<string>> UpdateDadInfoRequest(UpdateDadInfoRequest request)
         {
             var dadInfo = await _unitOfWork.DadInfoRepository.FirstAsync(x => x.Id == request.Id);
@@ -76,7 +78,6 @@ namespace Mumbi.Application.Services
             if (dadInfo == null)
             {
                 return new Response<string>(null, $"Không tìm thấy thông tin ba \'{request.Id}\'.");
-
             }
 
             dadInfo.FullName = request.FullName;
@@ -94,7 +95,7 @@ namespace Mumbi.Application.Services
 
         public async Task<Response<string>> DeleteDadInfo(string Id)
         {
-            var dadInfo = await _unitOfWork.DadInfoRepository.FirstAsync(x => x.Id == Id, includeProperties:"Mom");
+            var dadInfo = await _unitOfWork.DadInfoRepository.FirstAsync(x => x.Id == Id, includeProperties: "Mom");
             if (dadInfo == null)
             {
                 return new Response<string>(null, $"Không tìm thấy thông tin ba \'{Id}\'.");

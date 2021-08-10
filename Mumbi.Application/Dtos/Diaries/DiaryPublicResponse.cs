@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mumbi.Application.Dtos.Diaries
+﻿namespace Mumbi.Application.Dtos.Diaries
 {
     public interface DiaryPublicResponse
     {
@@ -11,10 +9,10 @@ namespace Mumbi.Application.Dtos.Diaries
         public string ImageURLCreateBy { get; set; }
         public string NameCreatedBy { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public string CreatedTime { get; set; }
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedTime { get; set; }
-        public DateTime PublicDate { get; set; }
+        public string LastModifiedTime { get; set; }
+        public string PublicDate { get; set; }
         public bool PublicFlag { get; set; }
         public bool ApprovedFlag { get; set; }
     }

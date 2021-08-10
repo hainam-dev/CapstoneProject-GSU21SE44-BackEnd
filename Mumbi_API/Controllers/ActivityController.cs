@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mumbi.Application.Dtos.Action;
 using Mumbi.Application.Dtos.Activity;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
@@ -22,6 +21,7 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _activityService.AddActivity(request));
         }
+
         [HttpGet("GetActivity")]
         public async Task<IActionResult> GetActivity([FromQuery] ActivityRequest request)
         {

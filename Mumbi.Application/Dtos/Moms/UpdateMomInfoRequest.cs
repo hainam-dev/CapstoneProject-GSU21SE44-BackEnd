@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mumbi.Application.Dtos.Moms
+﻿namespace Mumbi.Application.Dtos.Moms
 {
     public class UpdateMomInfoRequest
     {
@@ -15,6 +9,5 @@ namespace Mumbi.Application.Dtos.Moms
         public string Phonenumber { get; set; }
         public string BloodGroup { get; set; }
         public string RhBloodGroup { get; set; }
-
     }
 }

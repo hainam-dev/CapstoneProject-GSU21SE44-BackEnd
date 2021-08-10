@@ -1,9 +1,4 @@
-﻿using Mumbi.Application.Dtos.Tokens;
-using Mumbi.Application.Wrappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Mumbi.Application.Wrappers;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Interfaces

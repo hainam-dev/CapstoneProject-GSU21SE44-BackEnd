@@ -35,6 +35,7 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(activity.Id.ToString(), $"Thêm activity thành công, id: {activity.Id}");
         }
+
         public async Task<Response<ActivityResponse>> GetActivityById(int Id)
         {
             var response = new ActivityResponse();
@@ -48,6 +49,7 @@ namespace Mumbi.Application.Services
 
             return new Response<ActivityResponse>(response);
         }
+
         public async Task<Response<List<ActivityByTypeIdResponse>>> GetActivityByTypeId(ActivityRequest request)
         {
             var response = new List<ActivityByTypeIdResponse>();
@@ -63,6 +65,7 @@ namespace Mumbi.Application.Services
 
             return new Response<List<ActivityByTypeIdResponse>>(response);
         }
+
         public async Task<PagedResponse<List<ActivityByTypeIdResponse>>> GetActivity(ActivityRequest request)
         {
             var response = new List<ActivityByTypeIdResponse>();
@@ -123,6 +126,5 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(activity.Id.ToString(), $"Xóa activity id \'{Id}\' thành công!");
         }
-
     }
 }

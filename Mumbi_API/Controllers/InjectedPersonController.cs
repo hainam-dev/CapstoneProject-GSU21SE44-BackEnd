@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class InjectedPersonController : ControllerBase

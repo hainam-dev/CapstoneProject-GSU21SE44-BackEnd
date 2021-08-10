@@ -1,5 +1,4 @@
 ﻿using Mumbi.Domain.Entities;
-using System.Threading.Tasks;
 
 namespace Mumbi.Application.Interfaces.Repositories
 {

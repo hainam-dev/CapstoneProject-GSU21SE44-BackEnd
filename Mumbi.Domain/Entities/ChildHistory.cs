@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -13,12 +10,15 @@ namespace Mumbi.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(50)]
         public string ChildId { get; set; }
+
         [Required]
         [StringLength(50)]
         public string Date { get; set; }
+
         public double? Height { get; set; }
         public double? Weight { get; set; }
         public double? HeadCircumference { get; set; }

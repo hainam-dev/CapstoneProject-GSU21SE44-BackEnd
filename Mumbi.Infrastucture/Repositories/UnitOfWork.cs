@@ -1,7 +1,6 @@
 ﻿using Mumbi.Application.Interfaces;
 using Mumbi.Application.Interfaces.Repositories;
 using Mumbi.Infrastucture.Context;
-using Mumbi.Infrastucture.Repositories;
 using System.Threading.Tasks;
 
 namespace Mumbi.Infrastucture.Repositories
@@ -45,7 +44,6 @@ namespace Mumbi.Infrastucture.Repositories
         public IStandardIndexRepository StandardIndexRepository { get; set; }
         public IVaccineRepository VaccineRepository { get; set; }
 
-
         private void InitRepository()
         {
             RoleRepository = new RoleRepository(_context);
@@ -73,7 +71,6 @@ namespace Mumbi.Infrastucture.Repositories
             ActionRepository = new ActionRepository(_context);
             StandardIndexRepository = new StandardIndexRepository(_context);
             VaccineRepository = new VaccineRepository(_context);
-
         }
 
         public async Task<int> SaveAsync()

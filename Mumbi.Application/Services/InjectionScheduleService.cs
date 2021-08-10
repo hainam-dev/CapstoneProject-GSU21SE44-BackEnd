@@ -23,7 +23,7 @@ namespace Mumbi.Application.Services
             foreach (var item in request)
             {
                 var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
-                if(injectData is null)
+                if (injectData is null)
                 {
                     injectionScheduleRequest.Add(item);
                 }

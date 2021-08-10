@@ -21,5 +21,4 @@ namespace Mumbi_API.Controllers
             return Ok(await _tokenService.DeleteToken(UserId, FcmToken));
         }
     }
-
 }

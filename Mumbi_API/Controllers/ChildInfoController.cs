@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Childrens;
-using Mumbi.Application.Dtos.PregnancyHistory;
 using Mumbi.Application.Interfaces;
 using System.Threading.Tasks;
 
@@ -54,7 +53,7 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpPut("DeleteChildInfo/{Id}")]
-        public async Task<IActionResult> Delete (string Id)
+        public async Task<IActionResult> Delete(string Id)
         {
             return Ok(await _childInfoService.DeleteChildInfo(Id));
         }

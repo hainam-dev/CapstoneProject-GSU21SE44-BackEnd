@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -18,13 +17,17 @@ namespace Mumbi.Domain.Entities
 
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(200)]
         public string Title { get; set; }
+
         [Required]
         public string NotificationContent { get; set; }
+
         [Column(TypeName = "datetime")]
         public DateTime? CreatedTime { get; set; }
+
         [StringLength(100)]
         public string CreatedBy { get; set; }
 

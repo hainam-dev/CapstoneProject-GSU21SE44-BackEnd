@@ -7,7 +7,6 @@ namespace Mumbi.Application.Services
 {
     public static class SendNotificationService
     {
-
         public static async Task<int> SendNotificationAsync(List<string> deviceTokens, string title, string body)
         {
             BatchResponse response = null;
@@ -39,6 +38,5 @@ namespace Mumbi.Application.Services
 
             return response.SuccessCount;
         }
-
     }
 }

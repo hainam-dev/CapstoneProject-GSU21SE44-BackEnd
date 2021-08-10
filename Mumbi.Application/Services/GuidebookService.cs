@@ -5,6 +5,7 @@ using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -13,6 +14,7 @@ namespace Mumbi.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
         public GuidebookService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -42,18 +44,22 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(guidebook.Id, $"Thêm guidebook thành công, id: {guidebook.Id}");
         }
+
         public async Task<PagedResponse<List<GuidebookByTypeIdResponse>>> GetGuidebook(GuidebookRequest request)
         {
             var response = new List<GuidebookByTypeIdResponse>();
             var guidebook = await _unitOfWork.GuidebookRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
-                                                                             x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
-                                                                               && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
-                                                                               && x.DelFlag == false);
+                                                                                       filter: x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                                               && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
+                                                                                               && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                                               && x.DelFlag == false,
+                                                                                       orderBy: x => x.OrderByDescending(o => o.CreatedTime));
 
             response = _mapper.Map<List<GuidebookByTypeIdResponse>>(guidebook);
 
             return new PagedResponse<List<GuidebookByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
         }
+
         public async Task<Response<List<GuidebookResponse>>> GetAllGuidebook()
         {
             var guidebook = await _unitOfWork.GuidebookRepository.GetAsync(x => x.DelFlag == false, includeProperties: "Type");

@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Mumbi.Application;
-using Mumbi.Domain.Settings;
 using Mumbi.Infrastucture;
 using Mumbi_API.Extensions;
 
@@ -45,7 +44,6 @@ namespace Mumbi_API
             services.AddInfrastructure(Configuration);
             services.AddSwaggerExtension();
             services.AddHealthChecks();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

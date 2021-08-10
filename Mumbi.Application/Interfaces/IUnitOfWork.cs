@@ -31,7 +31,6 @@ namespace Mumbi.Application.Interfaces
         IStandardIndexRepository StandardIndexRepository { get; }
         IVaccineRepository VaccineRepository { get; }
 
-
         Task<int> SaveAsync();
     }
 }

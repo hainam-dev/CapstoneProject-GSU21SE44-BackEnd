@@ -2,6 +2,7 @@
 using Mumbi.Application.Constants;
 using Mumbi.Application.Dtos.Diaries;
 using Mumbi.Application.Interfaces;
+using Mumbi.Application.Parameters;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
 using System;
@@ -63,10 +64,13 @@ namespace Mumbi.Application.Services
 
             return new Response<List<DiaryPublicResponse>>(response);
         }
-        public async Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic()
+
+        public async Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic(RequestParameter request)
         {
-            var diaryPublic = await _unitOfWork.DiaryRepository.GetAsync(x => x.DelFlag == false && x.ApprovedFlag == true,
-                                                                         includeProperties: "Child.Mom.IdNavigation.UserInfo");
+            var diaryPublic = await _unitOfWork.DiaryRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                                     filter: x => x.DelFlag == false && x.ApprovedFlag == true,
+                                                                                     includeProperties: "Child.Mom.IdNavigation.UserInfo",
+                                                                                     orderBy: x => x.OrderByDescending(o => o.PublicDate));
             if (diaryPublic.Count == 0)
             {
                 return new Response<List<DiaryPublicResponse>>(null, "Chưa có dữ liệu");
@@ -76,16 +80,19 @@ namespace Mumbi.Application.Services
 
             return new Response<List<DiaryPublicResponse>>(response);
         }
-        public async Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(string childId)
+
+        public async Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(DiaryRequest request)
         {
             var response = new List<DiaryResponse>();
-            var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == childId && x.DelFlag == false);
-            if (child == null)
+            var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.ChildId);
+            if (child is null)
             {
-                return new Response<List<DiaryResponse>>($"Không tìm thấy bé \'{childId}\'.");
+                return new Response<List<DiaryResponse>>($"Không tìm thấy bé \'{request.ChildId}\'.");
             }
 
-            var diary = await _unitOfWork.DiaryRepository.GetAsync(x => x.ChildId == childId && x.DelFlag == false);
+            var diary = await _unitOfWork.DiaryRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                               filter: x => x.ChildId == request.ChildId && x.DelFlag == false,
+                                                                               orderBy: x => x.OrderByDescending(o => o.CreatedTime));
             if (diary.Count == 0)
             {
                 return new Response<List<DiaryResponse>>(null, $"Bé {child.FullName} chưa có nhật ký nào!");
@@ -123,6 +130,7 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(diary.Id.ToString(), $"Cập nhật thông tin nhật ký thành công, id: {diary.Id}");
         }
+
         public async Task<Response<string>> UpdateDiaryPublicRequest(UpdateDiaryPublicRequest request)
         {
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.ChildId && x.DelFlag == false);
@@ -184,6 +192,4 @@ namespace Mumbi.Application.Services
             }
         }
     }
-
-
 }

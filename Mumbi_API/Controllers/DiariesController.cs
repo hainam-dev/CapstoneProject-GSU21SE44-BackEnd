@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mumbi.Application.Dtos.Diaries;
 using Mumbi.Application.Interfaces;
+using Mumbi.Application.Parameters;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -29,15 +30,15 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpGet("GetDiaryPublic")]
-        public async Task<IActionResult> GetDiaryPublic()
+        public async Task<IActionResult> GetDiaryPublic([FromQuery] RequestParameter request)
         {
-            return Ok(await _diaryService.GetDiaryPublic());
+            return Ok(await _diaryService.GetDiaryPublic(request));
         }
 
-        [HttpGet("GetDiaryOfChildren/{childId}")]
-        public async Task<IActionResult> GetDiaryOfChildren(string childId)
+        [HttpGet("GetDiaryOfChildren")]
+        public async Task<IActionResult> GetDiaryOfChildren([FromQuery] DiaryRequest request)
         {
-            return Ok(await _diaryService.GetDiaryOfChildren(childId));
+            return Ok(await _diaryService.GetDiaryOfChildren(request));
         }
 
         [HttpPut("UpdateDiary/{Id}")]

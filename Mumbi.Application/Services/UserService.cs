@@ -20,6 +20,7 @@ namespace Mumbi.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly JWTSettings _jwtSettings;
+
         public UserService(IUnitOfWork unitOfWork, IOptions<JWTSettings> jwtSettings)
         {
             _unitOfWork = unitOfWork;
@@ -69,7 +70,6 @@ namespace Mumbi.Application.Services
                             Id = user_registration.Id
                         };
                         await _unitOfWork.MomInfoRepository.AddAsync(momInfo);
-
                     }
                     await _unitOfWork.UserRepository.AddAsync(user_registration);
 
@@ -79,7 +79,6 @@ namespace Mumbi.Application.Services
                         FullName = user_firebase.DisplayName,
                         ImageUrl = user_firebase.PhotoUrl,
                         Phonenumber = user_firebase.PhoneNumber
-
                     };
                     await _unitOfWork.UserInfoRepository.AddAsync(userInfo);
 
@@ -130,7 +129,6 @@ namespace Mumbi.Application.Services
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-
 
             var jwtSecurityToken = new JwtSecurityToken(
                 issuer: "https://securetoken.google.com/" + _jwtSettings.FirebaseProjectId,

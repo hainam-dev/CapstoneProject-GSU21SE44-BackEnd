@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Mumbi.Application.Dtos.Childrens;
-using Mumbi.Application.Dtos.PregnancyHistory;
 using Mumbi.Application.Enums;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
@@ -68,6 +67,7 @@ namespace Mumbi.Application.Services
                 return new Response<string>(pregnancy.Id, $"Thêm thai kì thành công, id: {pregnancy.Id}");
             }
         }
+
         public async Task<Response<string>> UpdateChildInfo(UpdateChildInfoRequest request)
         {
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.Id);
@@ -124,8 +124,7 @@ namespace Mumbi.Application.Services
 
             return new Response<string>(null, $"Không tìm thấy em bé \'{request.Id}\'");
         }
-        
-        
+
         public async Task<Response<string>> DeleteChildInfo(string id)
         {
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == id);

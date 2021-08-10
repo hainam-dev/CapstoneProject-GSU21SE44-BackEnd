@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mumbi.Application.Dtos.Childrens
+﻿namespace Mumbi.Application.Dtos.Childrens
 {
     public class CreateChildInfoRequest
     {

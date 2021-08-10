@@ -32,7 +32,6 @@ namespace Mumbi_API.Controllers
         public async Task<IActionResult> GetGuidebookTypeById(int Id)
         {
             return Ok(await _guidebookTypeService.GetGuidebookTypeById(Id));
-
         }
 
         [HttpPut("UpdateGuidebookType/{Id}")]

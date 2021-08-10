@@ -75,7 +75,6 @@ namespace Mumbi.Application.Services
             await _unitOfWork.SaveAsync();
 
             return new Response<string>(user.Id, $"Xóa mom thành công, {user.Id}");
-
         }
     }
 }

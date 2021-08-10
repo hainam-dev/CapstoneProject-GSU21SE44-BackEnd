@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mumbi.Application.Dtos.Childrens
+﻿namespace Mumbi.Application.Dtos.Childrens
 {
     public class UpdateChildInfoRequest
     {
@@ -20,6 +14,5 @@ namespace Mumbi.Application.Dtos.Childrens
         public byte HeadVortex { get; set; }
         public byte Fingertips { get; set; }
         public int ChildrenStatus { get; set; }
-
     }
 }

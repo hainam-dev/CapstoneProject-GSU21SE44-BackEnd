@@ -16,8 +16,8 @@ namespace Mumbi_API.Controllers
         {
             _injectionScheduleService = injectionScheduleService;
         }
-        [HttpPost("AddInjectionSchedule")]
 
+        [HttpPost("AddInjectionSchedule")]
         public async Task<IActionResult> AddInjectionSchedule(List<CreateInjectionScheduleRequest> request)
         {
             return Ok(await _injectionScheduleService.AddInjectionSchedule(request));

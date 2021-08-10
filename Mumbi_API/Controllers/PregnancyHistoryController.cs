@@ -30,7 +30,7 @@ namespace Mumbi_API.Controllers
         }
 
         [HttpPut("UpdatePregnancyHistory")]
-        public async Task<IActionResult> UpdatePregnancyHistory([FromQuery] PregnancyHistoryRequest request, [FromBody]UpdatePregnancyHistoryRequest updateRequest)
+        public async Task<IActionResult> UpdatePregnancyHistory([FromQuery] PregnancyHistoryRequest request, [FromBody] UpdatePregnancyHistoryRequest updateRequest)
         {
             if (string.IsNullOrEmpty(request.ChildId) || request.ChildId != updateRequest.ChildId)
             {

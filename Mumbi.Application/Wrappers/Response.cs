@@ -11,7 +11,6 @@ namespace Mumbi.Application.Wrappers
 
         public Response()
         {
-
         }
 
         public Response(T data, string message = null)

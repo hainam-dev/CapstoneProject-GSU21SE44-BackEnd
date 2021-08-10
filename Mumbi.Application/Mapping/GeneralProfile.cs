@@ -50,7 +50,13 @@ namespace Mumbi.Application.Mapping
                 );
             CreateMap<Activity, ActivityByTypeIdResponse>();
             // Diary
-            CreateMap<Diary, DiaryResponse>();
+            CreateMap<Diary, DiaryResponse>().ForMember(
+                dest => dest.CreatedTime,
+                opt => opt.MapFrom(src => src.CreatedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.LastModifiedTime,
+                opt => opt.MapFrom(src => src.LastModifiedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            );
             // DiaryPublic
             CreateMap<Diary, DiaryPublicResponse>().ForMember(
                 dest => dest.NameCreatedBy,
@@ -58,6 +64,15 @@ namespace Mumbi.Application.Mapping
             ).ForMember(
                 dest => dest.ImageURLCreateBy,
                 opt => opt.MapFrom(src => src.Child.Mom.IdNavigation.UserInfo.ImageUrl)
+            ).ForMember(
+                dest => dest.CreatedTime,
+                opt => opt.MapFrom(src => src.CreatedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.LastModifiedTime,
+                opt => opt.MapFrom(src => src.LastModifiedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.PublicDate,
+                opt => opt.MapFrom(src => src.PublicDate.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
             );
             // NewsType
             CreateMap<NewsType, NewsTypeResponse>();
@@ -79,8 +94,20 @@ namespace Mumbi.Application.Mapping
             CreateMap<Guidebook, GuidebookResponse>().ForMember(
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
-                );
-            CreateMap<Guidebook, GuidebookByTypeIdResponse>();
+            ).ForMember(
+                dest => dest.CreatedTime,
+                opt => opt.MapFrom(src => src.CreatedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.LastModifiedTime,
+                opt => opt.MapFrom(src => src.LastModifiedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            );
+            CreateMap<Guidebook, GuidebookByTypeIdResponse>().ForMember(
+                dest => dest.CreatedTime,
+                opt => opt.MapFrom(src => src.CreatedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            ).ForMember(
+                dest => dest.LastModifiedTime,
+                opt => opt.MapFrom(src => src.LastModifiedTime.Value.ToString("dd'/'MM'/'yyyy hh:mm"))
+            );
             //Token
             CreateMap<Token, FcmTokenResponse>();
             //Tooth

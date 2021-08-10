@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mumbi.Application.Dtos.Diaries
+﻿namespace Mumbi.Application.Dtos.Diaries
 {
     public class DiaryResponse
     {
@@ -13,9 +7,9 @@ namespace Mumbi.Application.Dtos.Diaries
         public string ImageURL { get; set; }
         public string DiaryContent { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedTime { get; set; }
+        public string CreatedTime { get; set; }
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedTime { get; set; }
+        public string LastModifiedTime { get; set; }
         public bool PublicFlag { get; set; }
         public bool ApprovedFlag { get; set; }
     }

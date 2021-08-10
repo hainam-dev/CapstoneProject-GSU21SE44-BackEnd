@@ -3,7 +3,6 @@ using Mumbi.Application.Interfaces.Repositories;
 using Mumbi.Domain.Entities;
 using Mumbi.Infrastucture.Context;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mumbi.Infrastucture.Repositories
 {
@@ -20,7 +19,5 @@ namespace Mumbi.Infrastucture.Repositories
         {
             return _token.All(x => x.FcmToken != fcmToken);
         }
-
-
     }
 }

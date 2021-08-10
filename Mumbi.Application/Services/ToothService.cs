@@ -27,7 +27,7 @@ namespace Mumbi.Application.Services
             {
                 return new Response<List<ToothResponse>>(null, $"Không có dữ liệu mọc răng của bé \'{childId}\'.");
             }
-            
+
             response = _mapper.Map<List<ToothResponse>>(tooth);
 
             return new Response<List<ToothResponse>>(response);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mumbi.Application.Dtos.PregnancyHistory
+﻿namespace Mumbi.Application.Dtos.PregnancyHistory
 {
     public class UpdatePregnancyHistoryRequest
     {
@@ -17,6 +11,5 @@ namespace Mumbi.Application.Dtos.PregnancyHistory
         public float FemurLength { get; set; }
         public float FetalHeartRate { get; set; }
         public float MotherWeight { get; set; }
-
     }
 }

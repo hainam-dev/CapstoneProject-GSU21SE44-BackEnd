@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mumbi.Application.Dtos.News
+﻿namespace Mumbi.Application.Dtos.News
 {
     public class NewsByTypeIdResponse
     {
