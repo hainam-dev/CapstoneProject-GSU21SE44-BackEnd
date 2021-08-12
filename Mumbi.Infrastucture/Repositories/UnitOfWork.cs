@@ -34,7 +34,7 @@ namespace Mumbi.Infrastucture.Repositories
         public IGuidebookMomRepository GuidebookMomRepository { get; set; }
         public ITokenRepository TokenRepository { get; set; }
         public IUserInfoRepository UserInfoRepository { get; set; }
-        public IToothRepository ToothRepository { get; set; }
+        public IToothChildRepository ToothChildRepository { get; set; }
         public IToothInfoRepository ToothInfoRepository { get; set; }
         public IInjectionScheduleRepository InjectionScheduleRepository { get; set; }
         public IInjectedPersonRepository InjectedPersonRepository { get; set; }
@@ -62,7 +62,7 @@ namespace Mumbi.Infrastucture.Repositories
             GuidebookTypeRepository = new GuidebookTypeRepository(_context);
             GuidebookMomRepository = new GuidebookMomRepository(_context);
             TokenRepository = new TokenRepository(_context);
-            ToothRepository = new ToothRepository(_context);
+            ToothChildRepository = new ToothRepository(_context);
             ToothInfoRepository = new ToothInfoRepository(_context);
             InjectionScheduleRepository = new InjectionScheduleRepository(_context);
             InjectedPersonRepository = new InjectedPersonRepository(_context);

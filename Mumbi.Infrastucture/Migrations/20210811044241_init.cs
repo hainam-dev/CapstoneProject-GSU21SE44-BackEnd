@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Mumbi.Infrastucture.Migrations
 {
@@ -6,6 +7,7 @@ namespace Mumbi.Infrastucture.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+           
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -38,16 +40,13 @@ namespace Mumbi.Infrastucture.Migrations
                 name: "PregnancyHistory");
 
             migrationBuilder.DropTable(
-                name: "Reminder");
-
-            migrationBuilder.DropTable(
                 name: "StandardIndex");
 
             migrationBuilder.DropTable(
                 name: "Token");
 
             migrationBuilder.DropTable(
-                name: "Tooth");
+                name: "ToothChild");
 
             migrationBuilder.DropTable(
                 name: "UserInfo");

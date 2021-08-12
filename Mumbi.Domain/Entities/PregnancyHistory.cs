@@ -19,9 +19,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(50)]
         public string Date { get; set; }
 
-        [StringLength(50)]
         public short? PregnancyWeek { get; set; }
-
         public double? Weight { get; set; }
         public double? BiparietalDiameter { get; set; }
         public double? HeadCircumference { get; set; }

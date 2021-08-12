@@ -11,7 +11,7 @@ namespace Mumbi.Domain.Entities
     {
         public ToothInfo()
         {
-            Teeth = new HashSet<Tooth>();
+            ToothChildren = new HashSet<ToothChild>();
         }
 
         [Key]
@@ -30,7 +30,7 @@ namespace Mumbi.Domain.Entities
 
         public byte Position { get; set; }
 
-        [InverseProperty(nameof(Tooth.ToothNavigation))]
-        public virtual ICollection<Tooth> Teeth { get; set; }
+        [InverseProperty(nameof(ToothChild.Tooth))]
+        public virtual ICollection<ToothChild> ToothChildren { get; set; }
     }
 }

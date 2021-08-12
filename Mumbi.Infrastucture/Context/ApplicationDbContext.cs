@@ -35,11 +35,10 @@ namespace Mumbi.Infrastucture.Context
         public virtual DbSet<NewsType> NewsTypes { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<PregnancyHistory> PregnancyHistories { get; set; }
-        public virtual DbSet<Reminder> Reminders { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<StandardIndex> StandardIndices { get; set; }
         public virtual DbSet<Token> Tokens { get; set; }
-        public virtual DbSet<Tooth> Teeth { get; set; }
+        public virtual DbSet<ToothChild> ToothChildren { get; set; }
         public virtual DbSet<ToothInfo> ToothInfos { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserInfo> UserInfos { get; set; }
@@ -206,6 +205,8 @@ namespace Mumbi.Infrastucture.Context
 
             modelBuilder.Entity<InjectionSchedule>(entity =>
             {
+                entity.Property(e => e.ChildId).IsUnicode(false);
+
                 entity.Property(e => e.InjectionDate).IsUnicode(false);
 
                 entity.Property(e => e.MomId).IsUnicode(false);
@@ -284,21 +285,6 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_PregnancyHistory_ChildInfo");
             });
 
-            modelBuilder.Entity<Reminder>(entity =>
-            {
-                entity.Property(e => e.EnabledFlag).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Frequency).IsUnicode(false);
-
-                entity.Property(e => e.UserId).IsUnicode(false);
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Reminders)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Reminder_Users");
-            });
-
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.Property(e => e.Id).IsUnicode(false);
@@ -326,7 +312,7 @@ namespace Mumbi.Infrastucture.Context
                     .HasConstraintName("FK_Token_User");
             });
 
-            modelBuilder.Entity<Tooth>(entity =>
+            modelBuilder.Entity<ToothChild>(entity =>
             {
                 entity.Property(e => e.ChildId).IsUnicode(false);
 
@@ -335,13 +321,13 @@ namespace Mumbi.Infrastucture.Context
                 entity.Property(e => e.ToothId).IsUnicode(false);
 
                 entity.HasOne(d => d.Child)
-                    .WithMany(p => p.Teeth)
+                    .WithMany(p => p.ToothChildren)
                     .HasForeignKey(d => d.ChildId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tooth_ChildInfo");
 
-                entity.HasOne(d => d.ToothNavigation)
-                    .WithMany(p => p.Teeth)
+                entity.HasOne(d => d.Tooth)
+                    .WithMany(p => p.ToothChildren)
                     .HasForeignKey(d => d.ToothId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tooth_ToothInfo");

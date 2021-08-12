@@ -111,12 +111,12 @@ namespace Mumbi.Application.Mapping
             //Token
             CreateMap<Token, FcmTokenResponse>();
             //Tooth
-            CreateMap<Tooth, ToothResponse>().ForMember(
+            CreateMap<ToothChild, ToothResponse>().ForMember(
                 dest => dest.ToothName,
-                opt => opt.MapFrom(src => src.ToothNavigation.Name)
+                opt => opt.MapFrom(src => src.Tooth.Name)
             ).ForMember(
                 dest => dest.Position,
-                opt => opt.MapFrom(src => src.ToothNavigation.Position)
+                opt => opt.MapFrom(src => src.Tooth.Position)
             );
             //ToothInfo
             CreateMap<ToothInfo, ToothInfoResponse>();

@@ -2,7 +2,7 @@
 
 namespace Mumbi.Application.Interfaces.Repositories
 {
-    public interface IToothRepository : IGenericRepository<Tooth>
+    public interface IToothChildRepository : IGenericRepository<ToothChild>
     {
     }
 }

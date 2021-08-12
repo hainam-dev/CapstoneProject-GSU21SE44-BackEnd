@@ -6,8 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mumbi.Domain.Entities
 {
-    [Table("Tooth")]
-    public partial class Tooth
+    [Table("ToothChild")]
+    public partial class ToothChild
     {
         [Key]
         public int Id { get; set; }
@@ -31,11 +31,11 @@ namespace Mumbi.Domain.Entities
         public bool GrownFlag { get; set; }
 
         [ForeignKey(nameof(ChildId))]
-        [InverseProperty(nameof(ChildInfo.Teeth))]
+        [InverseProperty(nameof(ChildInfo.ToothChildren))]
         public virtual ChildInfo Child { get; set; }
 
         [ForeignKey(nameof(ToothId))]
-        [InverseProperty(nameof(ToothInfo.Teeth))]
-        public virtual ToothInfo ToothNavigation { get; set; }
+        [InverseProperty(nameof(ToothInfo.ToothChildren))]
+        public virtual ToothInfo Tooth { get; set; }
     }
 }

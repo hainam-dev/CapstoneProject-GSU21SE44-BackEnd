@@ -502,6 +502,11 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ChildId")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<double?>("InjectedPersonId")
                         .HasColumnType("float");
 
@@ -732,7 +737,6 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasColumnType("float");
 
                     b.Property<short?>("PregnancyWeek")
-                        .HasMaxLength(50)
                         .HasColumnType("smallint");
 
                     b.Property<double?>("Weight")
@@ -743,43 +747,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.HasIndex("ChildId");
 
                     b.ToTable("PregnancyHistory");
-                });
-
-            modelBuilder.Entity("Mumbi.Domain.Entities.Reminder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool?>("EnabledFlag")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValueSql("((0))");
-
-                    b.Property<string>("Frequency")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<TimeSpan?>("Time")
-                        .HasColumnType("time(0)");
-
-                    b.Property<string>("Type")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Reminder");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Role", b =>
@@ -861,7 +828,7 @@ namespace Mumbi.Infrastucture.Migrations
                     b.ToTable("Token");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Tooth", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.ToothChild", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -900,7 +867,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.HasIndex("ToothId");
 
-                    b.ToTable("Tooth");
+                    b.ToTable("ToothChild");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ToothInfo", b =>
@@ -1231,17 +1198,6 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("Child");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Reminder", b =>
-                {
-                    b.HasOne("Mumbi.Domain.Entities.User", "User")
-                        .WithMany("Reminders")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Reminder_Users")
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Mumbi.Domain.Entities.Token", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.User", "User")
@@ -1253,23 +1209,23 @@ namespace Mumbi.Infrastucture.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Mumbi.Domain.Entities.Tooth", b =>
+            modelBuilder.Entity("Mumbi.Domain.Entities.ToothChild", b =>
                 {
                     b.HasOne("Mumbi.Domain.Entities.ChildInfo", "Child")
-                        .WithMany("Teeth")
+                        .WithMany("ToothChildren")
                         .HasForeignKey("ChildId")
                         .HasConstraintName("FK_Tooth_ChildInfo")
                         .IsRequired();
 
-                    b.HasOne("Mumbi.Domain.Entities.ToothInfo", "ToothNavigation")
-                        .WithMany("Teeth")
+                    b.HasOne("Mumbi.Domain.Entities.ToothInfo", "Tooth")
+                        .WithMany("ToothChildren")
                         .HasForeignKey("ToothId")
                         .HasConstraintName("FK_Tooth_ToothInfo")
                         .IsRequired();
 
                     b.Navigation("Child");
 
-                    b.Navigation("ToothNavigation");
+                    b.Navigation("Tooth");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.User", b =>
@@ -1333,7 +1289,7 @@ namespace Mumbi.Infrastucture.Migrations
 
                     b.Navigation("PregnancyHistories");
 
-                    b.Navigation("Teeth");
+                    b.Navigation("ToothChildren");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.Guidebook", b =>
@@ -1386,14 +1342,12 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.ToothInfo", b =>
                 {
-                    b.Navigation("Teeth");
+                    b.Navigation("ToothChildren");
                 });
 
             modelBuilder.Entity("Mumbi.Domain.Entities.User", b =>
                 {
                     b.Navigation("MomInfo");
-
-                    b.Navigation("Reminders");
 
                     b.Navigation("Tokens");
 

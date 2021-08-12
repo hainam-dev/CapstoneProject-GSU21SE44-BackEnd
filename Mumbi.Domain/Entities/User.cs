@@ -11,7 +11,6 @@ namespace Mumbi.Domain.Entities
     {
         public User()
         {
-            Reminders = new HashSet<Reminder>();
             Tokens = new HashSet<Token>();
             UserNotifications = new HashSet<UserNotification>();
         }
@@ -39,9 +38,6 @@ namespace Mumbi.Domain.Entities
 
         [InverseProperty("IdNavigation")]
         public virtual UserInfo UserInfo { get; set; }
-
-        [InverseProperty(nameof(Reminder.User))]
-        public virtual ICollection<Reminder> Reminders { get; set; }
 
         [InverseProperty(nameof(Token.User))]
         public virtual ICollection<Token> Tokens { get; set; }

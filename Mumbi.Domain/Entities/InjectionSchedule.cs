@@ -14,6 +14,9 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string MomId { get; set; }
 
+        [StringLength(50)]
+        public string ChildId { get; set; }
+
         public double? InjectedPersonId { get; set; }
 
         [StringLength(100)]

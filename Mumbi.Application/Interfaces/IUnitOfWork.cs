@@ -20,7 +20,7 @@ namespace Mumbi.Application.Interfaces
         IGuidebookRepository GuidebookRepository { get; }
         IGuidebookTypeRepository GuidebookTypeRepository { get; }
         IGuidebookMomRepository GuidebookMomRepository { get; }
-        IToothRepository ToothRepository { get; }
+        IToothChildRepository ToothChildRepository { get; }
         IToothInfoRepository ToothInfoRepository { get; }
         ITokenRepository TokenRepository { get; }
         IInjectedPersonRepository InjectedPersonRepository { get; }

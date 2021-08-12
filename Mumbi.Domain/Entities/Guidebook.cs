@@ -44,8 +44,8 @@ namespace Mumbi.Domain.Entities
         public DateTime? LastModifiedTime { get; set; }
 
         public int? TypeId { get; set; }
-        public byte? SuitableAge { get; set; }
         public bool DelFlag { get; set; }
+        public byte? SuitableAge { get; set; }
 
         [ForeignKey(nameof(TypeId))]
         [InverseProperty(nameof(GuidebookType.Guidebooks))]

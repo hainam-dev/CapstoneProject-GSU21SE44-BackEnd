@@ -15,7 +15,7 @@ namespace Mumbi.Domain.Entities
             ChildHistories = new HashSet<ChildHistory>();
             Diaries = new HashSet<Diary>();
             PregnancyHistories = new HashSet<PregnancyHistory>();
-            Teeth = new HashSet<Tooth>();
+            ToothChildren = new HashSet<ToothChild>();
         }
 
         [Key]
@@ -71,7 +71,7 @@ namespace Mumbi.Domain.Entities
         [InverseProperty(nameof(PregnancyHistory.Child))]
         public virtual ICollection<PregnancyHistory> PregnancyHistories { get; set; }
 
-        [InverseProperty(nameof(Tooth.Child))]
-        public virtual ICollection<Tooth> Teeth { get; set; }
+        [InverseProperty(nameof(ToothChild.Child))]
+        public virtual ICollection<ToothChild> ToothChildren { get; set; }
     }
 }
