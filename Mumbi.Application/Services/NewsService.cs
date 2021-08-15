@@ -81,8 +81,11 @@ namespace Mumbi.Application.Services
                                                                              orderBy: x => x.OrderByDescending(o => o.CreatedTime));
 
             response = _mapper.Map<List<NewsByTypeIdResponse>>(news);
+            var totalCount = await _unitOfWork.NewsRepository.CountAsync(x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                           && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                           && x.DelFlag == false);
 
-            return new PagedResponse<List<NewsByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
+            return new PagedResponse<List<NewsByTypeIdResponse>>(response, request.PageNumber, request.PageSize, totalCount);
         }
 
         public async Task<Response<string>> UpdateNewsRequest(UpdateNewsRequest request)

@@ -50,14 +50,18 @@ namespace Mumbi.Application.Services
             var response = new List<GuidebookByTypeIdResponse>();
             var guidebook = await _unitOfWork.GuidebookRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
                                                                                        filter: x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
-                                                                                               && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
-                                                                                               && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
-                                                                                               && x.DelFlag == false,
+                                                                                                 && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
+                                                                                                 && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                                                 && x.DelFlag == false,
                                                                                        orderBy: x => x.OrderByDescending(o => o.CreatedTime));
 
             response = _mapper.Map<List<GuidebookByTypeIdResponse>>(guidebook);
+            var totalCount = await _unitOfWork.GuidebookRepository.CountAsync(x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
+                                                                                          && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
+                                                                                          && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
+                                                                                          && x.DelFlag == false);
 
-            return new PagedResponse<List<GuidebookByTypeIdResponse>>(response, request.PageNumber, request.PageSize);
+            return new PagedResponse<List<GuidebookByTypeIdResponse>>(response, request.PageNumber, request.PageSize, totalCount);
         }
 
         public async Task<Response<List<GuidebookResponse>>> GetAllGuidebook()

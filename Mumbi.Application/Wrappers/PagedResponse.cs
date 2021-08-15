@@ -26,5 +26,13 @@
             Message = null;
             Data = data;
         }
+
+        public PagedResponse(T data, string message)
+        {
+            Succeeded = true;
+            Errors = null;
+            Message = message;
+            Data = data;
+        }
     }
 }

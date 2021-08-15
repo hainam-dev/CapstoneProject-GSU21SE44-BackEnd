@@ -8,6 +8,7 @@ using Mumbi.Application.Dtos.Dads;
 using Mumbi.Application.Dtos.Diaries;
 using Mumbi.Application.Dtos.Guidebooks;
 using Mumbi.Application.Dtos.GuidebookTypes;
+using Mumbi.Application.Dtos.InjectionSchedule;
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Dtos.News;
 using Mumbi.Application.Dtos.NewsType;
@@ -163,6 +164,9 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Phonenumber,
                 opt => opt.MapFrom(src => src.UserInfo.Phonenumber)
             );
+
+            // InjectionSchedule
+            CreateMap<InjectionSchedule, InjectionScheduleResponse>();
         }
     }
 }

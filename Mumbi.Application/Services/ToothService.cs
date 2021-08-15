@@ -22,7 +22,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<ToothResponse>>> GetToothByChildId(string childId)
         {
             var response = new List<ToothResponse>();
-            var tooth = await _unitOfWork.ToothChildRepository.GetAsync(x => x.ChildId == childId && x.GrownFlag == true, includeProperties: "ToothNavigation");
+            var tooth = await _unitOfWork.ToothChildRepository.GetAsync(x => x.ChildId == childId && x.GrownFlag == true, includeProperties: "Tooth");
             if (tooth == null)
             {
                 return new Response<List<ToothResponse>>(null, $"Không có dữ liệu mọc răng của bé \'{childId}\'.");

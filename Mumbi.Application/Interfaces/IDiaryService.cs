@@ -12,9 +12,9 @@ namespace Mumbi.Application.Interfaces
 
         Task<Response<List<DiaryPublicResponse>>> GetDiaryToApprove();
 
-        Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic(RequestParameter request);
+        Task<PagedResponse<List<DiaryPublicResponse>>> GetDiaryPublic(RequestParameter request);
 
-        Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(DiaryRequest request);
+        Task<PagedResponse<List<DiaryResponse>>> GetDiaryOfChildren(DiaryRequest request);
 
         Task<Response<string>> UpdateDiaryRequest(UpdateDiaryRequest request);
 

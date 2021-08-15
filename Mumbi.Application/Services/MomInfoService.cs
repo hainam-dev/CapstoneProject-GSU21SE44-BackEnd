@@ -18,13 +18,16 @@ namespace Mumbi.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Response<List<MomInfoResponse>>> GetAllMomInfo()
+        public async Task<PagedResponse<List<MomInfoResponse>>> GetListMomInfo(MomInfoRequest request)
         {
             var response = new List<MomInfoResponse>();
-            var user = await _unitOfWork.UserRepository.GetAsync(x => x.DelFlag == false && x.RoleId == "role01", includeProperties: "UserInfo,MomInfo");
+            var user = await _unitOfWork.UserRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
+                                                                             filter: x => x.DelFlag == false && x.RoleId == Constants.RoleConstant.USER_ROLE, 
+                                                                             includeProperties: "UserInfo,MomInfo");
             response = _mapper.Map<List<MomInfoResponse>>(user);
+            var totalCount = await _unitOfWork.UserRepository.CountAsync(x => x.DelFlag == false && x.RoleId == Constants.RoleConstant.USER_ROLE);
 
-            return new Response<List<MomInfoResponse>>(response);
+            return new PagedResponse<List<MomInfoResponse>>(response, request.PageNumber, request.PageSize, totalCount);
         }
 
         public async Task<Response<MomInfoResponse>> GetMomInfoById(string Id)

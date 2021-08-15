@@ -65,7 +65,7 @@ namespace Mumbi.Application.Services
             return new Response<List<DiaryPublicResponse>>(response);
         }
 
-        public async Task<Response<List<DiaryPublicResponse>>> GetDiaryPublic(RequestParameter request)
+        public async Task<PagedResponse<List<DiaryPublicResponse>>> GetDiaryPublic(RequestParameter request)
         {
             var diaryPublic = await _unitOfWork.DiaryRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
                                                                                      filter: x => x.DelFlag == false && x.ApprovedFlag == true,
@@ -73,21 +73,22 @@ namespace Mumbi.Application.Services
                                                                                      orderBy: x => x.OrderByDescending(o => o.PublicDate));
             if (diaryPublic.Count == 0)
             {
-                return new Response<List<DiaryPublicResponse>>(null, "Chưa có dữ liệu");
+                return new PagedResponse<List<DiaryPublicResponse>>(null, "Chưa có dữ liệu");
             }
 
             var response = _mapper.Map<List<DiaryPublicResponse>>(diaryPublic);
+            var totalCount = await _unitOfWork.DiaryRepository.CountAsync(x => x.DelFlag == false && x.ApprovedFlag == true);
 
-            return new Response<List<DiaryPublicResponse>>(response);
+            return new PagedResponse<List<DiaryPublicResponse>>(response, request.PageNumber, request.PageSize, totalCount);
         }
 
-        public async Task<Response<List<DiaryResponse>>> GetDiaryOfChildren(DiaryRequest request)
+        public async Task<PagedResponse<List<DiaryResponse>>> GetDiaryOfChildren(DiaryRequest request)
         {
             var response = new List<DiaryResponse>();
             var child = await _unitOfWork.ChildInfoRepository.FirstAsync(x => x.Id == request.ChildId);
             if (child is null)
             {
-                return new Response<List<DiaryResponse>>($"Không tìm thấy bé \'{request.ChildId}\'.");
+                return new PagedResponse<List<DiaryResponse>>(null, $"Không tìm thấy bé \'{request.ChildId}\'.");
             }
 
             var diary = await _unitOfWork.DiaryRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
@@ -95,12 +96,13 @@ namespace Mumbi.Application.Services
                                                                                orderBy: x => x.OrderByDescending(o => o.CreatedTime));
             if (diary.Count == 0)
             {
-                return new Response<List<DiaryResponse>>(null, $"Bé {child.FullName} chưa có nhật ký nào!");
+                return new PagedResponse<List<DiaryResponse>>(null, $"Bé {child.FullName} chưa có nhật ký nào!");
             }
 
             response = _mapper.Map<List<DiaryResponse>>(diary);
+            var total = await _unitOfWork.DiaryRepository.CountAsync(x => x.ChildId == request.ChildId && x.DelFlag == false);
 
-            return new Response<List<DiaryResponse>>(response);
+            return new PagedResponse<List<DiaryResponse>>(response, request.PageSize, request.PageNumber, total);
         }
 
         public async Task<Response<string>> UpdateDiaryRequest(UpdateDiaryRequest request)

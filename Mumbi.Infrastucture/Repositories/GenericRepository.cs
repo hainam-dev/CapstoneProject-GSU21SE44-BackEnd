@@ -124,5 +124,15 @@ namespace Mumbi.Infrastucture.Repositories
         {
             _context.Entry(entity).State = EntityState.Modified;
         }
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
+        {
+            return await _context.Set<T>().AsNoTracking().CountAsync(filter);
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Set<T>().AsNoTracking().CountAsync();
+        }
     }
 }

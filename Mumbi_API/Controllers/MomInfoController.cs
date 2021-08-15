@@ -16,10 +16,10 @@ namespace Mumbi_API.Controllers
             _momInfoService = momInfoService;
         }
 
-        [HttpGet("GetAllMomInfo")]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("GetListMomInfo")]
+        public async Task<IActionResult> GetAll([FromQuery] MomInfoRequest request)
         {
-            return Ok(await _momInfoService.GetAllMomInfo());
+            return Ok(await _momInfoService.GetListMomInfo(request));
         }
 
         [HttpGet("GetMomInfoBy/{Id}")]

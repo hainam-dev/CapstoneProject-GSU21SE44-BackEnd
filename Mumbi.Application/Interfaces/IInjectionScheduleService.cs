@@ -8,5 +8,7 @@ namespace Mumbi.Application.Interfaces
     public interface IInjectionScheduleService
     {
         Task<Response<List<string>>> AddInjectionSchedule(List<CreateInjectionScheduleRequest> request);
+
+        Task<Response<List<InjectionScheduleResponse>>> GetInjectionScheduleByChildId(string childId);
     }
 }

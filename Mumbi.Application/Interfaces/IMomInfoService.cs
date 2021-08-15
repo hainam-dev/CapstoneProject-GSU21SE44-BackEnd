@@ -8,9 +8,9 @@ namespace Mumbi.Application.Interfaces
 {
     public interface IMomInfoService
     {
-        Task<Response<List<MomInfoResponse>>> GetAllMomInfo();
+        Task<PagedResponse<List<MomInfoResponse>>> GetListMomInfo(MomInfoRequest request);
 
-        Task<Response<MomInfoResponse>> GetMomInfoById(String Id);
+        Task<Response<MomInfoResponse>> GetMomInfoById(string Id);
 
         Task<Response<string>> UpdateMomInfoRequest(UpdateMomInfoRequest request);
 

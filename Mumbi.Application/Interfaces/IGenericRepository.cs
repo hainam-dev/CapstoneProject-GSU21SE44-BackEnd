@@ -32,5 +32,9 @@ namespace Mumbi.Application.Interfaces
         void Delete(T entity);
 
         void DeleteAllAsync(IList<T> entities);
+
+        Task<int> CountAsync();
+
+        Task<int> CountAsync(Expression<Func<T, bool>> filter);
     }
 }

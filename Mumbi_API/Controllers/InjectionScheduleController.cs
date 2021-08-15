@@ -22,5 +22,11 @@ namespace Mumbi_API.Controllers
         {
             return Ok(await _injectionScheduleService.AddInjectionSchedule(request));
         }
+
+        [HttpGet("GetInjectionSchedules/{childId}")]
+        public async Task<IActionResult> GetInjectionSchedules(string childId)
+        {
+            return Ok(await _injectionScheduleService.GetInjectionScheduleByChildId(childId));
+        }
     }
 }
