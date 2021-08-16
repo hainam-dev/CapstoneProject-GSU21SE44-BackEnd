@@ -78,7 +78,7 @@ namespace Mumbi.Application.Services
                                                                              filter: x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
                                                                                && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
                                                                                && x.DelFlag == false,
-                                                                             orderBy: x => x.OrderByDescending(o => o.CreatedTime));
+                                                                             orderBy: x => x.OrderByDescending(o => o.CreatedTime), includeProperties: "Type");
 
             response = _mapper.Map<List<NewsByTypeIdResponse>>(news);
             var totalCount = await _unitOfWork.NewsRepository.CountAsync(x => (request.TypeId == null || x.TypeId == request.TypeId.Value)

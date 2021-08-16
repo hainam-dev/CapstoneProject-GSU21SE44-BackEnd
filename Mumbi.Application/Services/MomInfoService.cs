@@ -2,7 +2,9 @@
 using Mumbi.Application.Dtos.Moms;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
@@ -21,11 +23,15 @@ namespace Mumbi.Application.Services
         public async Task<PagedResponse<List<MomInfoResponse>>> GetListMomInfo(MomInfoRequest request)
         {
             var response = new List<MomInfoResponse>();
+            Expression<Func<Domain.Entities.User, bool>> query = x => x.DelFlag == false
+                                                                   && x.RoleId == Constants.RoleConstant.USER_ROLE
+                                                                   && (request.FullName == null || x.UserInfo.FullName.Contains(request.FullName))
+                                                                   && (request.Email == null || x.UserInfo.IdNavigation.Email.Contains(request.Email));
             var user = await _unitOfWork.UserRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize,
-                                                                             filter: x => x.DelFlag == false && x.RoleId == Constants.RoleConstant.USER_ROLE, 
+                                                                             filter: query,
                                                                              includeProperties: "UserInfo,MomInfo");
             response = _mapper.Map<List<MomInfoResponse>>(user);
-            var totalCount = await _unitOfWork.UserRepository.CountAsync(x => x.DelFlag == false && x.RoleId == Constants.RoleConstant.USER_ROLE);
+            var totalCount = await _unitOfWork.UserRepository.CountAsync(query);
 
             return new PagedResponse<List<MomInfoResponse>>(response, request.PageNumber, request.PageSize, totalCount);
         }

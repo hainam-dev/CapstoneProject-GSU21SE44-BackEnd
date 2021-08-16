@@ -73,7 +73,7 @@ namespace Mumbi.Application.Services
                                                                              x => (request.TypeId == null || x.TypeId == request.TypeId.Value)
                                                                              && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
                                                                                && (request.SearchValue == null || x.ActivityName.Contains(request.SearchValue))
-                                                                               && x.DelFlag == false);
+                                                                               && x.DelFlag == false, includeProperties: "Type");
 
             response = _mapper.Map<List<ActivityByTypeIdResponse>>(activity);
             var totalItem = await _unitOfWork.ActivityRepository.CountAsync(x => (request.TypeId == null || x.TypeId == request.TypeId.Value)

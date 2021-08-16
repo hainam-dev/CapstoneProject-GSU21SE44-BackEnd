@@ -53,7 +53,7 @@ namespace Mumbi.Application.Services
                                                                                                  && (request.SuitableAge == null || x.SuitableAge == request.SuitableAge.Value)
                                                                                                  && (request.SearchValue == null || x.Title.Contains(request.SearchValue))
                                                                                                  && x.DelFlag == false,
-                                                                                       orderBy: x => x.OrderByDescending(o => o.CreatedTime));
+                                                                                       orderBy: x => x.OrderByDescending(o => o.CreatedTime),includeProperties:"Type");
 
             response = _mapper.Map<List<GuidebookByTypeIdResponse>>(guidebook);
             var totalCount = await _unitOfWork.GuidebookRepository.CountAsync(x => (request.TypeId == null || x.TypeId == request.TypeId.Value)

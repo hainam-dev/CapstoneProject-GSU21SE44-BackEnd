@@ -49,7 +49,10 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
                 );
-            CreateMap<Activity, ActivityByTypeIdResponse>();
+            CreateMap<Activity, ActivityByTypeIdResponse>().ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type.Type)
+                );
             // Diary
             CreateMap<Diary, DiaryResponse>();
             // DiaryPublic
@@ -67,7 +70,10 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
             );
-            CreateMap<News, NewsByTypeIdResponse>();
+            CreateMap<News, NewsByTypeIdResponse>().ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type.Type)
+            );
             // GuidebookType
             CreateMap<GuidebookType, GuidebookTypeResponse>();
             // Guidebook
@@ -75,7 +81,10 @@ namespace Mumbi.Application.Mapping
                 dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Type)
             );
-            CreateMap<Guidebook, GuidebookByTypeIdResponse>();
+            CreateMap<Guidebook, GuidebookByTypeIdResponse>().ForMember(
+                dest => dest.Type,
+                opt => opt.MapFrom(src => src.Type.Type)
+            );
             //Token
             CreateMap<Token, FcmTokenResponse>();
             //Tooth
