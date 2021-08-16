@@ -1,4 +1,6 @@
-﻿namespace Mumbi.Application.Dtos.Guidebooks
+﻿using System;
+
+namespace Mumbi.Application.Dtos.Guidebooks
 {
     public class GuidebookResponse
     {
@@ -8,9 +10,9 @@
         public string ImageURL { get; set; }
         public short EstimatedFinishTime { get; set; }
         public string CreatedBy { get; set; }
-        public string CreatedTime { get; set; }
+        public DateTime CreatedTime { get; set; }
         public string LastModifiedBy { get; set; }
-        public string LastModifiedTime { get; set; }
+        public DateTime LastModifiedTime { get; set; }
         public byte SuitableAge { get; set; }
         public int TypeId { get; set; }
         public string Type { get; set; }

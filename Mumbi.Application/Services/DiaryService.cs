@@ -102,7 +102,7 @@ namespace Mumbi.Application.Services
             response = _mapper.Map<List<DiaryResponse>>(diary);
             var total = await _unitOfWork.DiaryRepository.CountAsync(x => x.ChildId == request.ChildId && x.DelFlag == false);
 
-            return new PagedResponse<List<DiaryResponse>>(response, request.PageSize, request.PageNumber, total);
+            return new PagedResponse<List<DiaryResponse>>(response, request.PageNumber, request.PageSize, total);
         }
 
         public async Task<Response<string>> UpdateDiaryRequest(UpdateDiaryRequest request)
@@ -147,7 +147,7 @@ namespace Mumbi.Application.Services
                 return new Response<string>(null, $"Không tìm thấy thông tin nhật ký có id \'{request.Id}\'.");
             }
 
-            diary.PublicDate = request.PublicDate;
+            diary.PublicDate = DateTimeOffset.Now.ToOffset(new TimeSpan(7, 0, 0)).DateTime;
             diary.PublicFlag = request.PublicFlag;
             diary.ApprovedFlag = request.ApprovedFlag;
             if (request.ApprovedFlag)
