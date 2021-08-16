@@ -23,12 +23,21 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<string>>> AddInjectionSchedule(List<CreateInjectionScheduleRequest> request)
         {
             var injectionScheduleRequest = new List<CreateInjectionScheduleRequest>();
+
             foreach (var item in request)
             {
-                var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
-                if (injectData is null)
+                var tmp = await _unitOfWork.InjectedPersonRepository.FirstAsync(x => x.Id == item.InjectedPersonId);
+                if (tmp != null)
                 {
-                    injectionScheduleRequest.Add(item);
+                    var childs = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == item.MomId);
+                    var childId = childs.FirstOrDefault(x => x.Birthday == tmp.Birthday).Id;
+
+                    var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
+                    if (injectData is null)
+                    {
+                        item.ChildId = childId;
+                        injectionScheduleRequest.Add(item);
+                    }
                 }
             }
 
