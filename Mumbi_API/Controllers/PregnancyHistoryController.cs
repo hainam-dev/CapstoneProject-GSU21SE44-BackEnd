@@ -3,6 +3,7 @@ using Mumbi.Application.Dtos.PregnancyHistory;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Mumbi_API.Controllers
@@ -21,7 +22,7 @@ namespace Mumbi_API.Controllers
         [HttpGet("GetPregnancyHistoryByChildId")]
         public async Task<IActionResult> GetPregnancyHistoryByChildId([FromQuery] PregnancyHistoryRequest request)
         {
-            if (!string.IsNullOrEmpty(request.Date) && !DateTimeOffset.TryParse(request.Date, out _))
+            if (!string.IsNullOrEmpty(request.Date) && !DateTimeOffset.TryParseExact(request.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             {
                 return BadRequest(new Response<string>("Incorrect date format"));
             }
