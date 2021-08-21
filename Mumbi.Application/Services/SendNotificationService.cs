@@ -19,7 +19,7 @@ namespace Mumbi.Application.Services
                     {
                         { "title", title },
                         { "text", body },
-                    }
+                    },
                 };
 
                 response = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(content);

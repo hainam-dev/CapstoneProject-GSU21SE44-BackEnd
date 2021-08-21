@@ -20,6 +20,8 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<string>>> AddInjectedPerson(List<CreateInjectedPersonRequest> request)
         {
             var injectPersonRequest = new List<CreateInjectedPersonRequest>();
+            var response = new List<string>();
+
             foreach (var item in request)
             {
                 var childs = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == item.MomId);
@@ -29,23 +31,30 @@ namespace Mumbi.Application.Services
                 }
             }
 
-            var injectedPerson = injectPersonRequest.Select(x => new InjectedPerson
+            foreach (var item in injectPersonRequest)
             {
-                Id = x.Id,
-                FullName = x.FullName,
-                Birthday = x.Birthday,
-                Gender = x.Gender,
-                EthnicGroup = x.EthnicGroup,
-                IdentityCardNumber = x.IdentityCardNumber,
-                Phonenumber = x.Phonenumber,
-                HomeAddress = x.HomeAddress,
-                TemporaryAddress = x.TemporaryAddress
-            }).ToList();
+                var injectionData = await _unitOfWork.InjectedPersonRepository.FirstAsync(x => x.Id == item.Id);
+                if (injectionData is null)
+                {
+                    var injectionPerson = new InjectedPerson
+                    {
+                        Id = item.Id,
+                        FullName = item.FullName,
+                        Birthday = item.Birthday,
+                        Gender = item.Gender,
+                        EthnicGroup = item.EthnicGroup,
+                        IdentityCardNumber = item.IdentityCardNumber,
+                        Phonenumber = item.Phonenumber,
+                        HomeAddress = item.HomeAddress,
+                        TemporaryAddress = item.TemporaryAddress
+                    };
 
-            await _unitOfWork.InjectedPersonRepository.AddRangeAsync(injectedPerson);
+                    await _unitOfWork.InjectedPersonRepository.AddAsync(injectionPerson);
+                    response.Add(injectionPerson.Id.ToString());
+                }
+            }
+
             await _unitOfWork.SaveAsync();
-
-            var response = injectedPerson.Select(x => x.Id.ToString()).ToList();
 
             return new Response<List<string>>(response, "Thêm thông tin người tiêm thành công");
         }

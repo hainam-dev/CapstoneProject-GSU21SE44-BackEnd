@@ -23,6 +23,7 @@ namespace Mumbi.Application.Services
         public async Task<Response<List<string>>> AddInjectionSchedule(List<CreateInjectionScheduleRequest> request)
         {
             var injectionScheduleRequest = new List<CreateInjectionScheduleRequest>();
+            var response = new List<string>();
 
             foreach (var item in request)
             {
@@ -31,8 +32,7 @@ namespace Mumbi.Application.Services
                 {
                     var childs = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == item.MomId);
                     var childId = childs.FirstOrDefault(x => x.Birthday == tmp.Birthday).Id;
-
-                    var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
+                    var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id && x.ChildId == childId);
                     if (injectData is null)
                     {
                         item.ChildId = childId;
@@ -41,24 +41,32 @@ namespace Mumbi.Application.Services
                 }
             }
 
-            var injectionSchedules = injectionScheduleRequest.Select(x => new InjectionSchedule
+            foreach (var item in injectionScheduleRequest)
             {
-                Id = x.Id,
-                MomId = x.MomId,
-                InjectedPersonId = x.InjectedPersonId,
-                VaccineName = x.VaccineName,
-                Antigen = x.Antigen,
-                InjectionDate = x.InjectionDate,
-                OrderOfInjection = x.OrderOfInjection,
-                VaccinationFacility = x.VaccinationFacility,
-                VaccineBatch = x.VaccineBatch,
-                Status = x.Status
-            }).ToList();
+                var injectionData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
+                if (injectionData is null)
+                {
+                    var injectionSchedule = new InjectionSchedule
+                    {
+                        Id = item.Id,
+                        MomId = item.MomId,
+                        ChildId = item.ChildId,
+                        InjectedPersonId = item.InjectedPersonId,
+                        VaccineName = item.VaccineName,
+                        Antigen = item.Antigen,
+                        InjectionDate = item.InjectionDate,
+                        OrderOfInjection = item.OrderOfInjection,
+                        VaccinationFacility = item.VaccinationFacility,
+                        VaccineBatch = item.VaccineBatch,
+                        Status = item.Status
+                    };
 
-            await _unitOfWork.InjectionScheduleRepository.AddRangeAsync(injectionSchedules);
+                    await _unitOfWork.InjectionScheduleRepository.AddAsync(injectionSchedule);
+                    response.Add(injectionSchedule.Id.ToString());
+                }
+            }
+
             await _unitOfWork.SaveAsync();
-
-            var response = injectionSchedules.Select(x => x.Id.ToString()).ToList();
 
             return new Response<List<string>>(response, "Thêm lịch tiêm thành công");
         }

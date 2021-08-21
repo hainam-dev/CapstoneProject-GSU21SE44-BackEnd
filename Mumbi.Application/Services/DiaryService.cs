@@ -152,11 +152,11 @@ namespace Mumbi.Application.Services
             diary.ApprovedFlag = request.ApprovedFlag;
             if (request.ApprovedFlag)
             {
-                await sendNotification(child.MomId, "Đăng nhật ký lên cộng đồng đã được duyệt!", $"Nhật ký của bạn đã được duyệt để đăng lên cộng đồng!");
+                await sendNotification(child.MomId, "Nhật ký đã được duyệt!", $"Nhật ký của bạn đã được duyệt để đăng lên cộng đồng!");
             }
             else
             {
-                await sendNotification(child.MomId, "Đăng nhật ký lên cộng đồng không được chấp nhận!", $"Nhật ký của bạn đã vi phạm quy định tiêu chuẩn cộng đồng, vui lòng thử lại!");
+                await sendNotification(child.MomId, "Nhật ký không được duyệt!", $"Nhật ký của bạn đã vi phạm quy định tiêu chuẩn cộng đồng, vui lòng thử lại!");
             }
 
             _unitOfWork.DiaryRepository.UpdateAsync(diary);

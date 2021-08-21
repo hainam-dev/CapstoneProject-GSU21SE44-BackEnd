@@ -22,7 +22,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(100)]
         public string VaccineName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(500)]
         public string Antigen { get; set; }
 
         [StringLength(50)]
@@ -33,7 +33,7 @@ namespace Mumbi.Domain.Entities
         [StringLength(30)]
         public string VaccineBatch { get; set; }
 
-        [StringLength(100)]
+        [StringLength(500)]
         public string VaccinationFacility { get; set; }
 
         public byte Status { get; set; }
