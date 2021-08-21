@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Mumbi.Application.Dtos.InjectionSchedule;
 using Mumbi.Application.Interfaces;
 using Mumbi.Application.Wrappers;
 using Mumbi.Domain.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mumbi.Application.Services
 {
@@ -43,12 +43,12 @@ namespace Mumbi.Application.Services
 
             foreach (var item in injectionScheduleRequest)
             {
-                var injectionData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id);
+                var injectionData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id && x.ChildId == item.ChildId);
                 if (injectionData is null)
                 {
                     var injectionSchedule = new InjectionSchedule
                     {
-                        Id = item.Id,
+                        InjectionScheduleId = item.Id,
                         MomId = item.MomId,
                         ChildId = item.ChildId,
                         InjectedPersonId = item.InjectedPersonId,
@@ -62,7 +62,7 @@ namespace Mumbi.Application.Services
                     };
 
                     await _unitOfWork.InjectionScheduleRepository.AddAsync(injectionSchedule);
-                    response.Add(injectionSchedule.Id.ToString());
+                    response.Add(injectionSchedule.InjectionScheduleId.ToString());
                 }
             }
 

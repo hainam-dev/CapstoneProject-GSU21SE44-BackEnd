@@ -495,8 +495,10 @@ namespace Mumbi.Infrastucture.Migrations
 
             modelBuilder.Entity("Mumbi.Domain.Entities.InjectionSchedule", b =>
                 {
-                    b.Property<double>("Id")
-                        .HasColumnType("float");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Antigen")
                         .HasMaxLength(500)
@@ -514,6 +516,9 @@ namespace Mumbi.Infrastucture.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<double>("InjectionScheduleId")
+                        .HasColumnType("float");
 
                     b.Property<string>("MomId")
                         .HasMaxLength(100)

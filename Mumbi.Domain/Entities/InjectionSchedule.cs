@@ -9,7 +9,9 @@ namespace Mumbi.Domain.Entities
     public partial class InjectionSchedule
     {
         [Key]
-        public double Id { get; set; }
+        public int Id { get; set; }
+
+        public double InjectionScheduleId { get; set; }
 
         [StringLength(100)]
         public string MomId { get; set; }
