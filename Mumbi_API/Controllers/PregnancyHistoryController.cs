@@ -39,7 +39,7 @@ namespace Mumbi_API.Controllers
             }
             else
             {
-                if (!DateTimeOffset.TryParse(request.Date, out _))
+                if (!DateTimeOffset.TryParseExact(request.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
                 {
                     return BadRequest(new Response<string>("Incorrect date format"));
                 }
