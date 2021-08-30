@@ -2,7 +2,7 @@
 {
     public class InjectionScheduleResponse
     {
-        public double Id { get; set; }
+        public double InjectionScheduleId { get; set; }
         public string MomId { get; set; }
         public string ChildId { get; set; }
         public double? InjectedPersonId { get; set; }

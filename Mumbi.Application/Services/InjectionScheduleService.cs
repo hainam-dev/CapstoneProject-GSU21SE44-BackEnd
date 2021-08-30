@@ -32,7 +32,7 @@ namespace Mumbi.Application.Services
                 {
                     var childs = await _unitOfWork.ChildInfoRepository.GetAsync(x => x.MomId == item.MomId);
                     var childId = childs.FirstOrDefault(x => x.Birthday == tmp.Birthday).Id;
-                    var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id && x.ChildId == childId);
+                    var injectData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.InjectionScheduleId == item.InjectionScheduleId && x.ChildId == childId);
                     if (injectData is null)
                     {
                         item.ChildId = childId;
@@ -43,12 +43,12 @@ namespace Mumbi.Application.Services
 
             foreach (var item in injectionScheduleRequest)
             {
-                var injectionData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.Id == item.Id && x.ChildId == item.ChildId);
+                var injectionData = await _unitOfWork.InjectionScheduleRepository.FirstAsync(x => x.InjectionScheduleId == item.InjectionScheduleId && x.ChildId == item.ChildId);
                 if (injectionData is null)
                 {
                     var injectionSchedule = new InjectionSchedule
                     {
-                        InjectionScheduleId = item.Id,
+                        InjectionScheduleId = item.InjectionScheduleId,
                         MomId = item.MomId,
                         ChildId = item.ChildId,
                         InjectedPersonId = item.InjectedPersonId,

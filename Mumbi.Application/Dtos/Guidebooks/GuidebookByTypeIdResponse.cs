@@ -4,6 +4,7 @@ namespace Mumbi.Application.Dtos.Guidebooks
 {
     public class GuidebookByTypeIdResponse
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string GuidebookContent { get; set; }
         public string ImageURL { get; set; }
